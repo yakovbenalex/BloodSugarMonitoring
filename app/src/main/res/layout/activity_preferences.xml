@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_item_padding"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnResetToDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/reset_to_default" />
+
+    <Button
+        android:id="@+id/btnSavePreferences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/btnResetToDefault"
+        android:enabled="false"
+        android:text="@string/save_settings" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnResetToDefault"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewDiabetesType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/rgDiabetesType"
+                    android:text="@string/diabetes_type" />
+
+                <RadioGroup
+                    android:id="@+id/rgDiabetesType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbDiabetesType1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_1_type" />
+
+                    <RadioButton
+                        android:id="@+id/rbDiabetesType2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_2_type" />
+
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewUnitOfBloodSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/rgUnitOfBloodSugar"
+                    android:maxLines="2"
+                    android:text="@string/unit_of_blood_sugar" />
+
+                <RadioGroup
+                    android:id="@+id/rgUnitOfBloodSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbUnitOfBloodSugarMmolL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/mmol_l" />
+
+                    <RadioButton
+                        android:id="@+id/rbUnitOfBloodSugarMgdL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="@string/mg_dl" />
+
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewBloodLowSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etBloodLowSugar"
+                    android:maxLines="2"
+                    android:text="@string/blood_low_sugar" />
+
+                <EditText
+                    android:id="@+id/etBloodLowSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="7"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:selectAllOnFocus="true"
+                    android:text="3.8"
+                    android:textAlignment="center" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewBloodHighSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etBloodHighSugar"
+                    android:maxLines="2"
+                    android:text="@string/blood_high_sugar" />
+
+                <EditText
+                    android:id="@+id/etBloodHighSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:ems="7"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:selectAllOnFocus="true"
+                    android:text="8.9"
+                    android:textAlignment="center" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/etAmountCarbInBreadUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:ems="7"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:selectAllOnFocus="true"
+                    android:text="12.0"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/textViewAmountCarbsInBreadUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etAmountCarbInBreadUnit"
+                    android:maxLines="2"
+                    android:text="@string/amount_of_carbohydrates_in_bread_unit" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dip"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/colorPrimary" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewTimeFormat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/rgTimeFormat"
+                    android:text="@string/time_format" />
+
+                <RadioGroup
+                    android:id="@+id/rgTimeFormat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbTimeFormat12h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_12h" />
+
+                    <RadioButton
+                        android:id="@+id/rbTimeFormat24h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_24h" />
+
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/btnDeleteAllMeasurements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_all_measurements" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

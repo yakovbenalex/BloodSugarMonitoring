@@ -1,0 +1,80 @@
+package com.example.jason.bloodGlucoseMonitoring;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
+
+public class AgreementActivity extends AppCompatActivity implements View.OnClickListener {
+
+    // temporary variables
+    private static long back_pressed;
+
+    // views declare
+    Button btnConfirm;
+    private boolean firstRun;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_agreement);
+
+        btnConfirm = (Button) findViewById(R.id.btnConfirm);
+
+        btnConfirm.setOnClickListener(this);
+
+        // get firstRun value
+        SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+        firstRun = sharedPref.getBoolean(KEY_PREFS_FIRST_RUN_AGREEMENT, true);
+        if (!firstRun) {
+            btnConfirm.setText("Ok");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnConfirm:
+                // set firstRun flag to false
+                SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+                SharedPreferences.Editor prefEditor = sharedPref.edit();
+                prefEditor.putBoolean(KEY_PREFS_FIRST_RUN_AGREEMENT, false);
+                prefEditor.apply();
+
+                finish();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (firstRun) {
+            if (back_pressed + 2000 > System.currentTimeMillis()) {
+                moveTaskToBack(true);
+                finishAffinity();
+            } else {
+                Toast.makeText(getBaseContext(), "Click the back button again to cancel the agreement!", Toast.LENGTH_SHORT).show();
+            }
+            back_pressed = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
+            finish();
+        }
+
+        /*if (back_pressed + 2000 > System.currentTimeMillis()) {
+            moveTaskToBack(true);
+            finishAffinity();
+        } else {
+            Toast.makeText(getBaseContext(), "Click the back button again to cancel the agreement!", Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();*/
+    }
+}

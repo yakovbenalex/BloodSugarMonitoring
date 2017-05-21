@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="7dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textInfoRules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="190dp"
+                android:text="some text"
+                android:textIsSelectable="true"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/tvInfoNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textInfoRules"
+                android:minWidth="190dp"
+                android:text="@string/developerInfo"
+                android:textColor="@android:color/black"
+                android:textSize="21sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

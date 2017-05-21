@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_item_padding"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.example.jason.bloodGlucoseMonitoring.AddMeasurementActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewBloodLowSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etBloodSugarMeasurementEdit"
+                    android:maxLines="2"
+                    android:text="@string/blood_sugar_measurement" />
+
+                <EditText
+                    android:id="@+id/etBloodSugarMeasurementEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="7"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:selectAllOnFocus="true"
+                    android:text="5.8"
+                    android:textAlignment="center" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewBloodHighSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/etCommentEdit"
+                    android:layout_alignParentStart="true"
+                    android:maxLines="2"
+                    android:paddingRight="16dp"
+                    android:text="Comment" />
+
+                <EditText
+                    android:id="@+id/etCommentEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/textViewBloodHighSugar"
+                    android:inputType="textAutoComplete"
+                    android:maxLength="127"
+                    android:selectAllOnFocus="true"
+                    android:text="All right!"
+                    android:textAlignment="textStart" />
+
+            </RelativeLayout>
+
+            <!-- android:layout_width="280dp" -->
+            <TimePicker
+                android:id="@+id/timePickerAddMeasurement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:headerBackground="@color/colorPrimary" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlControlPanel"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btnChooseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/timeInSeconds" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnSaveMeasurement"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/activity_item_padding"
+            android:text="tvDate"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/btnSaveMeasurement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/btnDeleteCurMeasurements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/btnSaveMeasurement"
+            android:visibility="invisible"
+            android:text="Delete" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+
+    <!--
+
+        <View
+        android:id="@+id/vSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#000" />
+
+    -->

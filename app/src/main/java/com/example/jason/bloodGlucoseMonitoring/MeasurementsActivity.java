@@ -1,0 +1,134 @@
+package com.example.jason.bloodGlucoseMonitoring;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_TIME_IN_SECONDS;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodLowSugarDefault;
+
+public class MeasurementsActivity extends AppCompatActivity {
+
+    // views declare
+    TextView textView;
+
+    ListView lvMeasurementsAll;
+    int lvIndexPos = 0;
+
+    // variables for preferences
+    float prefsBloodLowSugar;
+    float prefsBloodHighSugar;
+    boolean prefsTimeFormat24h;
+
+    //SQLite database
+    DBHelper dbHelper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_measurements);
+
+        textView = (TextView) findViewById(R.id.textView);
+        lvMeasurementsAll = (ListView) findViewById(R.id.lvMeasurementsAll);
+
+        lvMeasurementsAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MeasurementsActivity.this, AddMeasurementActivity.class);
+                intent.putExtra("idRec", id);
+                startActivity(intent);
+            }
+        });
+        /*
+        lvMeasurementsAll.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MeasurementsActivity.this, "456", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        */
+
+
+        // get settings object
+        SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+
+        // get saved value for diabetes
+        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
+        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
+        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
+
+        dbHelper = new DBHelper(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadRecordsGame();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        lvIndexPos = lvMeasurementsAll.getFirstVisiblePosition();
+    }
+
+    @Override
+    protected void onResume() {
+        if (lvMeasurementsAll != null) {
+            if (lvMeasurementsAll.getCount() > lvIndexPos)
+                lvMeasurementsAll.setSelectionFromTop(lvIndexPos, 0);
+            else
+                lvMeasurementsAll.setSelectionFromTop(0, 0);
+        }
+        super.onResume();
+    }
+
+    private void loadRecordsGame() {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        ArrayList<MyItemRecords> data = new ArrayList<>();
+
+        int id;
+        float measurement;
+        long timeInSeconds; // *1000 milliseconds
+        String comment;
+
+        Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS, null, null, null, null, null,
+                DBHelper.KEY_TIME_IN_SECONDS + " DESC");
+//                null);
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
+            int idMeasurement = cursor.getColumnIndex(DBHelper.KEY_MEASUREMENT);
+            int idTimeInSeconds = cursor.getColumnIndex(KEY_TIME_IN_SECONDS);
+            int idComment = cursor.getColumnIndex(DBHelper.KEY_COMMENT);
+            do {
+                id = cursor.getInt(idIndex);
+                measurement = cursor.getFloat(idMeasurement);
+                timeInSeconds = cursor.getLong(idTimeInSeconds);
+                comment = cursor.getString(idComment);
+                data.add(new MyItemRecords(id, measurement, timeInSeconds, comment));
+            } while (cursor.moveToNext());
+        } //else { //No Records }
+
+        cursor.close();
+
+        lvMeasurementsAll.setAdapter(new MyItemRecordsAdapter(this, data,
+                prefsBloodLowSugar, prefsBloodHighSugar, prefsTimeFormat24h));
+    }
+
+}
