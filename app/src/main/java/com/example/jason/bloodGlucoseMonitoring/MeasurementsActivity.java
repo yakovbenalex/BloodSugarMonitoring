@@ -17,9 +17,12 @@ import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_TIME_IN_SECO
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodLowSugarDefault;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class MeasurementsActivity extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class MeasurementsActivity extends AppCompatActivity {
     float prefsBloodLowSugar;
     float prefsBloodHighSugar;
     boolean prefsTimeFormat24h;
+    boolean prefsUnitBloodSugarMmol;
 
     //SQLite database
     DBHelper dbHelper;
@@ -68,6 +72,7 @@ public class MeasurementsActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
 
         // get saved value for diabetes
+        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, unitBloodSugarMmolDefault);
         prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
         prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
         prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
@@ -100,7 +105,7 @@ public class MeasurementsActivity extends AppCompatActivity {
 
     private void loadRecordsGame() {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        ArrayList<MyItemRecords> data = new ArrayList<>();
+        ArrayList<ItemRecords> data = new ArrayList<>();
 
         int id;
         float measurement;
@@ -121,14 +126,14 @@ public class MeasurementsActivity extends AppCompatActivity {
                 measurement = cursor.getFloat(idMeasurement);
                 timeInSeconds = cursor.getLong(idTimeInSeconds);
                 comment = cursor.getString(idComment);
-                data.add(new MyItemRecords(id, measurement, timeInSeconds, comment));
+                data.add(new ItemRecords(id, measurement, timeInSeconds, comment));
             } while (cursor.moveToNext());
         } //else { //No Records }
 
         cursor.close();
 
-        lvMeasurementsAll.setAdapter(new MyItemRecordsAdapter(this, data,
-                prefsBloodLowSugar, prefsBloodHighSugar, prefsTimeFormat24h));
+        lvMeasurementsAll.setAdapter(new ItemRecordsAdapter(this, data,
+                prefsBloodLowSugar, prefsBloodHighSugar, prefsUnitBloodSugarMmol, prefsTimeFormat24h));
     }
 
 }

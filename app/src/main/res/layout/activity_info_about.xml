@@ -2,40 +2,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="7dp">
+    android:orientation="vertical">
 
-    <ScrollView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="5dip"
+        android:background="@color/colorPrimaryDark" />
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="7dp">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textInfoRules"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minWidth="190dp"
-                android:text="some text"
-                android:textIsSelectable="true"
-                android:textSize="19sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvInfoNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/textInfoRules"
-                android:minWidth="190dp"
-                android:text="@string/developerInfo"
-                android:textColor="@android:color/black"
-                android:textSize="21sp" />
+                <TextView
+                    android:id="@+id/textInfoRules"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="190dp"
+                    android:text="some text"
+                    android:textIsSelectable="true"
+                    android:textSize="19sp" />
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvInfoNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/textInfoRules"
+                    android:minWidth="190dp"
+                    android:text="@string/developerInfo"
+                    android:textColor="@android:color/black"
+                    android:textSize="21sp" />
 
-    </ScrollView>
+            </RelativeLayout>
 
+        </ScrollView>
+
+    </RelativeLayout>
 </RelativeLayout>

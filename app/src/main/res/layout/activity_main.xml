@@ -1,54 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="7dp"
     tools:context="com.example.jason.bloodGlucoseMonitoring.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="TextView" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dip"
+        android:layout_marginBottom="@dimen/activity_item_padding"
+        android:background="@color/colorPrimaryDark" />
 
-    <Button
-        android:id="@+id/btnCalculatorCarbs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnAddMeasurement"
-        android:layout_alignParentEnd="true"
-        android:drawableLeft="@mipmap/ic_launcher"
-        android:text="Calc carbs" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="7dp"
+        tools:context="com.example.jason.bloodGlucoseMonitoring.MainActivity">
 
-    <Button
-        android:id="@+id/btnStatistics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_launcher"
-        android:text="Statistics"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="TextView" />
 
-    <Button
-        android:id="@+id/btnAddMeasurement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:drawableLeft="@mipmap/ic_launcher"
-        android:text="Add measure" />
 
-    <Button
-        android:id="@+id/btnMeasurements"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_launcher"
-        android:text="Measurements"
-        android:layout_above="@+id/btnAddMeasurement"
-        android:layout_alignParentStart="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnStatistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:layout_weight="1"
+                    android:text="@string/statistics" />
+
+                <Button
+                    android:id="@+id/btnCalculatorCarbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:text="@string/carbs_calculator" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnMeasurements"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:text="@string/measurements" />
+
+                <Button
+                    android:id="@+id/btnAddMeasurement"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_btn_ad"
+                    android:text="@string/add" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

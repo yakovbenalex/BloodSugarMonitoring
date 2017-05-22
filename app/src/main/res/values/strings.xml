@@ -22,36 +22,32 @@
     <string name="unit_of_blood_sugar">Unit of blood sugar measurement (future option)</string>
     <string name="mmol_l">mmol/L</string>
     <string name="mg_dl">mg/dL</string>
-    <string name="blood_low_sugar">Blood low measurementSugar</string>
-    <string name="blood_high_sugar">Blood high measurementSugar</string>
+    <string name="hypoglycemia_low_sugar">Hypoglycemia (low sugar)</string>
+    <string name="hyperglycemia_high_sugar">Hyperglycemia (high sugar)</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="from_to">From %1$.1f to %2$.1f</string>
 
     <!--  -->
     <string name="all_required_fields_must_be_filled">All required fields must be filled</string>
-    <string name="please_press_again_to_back_to_menu">Please, press again to back to menu!</string>
+    <string name="please_press_again_to_back_to_menu">Click the back button again to back to menu!</string>
     <string name="changes_will_not_saved">Changes will not saved!!!</string>
     <string name="settings_have_been_saved">Settings have been saved</string>
     <string name="grams_in_product">Grams in product</string>
-    <string name="carbs_in_100_grams_of_product">Carbs in 100 grams of product</string>
-    <string name="proteins_in_product">Proteins in product</string>
-    <string name="fats_in_product">Fats in product</string>
+    <string name="carbohydrates_per_100g_product">Carbohydrates per 100g product</string>
     <string name="amount_of_bread_units">Amount of bread units</string>
     <string name="carbs_in_grams_of_product">Carbs in grams of product</string>
-    <string name="proteins_in_grams_of_product">Proteins in grams of product</string>
-    <string name="fats_in_grams_of_product">Fats in grams of product</string>
     <string name="_0_100">0..100</string>
     <string name="_0_99_9">0..99.9</string>
-    <string name="timeInSeconds">Date</string>
     <string name="ready">Ready</string>
     <string name="add_measurement">Add measurement</string>
+    <string name="add">Add</string>
     <string name="incorrect_date">Incorrect date!</string>
     <string name="date_has_been_reset">Date has been reset</string>
 
     <!--  -->
     <string name="date_cannot_be_less_than__year">Date cannot be less than  %1$d year.</string>
     <string name="date_cannot_be_greater_than_the_current">Date cannot be greater than the current.</string>
-    <string name="time_format">Time format</string>
+    <string name="time_format_display">Time format display</string>
     <string name="blood_sugar_measurement">Blood sugar measurement</string>
 
 
@@ -65,13 +61,24 @@
     <string name="delete_all_measurements">Delete all measurements?</string>
     <string name="these_changes_can_t_return">These changes can\'t return!!!</string>
     <string name="all_measurements_has_been_deleted">All measurements has been deleted!</string>
-    <string name="incorrect_input_value">Incorrect input value</string>
+    <string name="incorrect_value">Incorrect value</string>
     <string name="delete_current_measurements">Delete current measurements?</string>
     <string name="the_current_measurement_has_been_deleted">The current measurement has been deleted!</string>
     <string name="count_of_measurements">Count of measurements</string>
     <string name="amount_of_carbohydrates_in_bread_unit">Amount of carbohydrates in bread unit</string>
     <string name="_12h">12h</string>
     <string name="_24h">24h</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="comment">Comment</string>
+    <string name="agreement_terms">By using this application, you agree to following terms and conditions:\n1 - Developer of this application is not responsible for your health.\n2 - Before making any decisions, first consult your doctor.</string>
+    <string name="carbs_calculator">Carbs calculator</string>
+    <string name="exit_are_you_sure">Exit: Are you sure?</string>
+    <string name="still_yes">Still, Yes!</string>
+    <string name="never">Never</string>
+    <string name="confirm">Confirm</string>
+    <string name="click_the_back_button_again_to_cancel_the_agreement">Click the back button again to cancel the agreement!</string>
+
 
 
     <integer name="qwe">5</integer>>

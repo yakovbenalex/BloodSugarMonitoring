@@ -52,7 +52,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 measurement = cursor.getFloat(idMeasurement);
                 timeInMillis = cursor.getLong(idTimeInMillis);
                 comment = cursor.getString(idComment);
-                data.add(new MyItemRecords(measurement, timeInMillis, comment));
+                data.add(new ItemRecords(measurement, timeInMillis, comment));
             } while (cursor.moveToNext());
         } //else { //No Records }*/
 

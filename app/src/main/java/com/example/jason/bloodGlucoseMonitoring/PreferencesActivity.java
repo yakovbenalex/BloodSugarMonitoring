@@ -5,17 +5,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import java.util.Objects;
 
 
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,34 +33,35 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final float bloodLowSugarDefault = 3.8f;
     protected static final float bloodHighSugarDefault = 8.9f;
     protected static final float amountCarbsInBreadUnitDefault = 12f;
-    protected static final boolean diabetesType1Default = true;
-    protected static final boolean timeFormat24h = true;
-    /*//---FUTURE OPTION---unit blood sugar-mg/dL---
-    private static final boolean unitBloodSugarMmolLDefaultValue = true;
-    */
+    protected static final boolean diabetes1TypeDefault = true;
+    protected static final boolean unitBloodSugarMmolDefault = true;
+    protected static final boolean timeFormat24hDefault = true;
 
     // keys
     protected static final String KEY_PREFS = "settings_pref";
-    protected static final String KEY_PREFS_DIABETES_TYPE = "diabetesType";
-    protected static final String KEY_PREFS_UNIT_BLOOD_SUGAR = "unitBloodSugar";
+    protected static final String KEY_PREFS_DIABETES_1TYPE = "diabetes1Type";
+    protected static final String KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL = "unitBloodSugarMmol";
     protected static final String KEY_PREFS_BLOOD_LOW_SUGAR = "bloodLowSugar";
     protected static final String KEY_PREFS_BLOOD_HIGH_SUGAR = "bloodHighSugar";
     protected static final String KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT = "amountCarbohydratesInBreadUnit";
     protected static final String KEY_PREFS_FIRST_RUN_AGREEMENT = "firstRunAgreement";
-    protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24h";
+    protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24hDefault";
+    private static final String TAG = "myLog";
 
     // variables for preferences
-    String prefsDiabetesType;
-    String prefsUnitBloodSugar;
     float prefsBloodLowSugar;
     float prefsBloodHighSugar;
     float prefsAmountCarbsInBreadUnit;
+    boolean prefsDiabetes1Type;
+    boolean prefsUnitBloodSugarMmol;
     boolean prefsTimeFormat24h;
+    boolean firstRun;
 
     // temporary variables
     private static long back_pressed;
     boolean isChangeSetting;
-    boolean firstRun;
+    float tmpBloodLowSugar;
+    float tmpBloodHighSugar;
 
     // views declare
     Button btnSavePreferences;
@@ -71,9 +73,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     RadioButton rbTimeFormat12h;
     RadioButton rbTimeFormat24h;
     RadioButton rbUnitOfBloodSugarMmolL;
-    /*//---FUTURE OPTION---unit blood sugar-mg/dL---
+    //---FUTURE OPTION---unit blood sugar-mg/dL---//
     RadioButton rbUnitOfBloodSugarMgdL;
-    */
+
+    RadioGroup rgDiabetesType;
+    RadioGroup rgUnitOfBloodSugar;
+    RadioGroup rgTimeFormat;
 
     EditText etBloodLowSugar;
     EditText etBloodHighSugar;
@@ -88,6 +93,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
+        dbHelper = new DBHelper(this);
+
         // initializing starts variables
         isChangeSetting = false;
 
@@ -101,18 +108,16 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         rbTimeFormat12h = (RadioButton) findViewById(R.id.rbTimeFormat12h);
         rbTimeFormat24h = (RadioButton) findViewById(R.id.rbTimeFormat24h);
         rbUnitOfBloodSugarMmolL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMmolL);
-        /*//---FUTURE OPTION---unit blood sugar-mg/dL---
+        //---FUTURE OPTION---unit blood sugar-mg/dL---//
         rbUnitOfBloodSugarMgdL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMgdL);
-        */
+
+        rgDiabetesType = (RadioGroup) findViewById(R.id.rgDiabetesType);
+        rgUnitOfBloodSugar = (RadioGroup) findViewById(R.id.rgUnitOfBloodSugar);
+        rgTimeFormat = (RadioGroup) findViewById(R.id.rgTimeFormat);
 
         etBloodLowSugar = (EditText) findViewById(R.id.etBloodLowSugar);
         etBloodHighSugar = (EditText) findViewById(R.id.etBloodHighSugar);
         etAmountCarb = (EditText) findViewById(R.id.etAmountCarbInBreadUnit);
-
-        // set hints for editText
-        etBloodLowSugar.setHint(String.format(getString(R.string.from_to), bloodLowSugarLowerBound, bloodLowSugarUpperBound));
-        etBloodHighSugar.setHint(String.format(getString(R.string.from_to), bloodHighSugarLowerBound, bloodHighSugarUpperBound));
-        etAmountCarb.setHint(String.format(getString(R.string.from_to), amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound));
 
         // set the listeners for views
         btnSavePreferences.setOnClickListener(this);
@@ -121,34 +126,43 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         rbDiabetesType1.setOnClickListener(this);
         rbDiabetesType2.setOnClickListener(this);
+        rbUnitOfBloodSugarMmolL.setOnClickListener(this);
+        rbUnitOfBloodSugarMgdL.setOnClickListener(this);
         rbTimeFormat12h.setOnClickListener(this);
         rbTimeFormat24h.setOnClickListener(this);
 
         //  load and set preferences in preferences menu
         loadPreferences();
 
-        etBloodLowSugar.setText(String.valueOf(prefsBloodLowSugar));
-        etBloodHighSugar.setText(String.valueOf(prefsBloodHighSugar));
+        // set hint for editText
+        setEditTextsHints(prefsUnitBloodSugarMmol);
+        etAmountCarb.setHint(String.format(getString(R.string.from_to),
+                amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound));
+
+        // set preferences values
         etAmountCarb.setText(String.valueOf(prefsAmountCarbsInBreadUnit));
 
-        if (Objects.equals(prefsDiabetesType, getString(R.string._1_type))) {
-            rbDiabetesType1.setChecked(true);
-        } else {
-            rbDiabetesType2.setChecked(true);
-        }
-        if (Objects.equals(prefsUnitBloodSugar, getString(R.string.mmol_l))) {
+        if (prefsDiabetes1Type) rbDiabetesType1.setChecked(true);
+        else rbDiabetesType2.setChecked(true);
+
+        if (prefsUnitBloodSugarMmol) {
+            etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
             rbUnitOfBloodSugarMmolL.setChecked(true);
-        }
-        //---FUTURE OPTION---unit blood sugar-mg/dL---
-        //else {
-        //    rbUnitOfBloodSugarMgdL.setChecked(true);
-        //}
-        //
-        if (prefsTimeFormat24h) {
-            rbTimeFormat24h.setChecked(true);
+            etBloodLowSugar.setText(String.valueOf(prefsBloodLowSugar));
+            etBloodHighSugar.setText(String.valueOf(prefsBloodHighSugar));
         } else {
-            rbTimeFormat12h.setChecked(true);
+            //---FUTURE OPTION---unit blood sugar-mg/dL---//
+            etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            rbUnitOfBloodSugarMgdL.setChecked(true);
+            etBloodLowSugar.setText(String.valueOf((int) (prefsBloodLowSugar * 18)));
+            etBloodHighSugar.setText(String.valueOf((int) (prefsBloodHighSugar * 18)));
         }
+
+        if (prefsTimeFormat24h) rbTimeFormat24h.setChecked(true);
+        else rbTimeFormat12h.setChecked(true);
+
 
         // event on text change in editTexts
         etBloodLowSugar.addTextChangedListener(new TextWatcher() {
@@ -209,6 +223,58 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        // On Checked Change event to enable button save preferences
+        rgUnitOfBloodSugar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                // set converted value depending on the type unit of blood sugar
+                switch (checkedId) {
+                    case R.id.rbUnitOfBloodSugarMmolL:
+                        etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER
+                                | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        if (!isEmpty(etBloodLowSugar)) {
+                            tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
+                            etBloodLowSugar.setText(String.valueOf(tmpBloodLowSugar / 18 + 0.001f));
+                        }
+                        if (!isEmpty(etBloodHighSugar)) {
+                            tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
+                            etBloodHighSugar.setText(String.valueOf(tmpBloodHighSugar / 18 + 0.001f));
+                        }
+                        break;
+
+                    case R.id.rbUnitOfBloodSugarMgdL:
+                        etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        if (!isEmpty(etBloodLowSugar)) {
+                            tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
+                            etBloodLowSugar.setText(String.valueOf(tmpBloodLowSugar * 18));
+                        }
+                        if (!isEmpty(etBloodHighSugar)) {
+                            tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
+                            etBloodHighSugar.setText(String.valueOf(tmpBloodHighSugar * 18));
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                setEditTextsHints(rbUnitOfBloodSugarMmolL.isChecked());
+                preferencesChanged(true, true);
+            }
+        });
+
+        rgDiabetesType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                preferencesChanged(true, true);
+            }
+        });
+        rgTimeFormat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                preferencesChanged(true, true);
+            }
+        });
+
         // get firstRunAgreement value
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         firstRun = sharedPref.getBoolean(KEY_PREFS_FIRST_RUN_AGREEMENT, true);
@@ -219,8 +285,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             Intent intent = new Intent(PreferencesActivity.this, AgreementActivity.class);
             startActivity(intent);
         }
-
-        dbHelper = new DBHelper(this);
     }
 
     @Override
@@ -237,7 +301,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
             // reset preferences to default but not save
             case R.id.btnResetToDefault:
-                resetPreferencesToDefault();
+//                resetPreferencesToDefault();
+                Toast.makeText(this, String.valueOf((int) 13.000001), Toast.LENGTH_SHORT).show();
                 break;
 
             // delete all measurements
@@ -247,28 +312,24 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
                 alert.setTitle(getString(R.string.delete_all_measurements));
                 alert.setMessage(getString(R.string.these_changes_can_t_return));
-                alert.setNegativeButton(getString(android.R.string.no), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        //Canceled.
-                    }
-                });
+                alert.setNegativeButton(getString(android.R.string.no),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                //Canceled.
+                            }
+                        });
                 alert.setNeutralButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SQLiteDatabase database = dbHelper.getWritableDatabase();
                         database.delete(DBHelper.TABLE_MEASUREMENTS, null, null);
                         database.close();
-                        Toast.makeText(PreferencesActivity.this, getString(R.string.all_measurements_has_been_deleted), Toast.LENGTH_LONG).show();
+                        Toast.makeText(PreferencesActivity.this, getString(
+                                R.string.all_measurements_has_been_deleted),
+                                Toast.LENGTH_LONG).show();
                         finish();
                     }
                 });
                 alert.show();
-                break;
-
-            case R.id.rbDiabetesType1:
-            case R.id.rbDiabetesType2:
-            case R.id.rbTimeFormat12h:
-            case R.id.rbTimeFormat24h:
-                preferencesChanged(true, true);
                 break;
 
             // switch default
@@ -309,14 +370,16 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
 
         // get saved value for diabetes
-        prefsDiabetesType = sharedPref.getString(KEY_PREFS_DIABETES_TYPE, getString(R.string._1_type));
-        prefsUnitBloodSugar = sharedPref.getString(KEY_PREFS_UNIT_BLOOD_SUGAR, getString(R.string.mmol_l));
+        prefsDiabetes1Type = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE, diabetes1TypeDefault);
+        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL,
+                unitBloodSugarMmolDefault);
         prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
         prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
-        prefsAmountCarbsInBreadUnit = sharedPref.getFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT, amountCarbsInBreadUnitDefault);
+        prefsAmountCarbsInBreadUnit = sharedPref.getFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT,
+                amountCarbsInBreadUnitDefault);
 
         // get saved value for function of interface
-        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
+        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, timeFormat24hDefault);
     }
 
     // save preferences in sharedPreferences
@@ -326,24 +389,30 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         SharedPreferences.Editor prefEditor = sharedPref.edit();
 
         // put preferences values
-        prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, Float.parseFloat(etBloodLowSugar.getText().toString()));
-        prefEditor.putFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, Float.parseFloat(etBloodHighSugar.getText().toString()));
-        prefEditor.putFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT, Float.parseFloat(etAmountCarb.getText().toString()));
+        if (rbDiabetesType1.isChecked()) prefEditor.putBoolean(KEY_PREFS_DIABETES_1TYPE, true);
+        else prefEditor.putBoolean(KEY_PREFS_DIABETES_1TYPE, false);
 
-        if (rbDiabetesType1.isChecked()) {
-            prefEditor.putString(KEY_PREFS_DIABETES_TYPE, rbDiabetesType1.getText().toString());
-        } else {
-            prefEditor.putString(KEY_PREFS_DIABETES_TYPE, rbDiabetesType2.getText().toString());
-        }
-        /*//---FUTURE OPTION---unit blood sugar-mg/dL---
         if (rbUnitOfBloodSugarMmolL.isChecked()) {
-            prefEditor.putString("prefsUnitBloodSugar",
-                rbUnitOfBloodSugarMmolL.getText().toString());
+            prefEditor.putBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, true);
+            prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR,
+                    Float.parseFloat(etBloodLowSugar.getText().toString()));
+            prefEditor.putFloat(KEY_PREFS_BLOOD_HIGH_SUGAR,
+                    Float.parseFloat(etBloodHighSugar.getText().toString()));
         } else {
-            prefEditor.putString("prefsUnitBloodSugar",
-                rbUnitOfBloodSugarMgdL.getText().toString());
+            String tmpBloodLowSugar = String.valueOf(
+                    Float.parseFloat(etBloodLowSugar.getText().toString()) / 18 + 0.001f);
+            String tmpBloodHighSugar = String.valueOf(
+                    Float.parseFloat(etBloodHighSugar.getText().toString()) / 18 + 0.001f);
+            String strBLSAccuracy = getStringNumberWithAccuracy(tmpBloodLowSugar, 1, '.', false);
+            String strBHSAccuracy = getStringNumberWithAccuracy(tmpBloodHighSugar, 1, '.', false);
+
+            prefEditor.putBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, false);
+            prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, Float.parseFloat(strBLSAccuracy));
+            prefEditor.putFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, Float.parseFloat(strBHSAccuracy));
         }
-        */
+
+        prefEditor.putFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT,
+                Float.parseFloat(etAmountCarb.getText().toString()));
 
         if (rbTimeFormat24h.isChecked()) prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
         else prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, false);
@@ -358,18 +427,24 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     // reset preferences to default but not save
     public void resetPreferencesToDefault() {
         // set default preferences for views
-        etBloodLowSugar.setText((String.valueOf(bloodLowSugarDefault)));
-        etBloodHighSugar.setText((String.valueOf(bloodHighSugarDefault)));
+
         etAmountCarb.setText((String.valueOf(amountCarbsInBreadUnitDefault)));
 
-        if (diabetesType1Default) rbDiabetesType1.setChecked(true);
+        if (diabetes1TypeDefault) rbDiabetesType1.setChecked(true);
         else rbDiabetesType2.setChecked(true);
-        /*//---FUTURE OPTION---unit blood sugar-mg/dL---
-        if (unitBloodSugarMmolLDefaultValue) rbUnitOfBloodSugarMmolL.setChecked(true);
-            else rbUnitOfBloodSugarMgdL.setChecked(true);
-        */
-        if (timeFormat24h) rbTimeFormat24h.setChecked(true);
-        else rbDiabetesType2.setChecked(true);
+
+        if (rbUnitOfBloodSugarMmolL.isChecked()) {
+            etBloodLowSugar.setText((String.valueOf(bloodLowSugarDefault)));
+            etBloodHighSugar.setText((String.valueOf(bloodHighSugarDefault)));
+        }
+        //---FUTURE OPTION---unit blood sugar-mg/dL---//
+        else {
+            etBloodLowSugar.setText((String.valueOf(bloodLowSugarDefault * 18)));
+            etBloodHighSugar.setText((String.valueOf(bloodHighSugarDefault * 18)));
+        }
+
+        if (timeFormat24hDefault) rbTimeFormat24h.setChecked(true);
+        else rbTimeFormat12h.setChecked(true);
 
         // set flag of changing settings to true and enabled button savePreferences
         preferencesChanged(true, true);
@@ -379,13 +454,30 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     public void preferencesChanged(boolean changedSetting, boolean setEnabledBtnSavePreferences) {
         // set flag of changing settings
         isChangeSetting = changedSetting;
-
         // set enabled button save preferences
         btnSavePreferences.setEnabled(setEnabledBtnSavePreferences);
     }
 
+
+    // set hints for editTexts
+    public void setEditTextsHints(boolean unitBloodSugarMmol) {
+        if (unitBloodSugarMmol) {
+            etBloodLowSugar.setHint(String.format(getString(R.string.from_to),
+                    bloodLowSugarLowerBound, bloodLowSugarUpperBound));
+            etBloodHighSugar.setHint(String.format(getString(R.string.from_to),
+                    bloodHighSugarLowerBound, bloodHighSugarUpperBound));
+        } else {
+            etBloodLowSugar.setHint(String.format(getString(R.string.from_to),
+                    bloodLowSugarLowerBound * 18, bloodLowSugarUpperBound * 18));
+            etBloodHighSugar.setHint(String.format(getString(R.string.from_to),
+                    bloodHighSugarLowerBound * 18, bloodHighSugarUpperBound * 18));
+        }
+    }
+
+
     // get text with set accuracy after specified symbol(separator)
-    public String getStringNumberWithAccuracy(String s, int scale, Character separator, boolean fillZero) {
+    public String getStringNumberWithAccuracy(String s, int scale,
+                                              Character separator, boolean fillZero) {
         int sLength = s.length();
         int sepIndex = s.indexOf(separator);
         // conditions of if:
@@ -448,16 +540,32 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         if (requiredFiledEmpty(etAmountCarb)) return false;
 
         // check on range input value and set focus on them
-        if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()), bloodLowSugarLowerBound, bloodLowSugarUpperBound)) {
-            setFocus(etBloodLowSugar, true, true, getString(R.string.incorrect_input_value));
-            return false;
+        if (rbUnitOfBloodSugarMmolL.isChecked()) {
+            if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()),
+                    bloodLowSugarLowerBound, bloodLowSugarUpperBound)) {
+                setFocus(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
+                return false;
+            }
+            if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()),
+                    bloodHighSugarLowerBound, bloodHighSugarUpperBound)) {
+                setFocus(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
+                return false;
+            }
+        } else {
+            if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()),
+                    (bloodLowSugarLowerBound * 18 - 0.001f), bloodLowSugarUpperBound * 18)) {
+                setFocus(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
+                return false;
+            }
+            if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()),
+                    (float) (bloodHighSugarLowerBound * 18 - 0.001f), bloodHighSugarUpperBound * 18)) {
+                setFocus(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
+                return false;
+            }
         }
-        if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()), bloodHighSugarLowerBound, bloodHighSugarUpperBound)) {
-            setFocus(etBloodHighSugar, true, true, getString(R.string.incorrect_input_value));
-            return false;
-        }
-        if (!numberInRange(Float.parseFloat(etAmountCarb.getText().toString()), amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound)) {
-            setFocus(etAmountCarb, true, true, getString(R.string.incorrect_input_value));
+        if (!numberInRange(Float.parseFloat(etAmountCarb.getText().toString()),
+                amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound)) {
+            setFocus(etAmountCarb, true, true, getString(R.string.incorrect_value));
             return false;
         }
         return true;

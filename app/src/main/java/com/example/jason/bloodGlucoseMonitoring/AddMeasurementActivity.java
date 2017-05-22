@@ -28,7 +28,10 @@ import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.numberInRan
 import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.requiredFiledEmpty;
 import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.setFocus;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class AddMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,6 +54,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
 
     // prefs vars
     boolean prefsTimeFormat24h;
+    boolean prefsUnitBloodSugarMmol;
 
     // views declare
     Button btnChooseDate;
@@ -80,6 +84,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         // get shared preferences object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
+        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, unitBloodSugarMmolDefault);
 
         // date and time format display
         if (prefsTimeFormat24h) {
@@ -102,7 +107,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         timePickerAddMeasurement = (TimePicker) findViewById(R.id.timePickerAddMeasurement);
 
         // set hint for editText
-        etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_to), bloodSugarLimitLow, bloodSugarLimitHigh));
+        setEditTextsHints(prefsUnitBloodSugarMmol);
 
         // set views properties
         timePickerAddMeasurement.setIs24HourView(true);
@@ -116,8 +121,8 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 //                if (!(dateAndTime.getTimeInMillis() > now.getTimeInMillis())) {
-                    dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                    dateAndTime.set(Calendar.MINUTE, minute);
+                dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                dateAndTime.set(Calendar.MINUTE, minute);
 //                }
                 setCaptionDateTime();
             }
@@ -181,14 +186,11 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
 
                 alertDelCurMes.setTitle(getString(R.string.delete_current_measurements));
                 alertDelCurMes.setMessage(getString(R.string.these_changes_can_t_return));
-
                 alertDelCurMes.setNegativeButton(getString(android.R.string.no), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // Canceled.
-                        //Toast.makeText(MainActivity.this, "Cancel.", Toast.LENGTH_SHORT).show();
                     }
                 });
-
                 // confirm delete current measurement
                 alertDelCurMes.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -281,6 +283,22 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
+
+
+
+
+//        prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, Float.parseFloat(strBLSAccuracy));
+
+
+
+        if (prefsUnitBloodSugarMmol) {
+            contentValues.put(DBHelper.KEY_MEASUREMENT, measurement);
+        } else {
+            String tmpSugar = String.valueOf(Float.parseFloat(etBloodSugarMeasurement.getText().toString()) / 18 + 0.001f);
+            String strSMAccuracy = getStringNumberWithAccuracy(tmpSugar, 1, '.', false);
+            contentValues.put(DBHelper.KEY_MEASUREMENT, Float.parseFloat(strSMAccuracy));
+        }
+
         contentValues.put(DBHelper.KEY_MEASUREMENT, measurement);
         contentValues.put(DBHelper.KEY_TIME_IN_SECONDS, date);
         contentValues.put(DBHelper.KEY_COMMENT, comment);
@@ -321,6 +339,9 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         int idComment = cursor.getColumnIndex(DBHelper.KEY_COMMENT);
 
         // filling fields
+        if (prefsUnitBloodSugarMmol)
+            etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement)));
+        else etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement) * 18));
         etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement)));
         etComment.setText(cursor.getString(idComment));
         timeInMillis = getMillisInSeconds(cursor.getLong(idTimeInSeconds));
@@ -345,6 +366,17 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         database.close();
     }
 
+    // set hints for editText
+    public void setEditTextsHints(boolean prefsUnitBloodSugarMmol) {
+        if (prefsUnitBloodSugarMmol) {
+            etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_to),
+                    bloodSugarLimitLow, bloodSugarLimitHigh));
+        } else {
+            etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_to),
+                    bloodSugarLimitLow * 18, bloodSugarLimitHigh * 18));
+        }
+    }
+
     // check fields for correctness
     public boolean isCorrectInputValues() {
         // is empty
@@ -354,10 +386,18 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         }
 
         // check on range input value and set focus on them
-        if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
-                bloodSugarLimitLow, bloodSugarLimitHigh)) {
-            setFocus(etBloodSugarMeasurement, true);
-            return false;
+        if (prefsUnitBloodSugarMmol) {
+            if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
+                    bloodSugarLimitLow, bloodSugarLimitHigh)) {
+                setFocus(etBloodSugarMeasurement, true);
+                return false;
+            }
+        } else {
+            if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
+                    bloodSugarLimitLow * 18 - 0.001f, bloodSugarLimitHigh * 18)) {
+                setFocus(etBloodSugarMeasurement, true);
+                return false;
+            }
         }
         return true;
     }

@@ -13,29 +13,31 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_TYPE;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.amountCarbsInBreadUnitDefault;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodLowSugarDefault;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.diabetes1TypeDefault;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 
 // implements View.OnClickListener
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // keys
 //    private static final String KEY_PREFS_FIRST_RUN_AGREEMENT = "firstRun";
 
     // variables for preferences
-    String prefsDiabetesType;
-    String prefsUnitBloodSugar;
     float prefsBloodLowSugar;
     float prefsBloodHighSugar;
     float prefsAmountCarb;
+    boolean prefsDiabetes1Type;
+    boolean prefsUnitBloodSugarMmol;
     boolean firstRun;
 
 
@@ -81,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnStatistics.setOnClickListener(this);
 
 
-
     }
 
     @Override
@@ -100,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         loadPreferences();
-        textView.setText(prefsDiabetesType);
-        textView.append("\n" + prefsUnitBloodSugar);
+        textView.setText(String.valueOf(prefsDiabetes1Type));
+        textView.append("\n" + prefsUnitBloodSugarMmol);
         textView.append("\n" + String.valueOf(prefsBloodLowSugar));
         textView.append("\n" + String.valueOf(prefsBloodHighSugar));
         textView.append("\n" + String.valueOf(prefsAmountCarb));
@@ -168,10 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intentStatisticsActivity);
                 break;
 
-
-//            case :
-//            break;
-
             default:
                 break;
         }
@@ -182,8 +179,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
 
         // get saved value
-        prefsDiabetesType = sharedPref.getString(KEY_PREFS_DIABETES_TYPE, getString(R.string._1_type));
-        prefsUnitBloodSugar = sharedPref.getString(KEY_PREFS_UNIT_BLOOD_SUGAR, getString(R.string.mmol_l));
+        prefsDiabetes1Type = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE, diabetes1TypeDefault);
+        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE, unitBloodSugarMmolDefault);
         prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
         prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
         prefsAmountCarb = sharedPref.getFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT, amountCarbsInBreadUnitDefault);
@@ -196,17 +193,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openQuitDialog() {
         AlertDialog.Builder quitDialog = new AlertDialog.Builder(MainActivity.this);
-        // Exit: Are you sure? - Выход: Вы уверены?
-        quitDialog.setTitle("Exit: Are you sure?");
-        // Still, Yes! - Таки да!
-        quitDialog.setPositiveButton("Still, Yes!", new DialogInterface.OnClickListener() {
+        quitDialog.setTitle(R.string.exit_are_you_sure);
+        quitDialog.setPositiveButton(R.string.still_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
         });
-        // Never - Ни за что
-        quitDialog.setNegativeButton("Never", new DialogInterface.OnClickListener() {
+        quitDialog.setNegativeButton(R.string.never, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Cancel
@@ -215,62 +209,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         quitDialog.show();
     }
-
-    /*@Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.:
-
-                break;
-
-            case :
-
-                break;
-
-            default:
-                break;
-        }
-    }*/
-
-
-
-
-
-
-
-
 }
 
 
 
 
-/*
-    // exit on button click
-    moveTaskToBack(true);
-    super.onBackPressed();
-
-
-    finishAffinity();
-    this.finish();
-
-*/
-
-
-
-
-
-/*
-PopupMenu popup = new PopupMenu(MainActivity.this, btnAddMeasurement);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.menu_main, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-                popup.show();
-*/
 
 
 

@@ -17,6 +17,7 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
 
     // views declare
     Button btnConfirm;
+
     private boolean firstRun;
 
     @Override
@@ -61,7 +62,7 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
                 moveTaskToBack(true);
                 finishAffinity();
             } else {
-                Toast.makeText(getBaseContext(), "Click the back button again to cancel the agreement!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), R.string.click_the_back_button_again_to_cancel_the_agreement, Toast.LENGTH_SHORT).show();
             }
             back_pressed = System.currentTimeMillis();
         } else {
