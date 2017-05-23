@@ -27,6 +27,7 @@ import java.util.Locale;
 import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.bloodGlucoseMonitoring.MyWorks.numberInRange;
 import static com.example.jason.bloodGlucoseMonitoring.MyWorks.requiredFiledEmpty;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.roundUp;
 import static com.example.jason.bloodGlucoseMonitoring.MyWorks.setFocus;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
@@ -280,18 +281,13 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
 
         ContentValues contentValues = new ContentValues();
 
-//        prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, Float.parseFloat(strBLSAccuracy));
-
-
         if (prefsUnitBloodSugarMmol) {
             contentValues.put(DBHelper.KEY_MEASUREMENT, measurement);
         } else {
-            String tmpSugar = String.valueOf(Float.parseFloat(etBloodSugarMeasurement.getText().toString()) / 18 + 0.001f);
-            String strSMAccuracy = getStringNumberWithAccuracy(tmpSugar, 1, '.', false);
-            contentValues.put(DBHelper.KEY_MEASUREMENT, Float.parseFloat(strSMAccuracy));
+            float tmpBloodLowSugar = roundUp(Float.parseFloat(etBloodSugarMeasurement.getText().toString()) / 18, 1).floatValue();
+            contentValues.put(DBHelper.KEY_MEASUREMENT, tmpBloodLowSugar);
         }
 
-        contentValues.put(DBHelper.KEY_MEASUREMENT, measurement);
         contentValues.put(DBHelper.KEY_TIME_IN_SECONDS, date);
         contentValues.put(DBHelper.KEY_COMMENT, comment);
 
@@ -335,7 +331,6 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement)));
         else
             etBloodSugarMeasurement.setText(String.valueOf((int) (cursor.getFloat(idMeasurement) * 18)));
-//        etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement)));
         etComment.setText(cursor.getString(idComment));
         timeInMillis = getMillisInSeconds(cursor.getLong(idTimeInSeconds));
 
@@ -346,7 +341,6 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             } else {
                 hour = dateAndTime.get(Calendar.HOUR);
             }*/
-
 
         /*try {
             timePickerAddMeasurement.setCurrentHour(dateAndTime.get(Calendar.HOUR_OF_DAY));

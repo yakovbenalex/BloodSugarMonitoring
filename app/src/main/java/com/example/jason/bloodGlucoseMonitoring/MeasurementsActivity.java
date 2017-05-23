@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,6 +23,7 @@ import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_P
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodLowSugarDefault;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.timeFormat24hDefault;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class MeasurementsActivity extends AppCompatActivity {
@@ -67,7 +69,6 @@ public class MeasurementsActivity extends AppCompatActivity {
         });
         */
 
-
         // get settings object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
 
@@ -75,7 +76,7 @@ public class MeasurementsActivity extends AppCompatActivity {
         prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, unitBloodSugarMmolDefault);
         prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
         prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
-        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
+        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, timeFormat24hDefault);
 
         dbHelper = new DBHelper(this);
     }
@@ -94,6 +95,7 @@ public class MeasurementsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        // set list view last pos
         if (lvMeasurementsAll != null) {
             if (lvMeasurementsAll.getCount() > lvIndexPos)
                 lvMeasurementsAll.setSelectionFromTop(lvIndexPos, 0);
@@ -109,12 +111,11 @@ public class MeasurementsActivity extends AppCompatActivity {
 
         int id;
         float measurement;
-        long timeInSeconds; // *1000 milliseconds
+        long timeInSeconds;
         String comment;
 
         Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS, null, null, null, null, null,
                 DBHelper.KEY_TIME_IN_SECONDS + " DESC");
-//                null);
 
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);

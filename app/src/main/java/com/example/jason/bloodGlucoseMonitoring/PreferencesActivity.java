@@ -135,7 +135,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         rbTimeFormat12h.setOnClickListener(this);
         rbTimeFormat24h.setOnClickListener(this);
 
-        //  load and set preferences in preferences menu
+        // load and set preferences in preferences menu
         loadPreferences();
 
         // set hint for editText
@@ -151,12 +151,14 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         if (prefsUnitBloodSugarMmol) {
             etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            etBloodHighSugar.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
             rbUnitOfBloodSugarMmolL.setChecked(true);
             etBloodLowSugar.setText(String.valueOf(prefsBloodLowSugar));
             etBloodHighSugar.setText(String.valueOf(prefsBloodHighSugar));
         } else {
             etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
+            etBloodHighSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             rbUnitOfBloodSugarMgdL.setChecked(true);
             etBloodLowSugar.setText(String.valueOf((int) (prefsBloodLowSugar * 18)));
@@ -411,7 +413,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
             prefEditor.putBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, false);
             prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, tmpBloodLowSugar);
-            prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, tmpBloodHighSugar);
+            prefEditor.putFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, tmpBloodHighSugar);
         }
 
         prefEditor.putFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT,

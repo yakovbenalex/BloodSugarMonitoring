@@ -69,7 +69,7 @@ class ItemRecordsAdapter extends BaseAdapter {
         float sugar = data.get(i).getMeasurementSugar();
 
         // sugar color range
-        if (sugar < prefsBloodLowSugar) { // low sugar
+        if (sugar < prefsBloodLowSugar + 0.01f) { // low sugar
             tvListSugar.setTextColor(Color.BLUE);
         } else {
             if (sugar < prefsBloodHighSugar) { // normal sugar
