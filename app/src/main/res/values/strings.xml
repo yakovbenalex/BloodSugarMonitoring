@@ -19,13 +19,14 @@
     <string name="diabetes_type">Diabetes type</string>
     <string name="_1_type">1 type</string>
     <string name="_2_type">2 type</string>
-    <string name="unit_of_blood_sugar">Unit of blood sugar measurement (future option)</string>
+    <string name="unit_of_blood_sugar">Unit of blood sugar measurement</string>
     <string name="mmol_l">mmol/L</string>
     <string name="mg_dl">mg/dL</string>
     <string name="hypoglycemia_low_sugar">Hypoglycemia (low sugar)</string>
     <string name="hyperglycemia_high_sugar">Hyperglycemia (high sugar)</string>
     <string name="reset_to_default">Reset to default</string>
-    <string name="from_to">From %1$.1f to %2$.1f</string>
+    <string name="from_toF">from %1$.1f to %2$.1f</string>
+    <string name="from_toD">from %1$d to %2$d</string>
 
     <!--  -->
     <string name="all_required_fields_must_be_filled">All required fields must be filled</string>

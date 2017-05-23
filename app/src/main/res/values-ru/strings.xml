@@ -26,7 +26,7 @@
     <string name="action_about">О приложении</string>
     <string name="agreement_terms">Используя данное приложение, вы соглашаетесь со следующими условия и положениями:\n1 - Разработчик этого приложения не несет ответственности за ваше здоровье.\n2 - Прежде чем принимать какие-либо решения, сначала проконсультируйтесь с врачом.</string>
     <string name="statistics">Статистика</string>
-    <string name="unit_of_blood_sugar">Единица измерения сахара в крови (в будущем)</string>
+    <string name="unit_of_blood_sugar">Единица измерения сахара в крови</string>
     <string name="these_changes_can_t_return">Эти изменения нельзя вернуть!!!</string>
     <string name="the_current_measurement_has_been_deleted">Текущее измерение было удалено!</string>
     <string name="sugar_measurement_field_must_be_filled">Поле измерения сахара должно быть заполнено</string>
@@ -67,4 +67,6 @@
     <string name="confirm">Подтвердить</string>
     <string name="click_the_back_button_again_to_cancel_the_agreement">Нажмите кнопку «Назад» еще раз, чтобы отменить соглашение!</string>
     <string name="add">Добавить</string>
+    <string name="from_toF">от %1$.1f до %2$.1f</string>
+    <string name="from_toD">от %1$d до %2$d</string>
 </resources>

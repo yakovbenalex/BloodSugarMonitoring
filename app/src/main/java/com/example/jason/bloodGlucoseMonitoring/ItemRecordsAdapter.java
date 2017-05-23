@@ -93,7 +93,7 @@ class ItemRecordsAdapter extends BaseAdapter {
         // set textViews data
         if (prefsUnitBloodSugarMmol)
             tvListSugar.setText(String.valueOf(data.get(i).getMeasurementSugar()));
-        else tvListSugar.setText(String.valueOf((int) data.get(i).getMeasurementSugar() * 18));
+        else tvListSugar.setText(String.valueOf((int) (data.get(i).getMeasurementSugar() * 18)));
 
         tvListDate.setText(sdfDate.format(data.get(i).getTimeInMillis()));
         tvListTime.setText(sdfTime.format(data.get(i).getTimeInMillis()));

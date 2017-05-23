@@ -18,6 +18,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.Locale;
+
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.numberInRange;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.roundUp;
+
 
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
     //-------------------------------------DECLARE BLOCK START------------------------------------//
@@ -73,7 +79,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     RadioButton rbTimeFormat12h;
     RadioButton rbTimeFormat24h;
     RadioButton rbUnitOfBloodSugarMmolL;
-    //---FUTURE OPTION---unit blood sugar-mg/dL---//
     RadioButton rbUnitOfBloodSugarMgdL;
 
     RadioGroup rgDiabetesType;
@@ -108,7 +113,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         rbTimeFormat12h = (RadioButton) findViewById(R.id.rbTimeFormat12h);
         rbTimeFormat24h = (RadioButton) findViewById(R.id.rbTimeFormat24h);
         rbUnitOfBloodSugarMmolL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMmolL);
-        //---FUTURE OPTION---unit blood sugar-mg/dL---//
         rbUnitOfBloodSugarMgdL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMgdL);
 
         rgDiabetesType = (RadioGroup) findViewById(R.id.rgDiabetesType);
@@ -136,7 +140,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         // set hint for editText
         setEditTextsHints(prefsUnitBloodSugarMmol);
-        etAmountCarb.setHint(String.format(getString(R.string.from_to),
+        etAmountCarb.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
                 amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound));
 
         // set preferences values
@@ -152,7 +156,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             etBloodLowSugar.setText(String.valueOf(prefsBloodLowSugar));
             etBloodHighSugar.setText(String.valueOf(prefsBloodHighSugar));
         } else {
-            //---FUTURE OPTION---unit blood sugar-mg/dL---//
             etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             rbUnitOfBloodSugarMgdL.setChecked(true);
@@ -173,10 +176,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 preferencesChanged(true, true);
-                String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
-                if (str.length() != charSequence.toString().length()) {
-                    etBloodLowSugar.setText(str);
-                    etBloodLowSugar.setSelection(str.length());
+                if (rbUnitOfBloodSugarMmolL.isChecked()) {
+                    String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
+                    if (str.length() != charSequence.toString().length()) {
+                        etBloodLowSugar.setText(str);
+                        etBloodLowSugar.setSelection(str.length());
+                    }
                 }
             }
 
@@ -192,10 +197,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 preferencesChanged(true, true);
-                String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
-                if (str.length() != charSequence.toString().length()) {
-                    etBloodHighSugar.setText(str);
-                    etBloodHighSugar.setSelection(str.length());
+                if (rbUnitOfBloodSugarMmolL.isChecked()) {
+                    String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
+                    if (str.length() != charSequence.toString().length()) {
+                        etBloodHighSugar.setText(str);
+                        etBloodHighSugar.setSelection(str.length());
+                    }
                 }
             }
 
@@ -211,10 +218,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 preferencesChanged(true, true);
-                String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
-                if (str.length() != charSequence.toString().length()) {
-                    etAmountCarb.setText(str);
-                    etAmountCarb.setSelection(str.length());
+                if (rbUnitOfBloodSugarMmolL.isChecked()) {
+                    String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
+                    if (str.length() != charSequence.toString().length()) {
+                        etAmountCarb.setText(str);
+                        etAmountCarb.setSelection(str.length());
+                    }
                 }
             }
 
@@ -234,11 +243,11 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                                 | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         if (!isEmpty(etBloodLowSugar)) {
                             tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
-                            etBloodLowSugar.setText(String.valueOf(tmpBloodLowSugar / 18 + 0.001f));
+                            etBloodLowSugar.setText(String.valueOf(roundUp(tmpBloodLowSugar / 18, 1)));
                         }
                         if (!isEmpty(etBloodHighSugar)) {
                             tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
-                            etBloodHighSugar.setText(String.valueOf(tmpBloodHighSugar / 18 + 0.001f));
+                            etBloodHighSugar.setText(String.valueOf(roundUp(tmpBloodHighSugar / 18, 1)));
                         }
                         break;
 
@@ -246,11 +255,11 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                         etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
                         if (!isEmpty(etBloodLowSugar)) {
                             tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
-                            etBloodLowSugar.setText(String.valueOf(tmpBloodLowSugar * 18));
+                            etBloodLowSugar.setText(String.valueOf((int) (tmpBloodLowSugar * 18)));
                         }
                         if (!isEmpty(etBloodHighSugar)) {
                             tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
-                            etBloodHighSugar.setText(String.valueOf(tmpBloodHighSugar * 18));
+                            etBloodHighSugar.setText(String.valueOf((int) (tmpBloodHighSugar * 18)));
                         }
                         break;
 
@@ -301,8 +310,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
             // reset preferences to default but not save
             case R.id.btnResetToDefault:
-//                resetPreferencesToDefault();
-                Toast.makeText(this, String.valueOf((int) 13.000001), Toast.LENGTH_SHORT).show();
+                resetPreferencesToDefault();
                 break;
 
             // delete all measurements
@@ -332,7 +340,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                 alert.show();
                 break;
 
-            // switch default
             default:
                 break;
         }
@@ -399,16 +406,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             prefEditor.putFloat(KEY_PREFS_BLOOD_HIGH_SUGAR,
                     Float.parseFloat(etBloodHighSugar.getText().toString()));
         } else {
-            String tmpBloodLowSugar = String.valueOf(
-                    Float.parseFloat(etBloodLowSugar.getText().toString()) / 18 + 0.001f);
-            String tmpBloodHighSugar = String.valueOf(
-                    Float.parseFloat(etBloodHighSugar.getText().toString()) / 18 + 0.001f);
-            String strBLSAccuracy = getStringNumberWithAccuracy(tmpBloodLowSugar, 1, '.', false);
-            String strBHSAccuracy = getStringNumberWithAccuracy(tmpBloodHighSugar, 1, '.', false);
+            tmpBloodLowSugar = roundUp(Float.parseFloat(etBloodLowSugar.getText().toString()) / 18, 1).floatValue();
+            tmpBloodHighSugar = roundUp(Float.parseFloat(etBloodHighSugar.getText().toString()) / 18, 1).floatValue();
 
             prefEditor.putBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, false);
-            prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, Float.parseFloat(strBLSAccuracy));
-            prefEditor.putFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, Float.parseFloat(strBHSAccuracy));
+            prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, tmpBloodLowSugar);
+            prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, tmpBloodHighSugar);
         }
 
         prefEditor.putFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT,
@@ -436,11 +439,9 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         if (rbUnitOfBloodSugarMmolL.isChecked()) {
             etBloodLowSugar.setText((String.valueOf(bloodLowSugarDefault)));
             etBloodHighSugar.setText((String.valueOf(bloodHighSugarDefault)));
-        }
-        //---FUTURE OPTION---unit blood sugar-mg/dL---//
-        else {
-            etBloodLowSugar.setText((String.valueOf(bloodLowSugarDefault * 18)));
-            etBloodHighSugar.setText((String.valueOf(bloodHighSugarDefault * 18)));
+        } else {
+            etBloodLowSugar.setText((String.valueOf((int) (bloodLowSugarDefault * 18))));
+            etBloodHighSugar.setText((String.valueOf((int) (bloodHighSugarDefault * 18))));
         }
 
         if (timeFormat24hDefault) rbTimeFormat24h.setChecked(true);
@@ -462,52 +463,16 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     // set hints for editTexts
     public void setEditTextsHints(boolean unitBloodSugarMmol) {
         if (unitBloodSugarMmol) {
-            etBloodLowSugar.setHint(String.format(getString(R.string.from_to),
+            etBloodLowSugar.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
                     bloodLowSugarLowerBound, bloodLowSugarUpperBound));
-            etBloodHighSugar.setHint(String.format(getString(R.string.from_to),
+            etBloodHighSugar.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
                     bloodHighSugarLowerBound, bloodHighSugarUpperBound));
         } else {
-            etBloodLowSugar.setHint(String.format(getString(R.string.from_to),
-                    bloodLowSugarLowerBound * 18, bloodLowSugarUpperBound * 18));
-            etBloodHighSugar.setHint(String.format(getString(R.string.from_to),
-                    bloodHighSugarLowerBound * 18, bloodHighSugarUpperBound * 18));
+            etBloodLowSugar.setHint(String.format(getString(R.string.from_toD),
+                    (int) (bloodLowSugarLowerBound * 18), (int) (bloodLowSugarUpperBound * 18)));
+            etBloodHighSugar.setHint(String.format(getString(R.string.from_toD),
+                    (int) (bloodHighSugarLowerBound * 18), (int) (bloodHighSugarUpperBound * 18)));
         }
-    }
-
-
-    // get text with set accuracy after specified symbol(separator)
-    public String getStringNumberWithAccuracy(String s, int scale,
-                                              Character separator, boolean fillZero) {
-        int sLength = s.length();
-        int sepIndex = s.indexOf(separator);
-        // conditions of if:
-        //  1 - length of string must be greater than 1
-        //  2 - is the number needs to be set accuracy
-        //  3 - is the number contains stated symbol
-        if ((sLength > 1) && (sLength - 1 != sepIndex + scale) && (s.contains(separator.toString()))) {
-            // (sLength - 1 - sepIndex) - number of digits after the separator greater than scale
-            if ((sLength - 1 - sepIndex > scale)) {
-                // get substring with specified number of digits after separator
-                s = s.substring(0, sepIndex + 1 + scale);
-            } else {
-                // is needed filling zeros
-                if (fillZero) {
-                    // filling zeros at start
-                    while (s.length() - 1 < sepIndex + scale) {
-                        s += "0";
-                    }
-                }
-            }
-        }
-        return s;
-    }
-
-    // checking of number for included in the specified range.
-    public boolean numberInRange(Float number, float lowerBound, float upperBound) {
-        if (number < lowerBound || number > upperBound) {
-            return false;
-        }
-        return true;
     }
 
     // checking fields on empty
@@ -553,12 +518,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             }
         } else {
             if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()),
-                    (bloodLowSugarLowerBound * 18 - 0.001f), bloodLowSugarUpperBound * 18)) {
+                    (int) (bloodLowSugarLowerBound * 18), bloodLowSugarUpperBound * 18)) {
                 setFocus(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
             if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()),
-                    (float) (bloodHighSugarLowerBound * 18 - 0.001f), bloodHighSugarUpperBound * 18)) {
+                    (int) (bloodHighSugarLowerBound * 18), bloodHighSugarUpperBound * 18)) {
                 setFocus(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }

@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.getStringNumberWithAccuracy;
-import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.isEmpty;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.isEmpty;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.amountCarbsInBreadUnitDefault;

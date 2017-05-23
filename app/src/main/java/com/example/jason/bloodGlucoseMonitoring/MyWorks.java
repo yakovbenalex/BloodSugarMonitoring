@@ -2,8 +2,15 @@ package com.example.jason.bloodGlucoseMonitoring;
 
 import android.widget.EditText;
 
+import java.math.BigDecimal;
 
-class EditTextWorks {
+
+class MyWorks {
+
+    // round float number to scale
+    static BigDecimal roundUp(float value, int digits) {
+        return new BigDecimal(String.valueOf(value)).setScale(digits, BigDecimal.ROUND_HALF_EVEN);
+    }
 
     // get text with set accuracy after specified symbol(separator)
     static String getStringNumberWithAccuracy(String s, int scale, Character separator, boolean fillZero) {

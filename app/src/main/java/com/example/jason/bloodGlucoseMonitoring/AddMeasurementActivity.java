@@ -22,13 +22,13 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
-import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.getStringNumberWithAccuracy;
-import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.numberInRange;
-import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.requiredFiledEmpty;
-import static com.example.jason.bloodGlucoseMonitoring.EditTextWorks.setFocus;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.numberInRange;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.requiredFiledEmpty;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.setFocus;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
@@ -213,11 +213,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             // add or update measurement
             case R.id.btnSaveMeasurement:
                 // choose update or add measurement
-                if (idRec != -1) {
-                    updateRec = true;
-                } else {
-                    updateRec = false;
-                }
+                updateRec = idRec != -1;
 
                 // check date to more than current and reset if so
                 if (dateAndTime.getTimeInMillis() > now.getTimeInMillis()) {
@@ -284,11 +280,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
 
         ContentValues contentValues = new ContentValues();
 
-
-
-
 //        prefEditor.putFloat(KEY_PREFS_BLOOD_LOW_SUGAR, Float.parseFloat(strBLSAccuracy));
-
 
 
         if (prefsUnitBloodSugarMmol) {
@@ -341,8 +333,9 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         // filling fields
         if (prefsUnitBloodSugarMmol)
             etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement)));
-        else etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement) * 18));
-        etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement)));
+        else
+            etBloodSugarMeasurement.setText(String.valueOf((int) (cursor.getFloat(idMeasurement) * 18)));
+//        etBloodSugarMeasurement.setText(String.valueOf(cursor.getFloat(idMeasurement)));
         etComment.setText(cursor.getString(idComment));
         timeInMillis = getMillisInSeconds(cursor.getLong(idTimeInSeconds));
 
@@ -355,12 +348,12 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             }*/
 
 
-        try {
+        /*try {
             timePickerAddMeasurement.setCurrentHour(dateAndTime.get(Calendar.HOUR_OF_DAY));
             timePickerAddMeasurement.setCurrentMinute(dateAndTime.get(Calendar.MINUTE));
         } catch (Exception e) {
             Log.d(TAG, "loadRecordsGame: setCurrent");
-        }
+        }*/
 
         cursor.close();
         database.close();
@@ -369,11 +362,11 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
     // set hints for editText
     public void setEditTextsHints(boolean prefsUnitBloodSugarMmol) {
         if (prefsUnitBloodSugarMmol) {
-            etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_to),
+            etBloodSugarMeasurement.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
                     bloodSugarLimitLow, bloodSugarLimitHigh));
         } else {
-            etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_to),
-                    bloodSugarLimitLow * 18, bloodSugarLimitHigh * 18));
+            etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_toD),
+                    (int) (bloodSugarLimitLow * 18), (int) (bloodSugarLimitHigh * 18)));
         }
     }
 
@@ -394,7 +387,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             }
         } else {
             if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
-                    bloodSugarLimitLow * 18 - 0.001f, bloodSugarLimitHigh * 18)) {
+                    (int) (bloodSugarLimitLow * 18), (int) (bloodSugarLimitHigh * 18))) {
                 setFocus(etBloodSugarMeasurement, true);
                 return false;
             }

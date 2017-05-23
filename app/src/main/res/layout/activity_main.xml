@@ -28,58 +28,70 @@
             android:text="TextView" />
 
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+            android:layout_alignParentBottom="true">
 
-            <LinearLayout
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/btnStatistics"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:drawableTop="@mipmap/ic_launcher"
                     android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_launcher"
                     android:text="@string/statistics" />
-
-                <Button
-                    android:id="@+id/btnCalculatorCarbs"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_launcher"
-                    android:text="@string/carbs_calculator" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="111dp"
+                    android:background="@color/colorPrimaryDark" />
                 <Button
                     android:id="@+id/btnMeasurements"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_launcher"
                     android:text="@string/measurements" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/btnCalculatorCarbs"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:text="@string/carbs_calculator" />
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="111dp"
+                    android:background="@color/colorPrimaryDark" />
+                <Button
                     android:id="@+id/btnAddMeasurement"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_btn_ad"
                     android:text="@string/add" />
+            </TableRow>
 
-            </LinearLayout>
-        </LinearLayout>
+        </TableLayout>
 
     </RelativeLayout>
 
