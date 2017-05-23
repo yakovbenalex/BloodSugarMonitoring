@@ -2,6 +2,7 @@ package com.example.jason.bloodGlucoseMonitoring;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,8 +71,10 @@ class ItemRecordsAdapter extends BaseAdapter {
 
         // sugar color range
         if (sugar < prefsBloodLowSugar + 0.01f) { // low sugar
-            tvListSugar.setTextColor(Color.BLUE);
+//            tvListSugar.setTextColor(Color.BLUE);
+            tvListSugar.setTextColor(Color.rgb(0,100,255));
         } else {
+
             if (sugar < prefsBloodHighSugar) { // normal sugar
                 tvListSugar.setTextColor(Color.DKGRAY);
             } else { // high sugar

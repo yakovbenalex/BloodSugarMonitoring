@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <color name="colorWhite">#EEEEEE</color>
 
-
-
-        <color name="colorPrimary">#C0CA33</color>
-        <color name="colorPrimaryDark">#9E9D24</color>
-        <color name="colorAccent">#FF3D00</color>
-        <color name="normal_color">#FF5722</color>
-        <color name="hover_color">#F4511E</color>
-        <color name="pressed_color">#E64A19</color>
+    <color name="colorPrimary">#C0CA33</color>
+    <color name="colorPrimaryDark">#9E9D24</color>
+    <color name="colorAccent">#FF3D00</color>
+    <color name="colorNormal">#FF5722</color>
+    <color name="colorHover">#F4511E</color>
+    <color name="colorPressed">#E64A19</color>
 
 
 </resources>

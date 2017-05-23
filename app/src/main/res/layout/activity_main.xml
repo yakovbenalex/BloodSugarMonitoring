@@ -13,18 +13,15 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="7dp"
-        tools:context="com.example.jason.bloodGlucoseMonitoring.MainActivity">
+        android:padding="7dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:text="TextView" />
 
 
@@ -35,6 +32,44 @@
 
             <TableRow
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btnAddMeasurement"
+                    android:layout_width="0dp"
+                    android:layout_height="105dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_btn_add"
+                    android:text="@string/add" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
@@ -42,29 +77,33 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_launcher"
+                    android:drawableTop="@mipmap/ic_btn_stat"
                     android:text="@string/statistics" />
+
                 <View
                     android:layout_width="1dip"
-                    android:layout_height="111dp"
+                    android:layout_height="100dp"
                     android:background="@color/colorPrimaryDark" />
+
                 <Button
                     android:id="@+id/btnMeasurements"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_launcher"
+                    android:drawableTop="@mipmap/ic_btn_meas"
                     android:text="@string/measurements" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryDark" />
+
             </TableRow>
 
             <TableRow
@@ -76,19 +115,22 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_launcher"
+                    android:drawableTop="@mipmap/ic_btn_calc"
                     android:text="@string/carbs_calculator" />
+
                 <View
                     android:layout_width="1dip"
-                    android:layout_height="111dp"
+                    android:layout_height="100dp"
                     android:background="@color/colorPrimaryDark" />
+
                 <Button
-                    android:id="@+id/btnAddMeasurement"
+                    android:id="@+id/btnHelp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_btn_ad"
-                    android:text="@string/add" />
+                    android:drawableTop="@mipmap/ic_btn_info"
+                    android:text="@string/information" />
+
             </TableRow>
 
         </TableLayout>

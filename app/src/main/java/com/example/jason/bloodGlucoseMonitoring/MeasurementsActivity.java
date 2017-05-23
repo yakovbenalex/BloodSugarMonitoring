@@ -106,7 +106,7 @@ public class MeasurementsActivity extends AppCompatActivity {
     }
 
     private void loadRecordsGame() {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
         ArrayList<ItemRecords> data = new ArrayList<>();
 
         int id;
@@ -132,6 +132,7 @@ public class MeasurementsActivity extends AppCompatActivity {
         } //else { //No Records }
 
         cursor.close();
+        database.close();
 
         lvMeasurementsAll.setAdapter(new ItemRecordsAdapter(this, data,
                 prefsBloodLowSugar, prefsBloodHighSugar, prefsUnitBloodSugarMmol, prefsTimeFormat24h));

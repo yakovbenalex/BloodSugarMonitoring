@@ -47,10 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnMeasurements;
     Button btnStatistics;
 
-
     TextView textView;
 
-//    DBHelper dbHelper;
+    DBHelper dbHelper;
 
 
     @Override

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- used in app -->
-    <string name="app_name">Blood glucose monitoring</string>
+    <string name="app_name">EventGlick</string>
     <string name="preferences">Preferences</string>
     <string name="agreement">Agreement</string>
     <string name="about">About</string>
@@ -79,9 +79,10 @@
     <string name="never">Never</string>
     <string name="confirm">Confirm</string>
     <string name="click_the_back_button_again_to_cancel_the_agreement">Click the back button again to cancel the agreement!</string>
+    <string name="information">Information</string>
 
 
-
-    <integer name="qwe">5</integer>>
+    <integer name="qwe">5</integer>
+    <string name="from_to">qwe</string>>
 
 </resources>
