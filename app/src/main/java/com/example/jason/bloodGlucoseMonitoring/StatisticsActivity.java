@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_TIME_IN_SECONDS;
-
 public class StatisticsActivity extends AppCompatActivity {
 
     public static final int weekInSec = 7*24*3600;
@@ -66,36 +62,5 @@ public class StatisticsActivity extends AppCompatActivity {
         tvCountOfMeasurements.setText(String.valueOf(recordsCount));
 
         cursor.close();
-    }
-
-
-    private void loadRecordsGame() {
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-        ArrayList<ItemRecords> data = new ArrayList<>();
-
-        int id;
-        float measurement;
-        long timeInSeconds;
-        String comment;
-
-        Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS, null, null, null, null, null,
-                DBHelper.KEY_TIME_IN_SECONDS + " DESC");
-
-        if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
-            int idMeasurement = cursor.getColumnIndex(DBHelper.KEY_MEASUREMENT);
-            int idTimeInSeconds = cursor.getColumnIndex(KEY_TIME_IN_SECONDS);
-            int idComment = cursor.getColumnIndex(DBHelper.KEY_COMMENT);
-            do {
-                id = cursor.getInt(idIndex);
-                measurement = cursor.getFloat(idMeasurement);
-                timeInSeconds = cursor.getLong(idTimeInSeconds);
-                comment = cursor.getString(idComment);
-                data.add(new ItemRecords(id, measurement, timeInSeconds, comment));
-            } while (cursor.moveToNext());
-        } //else { //No Records }
-
-        cursor.close();
-        database.close();
     }
 }
