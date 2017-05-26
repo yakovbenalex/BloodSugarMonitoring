@@ -24,6 +24,17 @@
             android:maxWidth="560dp"
             android:text="@string/agreement_terms" />
 
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_above="@+id/btnConfirm"
+            android:layout_alignEnd="@+id/btnConfirm"
+            android:layout_alignStart="@+id/btnConfirm"
+            android:layout_marginLeft="@dimen/activity_item_padding"
+            android:layout_marginRight="@dimen/activity_item_padding"
+            android:background="@color/colorPrimary" />
+
         <Button
             android:id="@+id/btnConfirm"
             android:layout_width="match_parent"
@@ -32,4 +43,5 @@
             android:text="@string/confirm" />
 
     </RelativeLayout>
+
 </RelativeLayout>

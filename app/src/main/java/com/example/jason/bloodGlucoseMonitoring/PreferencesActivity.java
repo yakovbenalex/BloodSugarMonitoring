@@ -21,8 +21,10 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.isEmpty;
 import static com.example.jason.bloodGlucoseMonitoring.MyWorks.numberInRange;
 import static com.example.jason.bloodGlucoseMonitoring.MyWorks.roundUp;
+import static com.example.jason.bloodGlucoseMonitoring.MyWorks.setFocus;
 
 
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,7 +54,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final String KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT = "amountCarbohydratesInBreadUnit";
     protected static final String KEY_PREFS_FIRST_RUN_AGREEMENT = "firstRunAgreement";
     protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24hDefault";
-    private static final String TAG = "myLog";
 
     // variables for preferences
     float prefsBloodLowSugar;
@@ -89,6 +90,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     EditText etBloodHighSugar;
     EditText etAmountCarb;
 
+    View vBtnDelMeas;
+    
     // SQLite database
     DBHelper dbHelper;
     //-------------------------------------DECLARE BLOCK END--------------------------------------//
@@ -98,6 +101,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
+        // create database object
         dbHelper = new DBHelper(this);
 
         // initializing starts variables
@@ -123,7 +127,9 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         etBloodHighSugar = (EditText) findViewById(R.id.etBloodHighSugar);
         etAmountCarb = (EditText) findViewById(R.id.etAmountCarbInBreadUnit);
 
-        // set the listeners for views
+        vBtnDelMeas = findViewById(R.id.vBtnDelMeas);
+
+        // listeners for views
         btnSavePreferences.setOnClickListener(this);
         btnResetToDefault.setOnClickListener(this);
         btnDeleteAllMeasurements.setOnClickListener(this);
@@ -135,7 +141,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         rbTimeFormat12h.setOnClickListener(this);
         rbTimeFormat24h.setOnClickListener(this);
 
-        // load and set preferences in preferences menu
+        // get preferences values
         loadPreferences();
 
         // set hint for editText
@@ -150,6 +156,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         else rbDiabetesType2.setChecked(true);
 
         if (prefsUnitBloodSugarMmol) {
+            // set editTexts input type to decimal number
             etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             etBloodHighSugar.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
@@ -157,6 +164,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             etBloodLowSugar.setText(String.valueOf(prefsBloodLowSugar));
             etBloodHighSugar.setText(String.valueOf(prefsBloodHighSugar));
         } else {
+            // set editTexts input type to integer number
             etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
             etBloodHighSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -168,7 +176,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         if (prefsTimeFormat24h) rbTimeFormat24h.setChecked(true);
         else rbTimeFormat12h.setChecked(true);
 
-
         // event on text change in editTexts
         etBloodLowSugar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -178,6 +185,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 preferencesChanged(true, true);
+
+                // set one point accuracy for editText value
                 if (rbUnitOfBloodSugarMmolL.isChecked()) {
                     String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
                     if (str.length() != charSequence.toString().length()) {
@@ -199,6 +208,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 preferencesChanged(true, true);
+
+                // set one point accuracy for editText value
                 if (rbUnitOfBloodSugarMmolL.isChecked()) {
                     String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
                     if (str.length() != charSequence.toString().length()) {
@@ -220,6 +231,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 preferencesChanged(true, true);
+
+                // set one point accuracy for editText value
                 if (rbUnitOfBloodSugarMmolL.isChecked()) {
                     String str = getStringNumberWithAccuracy(String.valueOf(charSequence), 1, '.', false);
                     if (str.length() != charSequence.toString().length()) {
@@ -292,7 +305,13 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         // check for first run app
         if (firstRun) {
+            // hide button delete all measurements
+            btnDeleteAllMeasurements.setVisibility(View.INVISIBLE);
+            vBtnDelMeas.setVisibility(View.INVISIBLE);
+
             preferencesChanged(true, true);
+
+            //start Agreement Activity
             Intent intent = new Intent(PreferencesActivity.this, AgreementActivity.class);
             startActivity(intent);
         }
@@ -477,16 +496,10 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    // checking fields on empty
-    public boolean isEmpty(EditText et) {
-        return et.getText().toString().trim().length() == 0;
-    }
-
     // set focus and additional option: show message, clear editText if needs
-    public void setFocus(EditText et, boolean clearET, boolean showMessage, String message) {
+    public void setFocusWithMessage(EditText et, boolean clearET, boolean showMessage, String message) {
+        setFocus(et, clearET);
         if (showMessage) Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        if (clearET) et.setText("");
-        et.requestFocus();
     }
 
     // request focus for empty required fields and return true if so
@@ -510,76 +523,31 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         if (rbUnitOfBloodSugarMmolL.isChecked()) {
             if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()),
                     bloodLowSugarLowerBound, bloodLowSugarUpperBound)) {
-                setFocus(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
+                setFocusWithMessage(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
             if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()),
                     bloodHighSugarLowerBound, bloodHighSugarUpperBound)) {
-                setFocus(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
+                setFocusWithMessage(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
         } else {
             if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()),
                     (int) (bloodLowSugarLowerBound * 18), bloodLowSugarUpperBound * 18)) {
-                setFocus(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
+                setFocusWithMessage(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
             if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()),
                     (int) (bloodHighSugarLowerBound * 18), bloodHighSugarUpperBound * 18)) {
-                setFocus(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
+                setFocusWithMessage(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
         }
         if (!numberInRange(Float.parseFloat(etAmountCarb.getText().toString()),
                 amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound)) {
-            setFocus(etAmountCarb, true, true, getString(R.string.incorrect_value));
+            setFocusWithMessage(etAmountCarb, true, true, getString(R.string.incorrect_value));
             return false;
         }
         return true;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    String[] listDiabetesType = new String[] {"1", "2"};
-    ArrayAdapter<String> adapter = new ArrayAdapter<String>(PreferencesActivity.this,
-            R.layout.support_simple_spinner_dropdown_item, listDiabetesType);
-adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-
-        Spinner spinnerDiabetesType = (Spinner) findViewById(R.id.spinnerDiabetesType);
-        spinnerDiabetesType.setAdapter(adapter);
-        spinnerDiabetesType.setPrompt("Choose you diabetes type");
-        spinnerDiabetesType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-@Override
-public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(PreferencesActivity.this, "" + position + " " + id, Toast.LENGTH_SHORT).show();
-        }
-
-@Override
-public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-        });
-
-
-
-
-
-    // move text with seekBar item
-        int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
-        tvBloodLowSugarValue.setText(String.format("%.1f", progressDecimal));
-        tvBloodLowSugarValue.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2);
-
-
-*/

@@ -53,6 +53,7 @@
                         android:layout_alignParentTop="true"
                         android:ems="8"
                         android:inputType="numberDecimal"
+                        android:labelFor="@+id/etBloodSugarMeasurementEdit"
                         android:maxLength="4"
                         android:selectAllOnFocus="true"
                         android:textAlignment="center" />
@@ -70,7 +71,7 @@
                         android:layout_alignBaseline="@+id/etCommentEdit"
                         android:layout_alignParentStart="true"
                         android:maxLines="2"
-                        android:paddingRight="16dp"
+                        android:paddingEnd="16dp"
                         android:text="@string/comment" />
 
                     <EditText
@@ -79,13 +80,13 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/textViewBloodHighSugar"
                         android:inputType="textAutoComplete"
+                        android:labelFor="@+id/etCommentEdit"
                         android:maxLength="127"
                         android:selectAllOnFocus="true"
                         android:textAlignment="textStart" />
 
                 </RelativeLayout>
 
-                <!-- android:layout_width="280dp" -->
                 <TimePicker
                     android:id="@+id/timePickerAddMeasurement"
                     android:layout_width="match_parent"
@@ -99,8 +100,19 @@
         <RelativeLayout
             android:id="@+id/rlControlPanel"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true">
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_above="@+id/btnChooseDate"
+                android:layout_alignEnd="@+id/btnChooseDate"
+                android:layout_alignStart="@+id/btnChooseDate"
+                android:layout_marginLeft="@dimen/activity_item_padding"
+                android:layout_marginRight="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnChooseDate"
@@ -118,17 +130,8 @@
                 android:layout_centerHorizontal="true"
                 android:background="@color/colorPrimary"
                 android:padding="@dimen/activity_item_padding"
-                android:text="tvDate"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite" />
-
-            <Button
-                android:id="@+id/btnSaveMeasurement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:text="@string/save" />
 
             <Button
                 android:id="@+id/btnDeleteCurMeasurements"
@@ -139,10 +142,29 @@
                 android:text="@string/delete"
                 android:visibility="invisible" />
 
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_above="@+id/btnSaveMeasurement"
+                android:layout_alignEnd="@+id/btnSaveMeasurement"
+                android:layout_alignStart="@+id/btnSaveMeasurement"
+                android:layout_marginLeft="@dimen/activity_item_padding"
+                android:layout_marginRight="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/btnSaveMeasurement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:text="@string/save" />
+
         </RelativeLayout>
 
-
     </RelativeLayout>
+
 </RelativeLayout>
 
 

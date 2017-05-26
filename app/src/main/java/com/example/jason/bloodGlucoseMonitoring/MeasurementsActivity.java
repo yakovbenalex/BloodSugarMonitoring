@@ -6,11 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,7 +16,6 @@ import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_TIME_IN_SECO
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
@@ -27,9 +24,6 @@ import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.timeF
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class MeasurementsActivity extends AppCompatActivity {
-
-    // views declare
-    TextView textView;
 
     ListView lvMeasurementsAll;
     int lvIndexPos = 0;
@@ -48,7 +42,6 @@ public class MeasurementsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurements);
 
-        textView = (TextView) findViewById(R.id.textView);
         lvMeasurementsAll = (ListView) findViewById(R.id.lvMeasurementsAll);
 
         lvMeasurementsAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,7 +77,7 @@ public class MeasurementsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        loadRecordsGame();
+        loadRecords();
     }
 
     @Override
@@ -105,7 +98,8 @@ public class MeasurementsActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    private void loadRecordsGame() {
+    // load records from DB
+    private void loadRecords() {
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         ArrayList<ItemRecords> data = new ArrayList<>();
 

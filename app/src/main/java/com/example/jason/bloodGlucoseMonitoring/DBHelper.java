@@ -35,14 +35,4 @@ class DBHelper extends SQLiteOpenHelper{
 
         onCreate(db);
     }
-
-    /*
-    public void getL(SQLiteDatabase db) {
-        db.execSQL("select table " + TABLE_MEASUREMENTS + "("
-                + KEY_ID + " integer primary key, "
-                + KEY_MEASUREMENT + " real, "
-                + KEY_TIME_IN_SECONDS + " integer, "
-                + KEY_COMMENT + " text " + ")");
-    }
-    */
 }

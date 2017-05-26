@@ -10,160 +10,157 @@
         android:layout_height="5dip"
         android:background="@color/colorPrimaryDark" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_item_padding">
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/activity_item_padding">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/activity_item_padding">
+                <TextView
+                    android:id="@+id/textViewCarbsIn100GramsProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etCarbsInProduct"
+                    android:text="@string/carbohydrates_per_100g_product" />
 
-                    <TextView
-                        android:id="@+id/textViewCarbsIn100GramsProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/etCarbsInProduct"
-                        android:text="@string/carbohydrates_per_100g_product" />
+                <EditText
+                    android:id="@+id/etCarbsInProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="7"
+                    android:hint="@string/_0_100"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
+                    android:selectAllOnFocus="true"
+                    android:textAlignment="center" />
 
-                    <EditText
-                        android:id="@+id/etCarbsInProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:ems="7"
-                        android:hint="@string/_0_100"
-                        android:inputType="numberDecimal"
-                        android:maxLength="5"
-                        android:selectAllOnFocus="true"
-                        android:textAlignment="center" />
+            </RelativeLayout>
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/activity_item_padding">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/activity_item_padding">
+                <TextView
+                    android:id="@+id/textViewGramsInProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etGramsInProduct"
+                    android:text="@string/grams_in_product" />
 
-                    <TextView
-                        android:id="@+id/textViewGramsInProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/etGramsInProduct"
-                        android:text="@string/grams_in_product" />
+                <EditText
+                    android:id="@+id/etGramsInProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="7"
+                    android:inputType="numberDecimal"
+                    android:labelFor="@+id/etGramsInProduct"
+                    android:maxLength="9"
+                    android:selectAllOnFocus="true"
+                    android:textAlignment="center" />
 
-                    <EditText
-                        android:id="@+id/etGramsInProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:ems="7"
-                        android:inputType="numberDecimal"
-                        android:maxLength="9"
-                        android:selectAllOnFocus="true"
-                        android:textAlignment="center" />
+            </RelativeLayout>
 
-                </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginBottom="@dimen/activity_item_padding"
-                    android:layout_marginTop="@dimen/activity_item_padding"
-                    android:background="@color/colorPrimary" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/textViewCarbsInGramsOfProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etCarbsInGramsOfProduct"
+                    android:maxLines="2"
+                    android:text="@string/carbs_in_grams_of_product" />
 
-                    <TextView
-                        android:id="@+id/textViewCarbsInGramsOfProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/etCarbsInGramsOfProduct"
-                        android:maxLines="2"
-                        android:text="@string/carbs_in_grams_of_product" />
+                <EditText
+                    android:id="@+id/etCarbsInGramsOfProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="7"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:inputType="numberDecimal"
+                    android:labelFor="@+id/etCarbsInGramsOfProduct"
+                    android:maxLength="9"
+                    android:selectAllOnFocus="true"
+                    android:textAlignment="center" />
 
-                    <EditText
-                        android:id="@+id/etCarbsInGramsOfProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:ems="7"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:inputType="numberDecimal"
-                        android:maxLength="9"
-                        android:selectAllOnFocus="true"
-                        android:textAlignment="center" />
+            </RelativeLayout>
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/textViewAmountBreadUnits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/etAmountBreadUnits"
+                    android:maxLines="2"
+                    android:text="@string/amount_of_bread_units" />
 
-                    <TextView
-                        android:id="@+id/textViewAmountBreadUnits"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/etAmountBreadUnits"
-                        android:maxLines="2"
-                        android:text="@string/amount_of_bread_units" />
+                <EditText
+                    android:id="@+id/etAmountBreadUnits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:ems="7"
+                    android:hint="@string/_0_99_9"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:selectAllOnFocus="true"
+                    android:textAlignment="center" />
 
-                    <EditText
-                        android:id="@+id/etAmountBreadUnits"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:ems="7"
-                        android:hint="@string/_0_99_9"
-                        android:inputType="numberDecimal"
-                        android:maxLength="4"
-                        android:selectAllOnFocus="true"
-                        android:textAlignment="center" />
+                <TextView
+                    android:id="@+id/tvCarbsInBreadUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignStart="@+id/etAmountBreadUnits"
+                    android:layout_below="@+id/etAmountBreadUnits"
+                    android:textAlignment="center"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tvCarbsInBreadUnit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignStart="@+id/etAmountBreadUnits"
-                        android:layout_below="@+id/etAmountBreadUnits"
-                        android:textAlignment="center"
-                        android:textSize="14sp" />
+            </RelativeLayout>
 
-                </RelativeLayout>
+        </LinearLayout>
 
-            </LinearLayout>
+    </ScrollView>
 
-        </ScrollView>
-
-    </RelativeLayout>
 </RelativeLayout>

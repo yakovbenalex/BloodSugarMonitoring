@@ -1,7 +1,7 @@
 <resources>
 
     <!-- used in app -->
-    <string name="app_name">EventGlick</string>
+    <string name="app_name">EveryGlic</string>
     <string name="preferences">Preferences</string>
     <string name="agreement">Agreement</string>
     <string name="about">About</string>
@@ -59,23 +59,23 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="sugar">Sugar</string>
-    <string name="delete_all_measurements">Delete all measurements?</string>
+    <string name="delete_all_measurements">Delete all measurements</string>
     <string name="these_changes_can_t_return">These changes can\'t return!!!</string>
     <string name="all_measurements_has_been_deleted">All measurements has been deleted!</string>
     <string name="incorrect_value">Incorrect value</string>
     <string name="delete_current_measurements">Delete current measurements?</string>
     <string name="the_current_measurement_has_been_deleted">The current measurement has been deleted!</string>
-    <string name="count_of_measurements">Count of measurements</string>
+    <string name="for_all_time">For all time</string>
     <string name="amount_of_carbohydrates_in_bread_unit">Amount of carbohydrates in bread unit</string>
     <string name="_12h">12h</string>
     <string name="_24h">24h</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="comment">Comment</string>
-    <string name="agreement_terms">By using this application, you agree to following terms and conditions:\n1 - Developer of this application is not responsible for your health.\n2 - Before making any decisions, first consult your doctor.</string>
+    <string name="agreement_terms">By using this application, you agree to following terms and conditions:\n1. Developer of this application is not responsible for your health.\n2. Before making any decisions, first consult your doctor.</string>
     <string name="carbs_calculator">Carbs calculator</string>
     <string name="exit_are_you_sure">Exit: Are you sure?</string>
-    <string name="still_yes">Still, Yes!</string>
+    <string name="still_yes">Still, Yes</string>
     <string name="never">Never</string>
     <string name="confirm">Confirm</string>
     <string name="click_the_back_button_again_to_cancel_the_agreement">Click the back button again to cancel the agreement!</string>
@@ -83,6 +83,28 @@
 
 
     <integer name="qwe">5</integer>
-    <string name="from_to">qwe</string>>
+    <string name="from_to">qwe</string>
+    <string name="count">Count</string>
+    <string name="for_week">For week</string>
+    <string name="for_month">For month</string>
+    <string name="average">Average</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="all_time">All time</string>
+    <string name="_nul">---</string>
+    <string name="the_everyglic_application_is_intended_for_use_by_people_with_diabetes">The EveryGlic application is intended for use by people with diabetes.</string>
+
+
+    <string name="_InfoUsefulTips">ПОЛЕЗНЫЕ СОВЕТЫ\n\n1. Диета - не жёсткие ограничения, а разумный выбор. \nОбыкновенная овсянка содержит: протеин, цинк, магний. калий, селен, клетчатку, биотин, витамины С и В.\nСнижает уровень холестерина, уменьшает риск возникновения дерматитов, нормализует работу кишечника. \nМожно добавить орехи, яблоки, сухофрукты, немного сыра.\n\n2. Движение - жизнь, а жизнь - движение.\nФизическая активность позволяет запустить физиологические механизмы в человеческом организме, следовательно:\n•  Понизить содержание глюкозы в крови. Работающие мышцы могут поглощать в 20 раз больше глюкозы.\n•  Улучшить использование инсулина. При нагрузках доза инсулина может быть снижена.\n•  Сбросить лишние килограммы и нормализовать обменные процессы в организме.\nДопустимы любые виды спорта, кроме тяжёлых и длительных силовых упражнений, велосипедные и пешие прогулки.\n\n3. К нижним конечностям повышенное внимание.\nСледует ежедневно мыть ноги тёплой водой, осматривать кожу стоп, не ходить босиком, носить мягкую и просторную обувь.\nНельзя пользоваться грелками и пластырями, стричь ногти на ногах полукругом (только прямо), срезать мозоли.</string>
+    <string name="_InfoEmergencyConditions">НЕОТЛОЖНЫЕ СОСТОЯНИЯ\n\n•\tДиабетический кетоацидоз - острое и тяжелое осложнение из-за недостаточности гормона инсулин. \nКлетки организма начинают питаться собственными жировыми запасами, в процессе происходит выработка кетоновых тел (ацетона).\n•\tГиперосмолярная гипергликемия и кома - угрожающая жизни патология с резким и длительным увеличением уровня глюкозы в крови. \n•\tГипогликемия и гипогликемическая кома - наиболее частое осложнение при интенсивной инсулинотерапим.\nОбусловлена быстрым и выраженным снижением уровня глюкозы в крови, вызывающим энергетическое голодание клеток, отек головного мозга.</string>
+    <string name="_InfoChronicComplications">ХРОНИЧЕСКИЕ ОСЛОЖНЕНИЯ\n\n•\tРетинопатия - микрососудистые нарушения и изменения сетчатки, в терминальной стадии приводящие к полной потере зрения.\n•\tНефропатия - специфическое поражение почек, характеризуется развитием хронической почечной недостаточности.\n•\tЦереброваскулярная болезнь - патологические состояния, приводящие к нарушениям кровообращения в мозге.\n•\tНейропатия – комплекс синдромов, характеризуется поражением периферических и/или автономных нервных волокон.\n•\tНейроастеоартропатия – почти безболевое, прогрессирующая, деструктивное поражение одного или нескольких суставов.\n•\tСиндром диабетической стопы - патологические изменения с развитием язвенно-некротических процессов и гангрены стопы.</string>
+    <string name="_InfoUrgentMedicalAssistance">СРОЧНАЯ ВРАЧЕБНАЯ ПОМОЩЬ\n\nСледует обязательно обратиться к врачу, если\n•\tпостоянный или частый высокий уровень сахара крови;\n•\tинсулин перестал давать прежний эффект;\n•\tпоявились раны или язвы любого размера и любой причины; \n•\tпотемнение пальцев, боли в икрах при ходьбе и в покое; \n•\tпоявился вросший ноготь, ушибы, потертости, ожоги; \n•\tотмечено снижение остроты зрения, потеря чувствительности стоп.</string>
+    <string name="UsefulTips">ПОЛЕЗНЫЕ СОВЕТЫ</string>
+    <string name="EmergencyConditions">НЕОТЛОЖНЫЕ СОСТОЯНИЯ</string>
+    <string name="ChronicComplications">ХРОНИЧЕСКИЕ ОСЛОЖНЕНИЯ</string>
+    <string name="UrgentMedicalAssistance">СРОЧНАЯ ВРАЧЕБНАЯ ПОМОЩЬ</string>
+
 
 </resources>

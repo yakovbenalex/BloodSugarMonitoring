@@ -43,13 +43,10 @@ class MyWorks {
 
     // checking of number for included in the specified range.
     static boolean numberInRange(Float number, float lowerBound, float upperBound) {
-        if (number < lowerBound || number > upperBound) {
-            return false;
-        }
-        return true;
+        return !(number < lowerBound || number > upperBound);
     }
 
-    // checking fields on empty
+    // checking fields on empty end return true if so
     static boolean isEmpty(EditText et) {
         return et.getText().toString().trim().length() == 0;
     }

@@ -2,7 +2,6 @@ package com.example.jason.bloodGlucoseMonitoring;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,6 @@ class ItemRecordsAdapter extends BaseAdapter {
 
         // sugar color range
         if (sugar < prefsBloodLowSugar + 0.01f) { // low sugar
-//            tvListSugar.setTextColor(Color.BLUE);
             tvListSugar.setTextColor(Color.rgb(0,100,255));
         } else {
 
@@ -97,7 +95,6 @@ class ItemRecordsAdapter extends BaseAdapter {
         if (prefsUnitBloodSugarMmol)
             tvListSugar.setText(String.valueOf(data.get(i).getMeasurementSugar()));
         else tvListSugar.setText(String.valueOf((int) (data.get(i).getMeasurementSugar() * 18)));
-
         tvListDate.setText(sdfDate.format(data.get(i).getTimeInMillis()));
         tvListTime.setText(sdfTime.format(data.get(i).getTimeInMillis()));
 

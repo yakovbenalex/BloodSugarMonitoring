@@ -17,6 +17,17 @@
         android:layout_margin="@dimen/activity_item_padding"
         android:orientation="vertical">
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_above="@+id/btnResetToDefault"
+            android:layout_alignEnd="@+id/btnResetToDefault"
+            android:layout_alignStart="@+id/btnResetToDefault"
+            android:layout_marginLeft="@dimen/activity_item_padding"
+            android:layout_marginRight="@dimen/activity_item_padding"
+            android:background="@color/colorPrimary" />
+
         <Button
             android:id="@+id/btnResetToDefault"
             android:layout_width="wrap_content"
@@ -25,6 +36,16 @@
             android:layout_alignParentStart="true"
             android:maxWidth="190dp"
             android:text="@string/reset_to_default" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_above="@+id/btnSavePreferences"
+            android:layout_alignEnd="@+id/btnSavePreferences"
+            android:layout_alignStart="@+id/btnSavePreferences"
+            android:layout_marginLeft="@dimen/activity_item_padding"
+            android:layout_marginRight="@dimen/activity_item_padding"
+            android:background="@color/colorPrimary" />
 
         <Button
             android:id="@+id/btnSavePreferences"
@@ -163,6 +184,7 @@
                         android:layout_alignParentTop="true"
                         android:ems="8"
                         android:inputType="numberDecimal"
+                        android:labelFor="@+id/etBloodLowSugar"
                         android:maxLength="4"
                         android:selectAllOnFocus="true"
                         android:textAlignment="center" />
@@ -198,6 +220,7 @@
                         android:layout_alignParentTop="true"
                         android:ems="8"
                         android:inputType="numberDecimal"
+                        android:labelFor="@+id/etBloodHighSugar"
                         android:maxLength="5"
                         android:selectAllOnFocus="true"
                         android:textAlignment="center" />
@@ -223,6 +246,7 @@
                         android:layout_alignParentTop="true"
                         android:ems="8"
                         android:inputType="numberDecimal"
+                        android:labelFor="@+id/etAmountCarbInBreadUnit"
                         android:maxLength="4"
                         android:selectAllOnFocus="true"
                         android:textAlignment="center" />
@@ -297,9 +321,18 @@
                     android:layout_height="wrap_content"
                     android:text="@string/delete_all_measurements" />
 
+                <View
+                    android:id="@+id/vBtnDelMeas"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginLeft="@dimen/activity_item_padding"
+                    android:layout_marginRight="@dimen/activity_item_padding"
+                    android:background="@color/colorPrimary" />
+
             </LinearLayout>
 
         </ScrollView>
 
     </RelativeLayout>
+
 </RelativeLayout>

@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:paddingEnd="7dp"
                 android:paddingStart="7dp"
                 android:text="@string/date" />
 
@@ -49,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:paddingEnd="11dp"
+                android:paddingStart="11dp"
                 android:text="@string/sugar"
                 android:textAlignment="textEnd" />
 
@@ -67,4 +69,5 @@
             android:fastScrollAlwaysVisible="true" />
 
     </LinearLayout>
+
 </LinearLayout>

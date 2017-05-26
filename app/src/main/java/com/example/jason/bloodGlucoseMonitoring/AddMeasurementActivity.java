@@ -3,7 +3,6 @@ package com.example.jason.bloodGlucoseMonitoring;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,9 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -43,11 +39,10 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
     private static final int yearLimitLowerBound = 1970;
     private static final float bloodSugarLimitLow = 0.7f;
     private static final float bloodSugarLimitHigh = 55.5f;
-    private static final String TAG = "myLog";
 
     // for date and time
     Calendar dateAndTime = Calendar.getInstance();
-    Calendar now = Calendar.getInstance();
+    Calendar now;
 
     String DATE_FORMAT = "dd/MM/yy - HH:mm";
     SimpleDateFormat sdf;
@@ -83,7 +78,6 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
 
         // get id record from Activity intent
         idRec = (int) getIntent().getLongExtra("idRec", -1);
-        Log.d(TAG, "onCreate: " + String.valueOf(idRec));
 
         // get shared preferences object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -124,10 +118,8 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         timePickerAddMeasurement.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-//                if (!(dateAndTime.getTimeInMillis() > now.getTimeInMillis())) {
                 dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 dateAndTime.set(Calendar.MINUTE, minute);
-//                }
                 setCaptionDateTime();
             }
         });
@@ -162,7 +154,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             // display delete button
             btnDeleteCurMeasurements.setVisibility(View.VISIBLE);
             // load measurement
-            loadRecordsGame();
+            loadRecords();
         } else {
             etBloodSugarMeasurement.requestFocus();
         }
@@ -198,7 +190,6 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
                 // confirm delete current measurement
                 alertDelCurMes.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                         SQLiteDatabase database = dbHelper.getWritableDatabase();
                         database.delete(DBHelper.TABLE_MEASUREMENTS,
                                 DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
@@ -220,12 +211,10 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
                 updateRec = idRec != -1;
 
                 // check date to more than current and reset if so
+                now = Calendar.getInstance();
                 if (dateAndTime.getTimeInMillis() > now.getTimeInMillis()) {
                     Toast.makeText(AddMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
                             + getString(R.string.date_cannot_be_greater_than_the_current), Toast.LENGTH_SHORT).show();
-//                    dateAndTime.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY));
-//                    dateAndTime.set(Calendar.MINUTE, now.get(Calendar.MINUTE));
-//                    setCaptionDateTime();
                 } else {
                     if (isCorrectInputValues()) {
                         float measurement = Float.parseFloat(etBloodSugarMeasurement.getText().toString());
@@ -257,6 +246,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             dateAndTime.set(year, monthOfYear, dayOfMonth);
 
             // checking on current date and reset date to current
+            now = Calendar.getInstance();
             if (dateAndTime.getTimeInMillis() > now.getTimeInMillis()) {
                 Toast.makeText(AddMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
                         + getString(R.string.date_cannot_be_greater_than_the_current) + "\n"
@@ -287,7 +277,8 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         if (prefsUnitBloodSugarMmol) {
             contentValues.put(DBHelper.KEY_MEASUREMENT, measurement);
         } else {
-            float tmpBloodLowSugar = roundUp(Float.parseFloat(etBloodSugarMeasurement.getText().toString()) / 18, 1).floatValue();
+            float tmpBloodLowSugar = roundUp(
+                    Float.parseFloat(etBloodSugarMeasurement.getText().toString()) / 18, 1).floatValue();
             contentValues.put(DBHelper.KEY_MEASUREMENT, tmpBloodLowSugar);
         }
 
@@ -308,14 +299,12 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
     public void deleteRecord(int idRec) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        database.delete(DBHelper.TABLE_MEASUREMENTS,
-                DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
-//        database.delete(DBHelper.TABLE_MEASUREMENTS, DBHelper.KEY_ID + " = ?", new String[]{String.valueOf(idRec)});
+        database.delete(DBHelper.TABLE_MEASUREMENTS, DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
         database.close();
     }
 
 
-    private void loadRecordsGame() {
+    private void loadRecords() {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         long timeInMillis;
@@ -337,7 +326,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         etComment.setText(cursor.getString(idComment));
         timeInMillis = getMillisInSeconds(cursor.getLong(idTimeInSeconds));
 
-        // time picker set
+        //  Calendar time picker set
         dateAndTime.setTimeInMillis(timeInMillis);
             /*if (prefsTimeFormat24h) {
                 hour = dateAndTime.get(Calendar.HOUR_OF_DAY);
@@ -345,10 +334,11 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
                 hour = dateAndTime.get(Calendar.HOUR);
             }*/
         /*try {
+            //time picker set
             timePickerAddMeasurement.setCurrentHour(dateAndTime.get(Calendar.HOUR_OF_DAY));
             timePickerAddMeasurement.setCurrentMinute(dateAndTime.get(Calendar.MINUTE));
         } catch (Exception e) {
-            Log.d(TAG, "loadRecordsGame: setCurrent");
+            Log.d(TAG, "loadRecords: setCurrent");
         }*/
 
         cursor.close();
@@ -379,12 +369,14 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
                     bloodSugarLimitLow, bloodSugarLimitHigh)) {
                 setFocus(etBloodSugarMeasurement, true);
+                Toast.makeText(this, getString(R.string.incorrect_value), Toast.LENGTH_SHORT).show();
                 return false;
             }
         } else {
             if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
                     (int) (bloodSugarLimitLow * 18), (int) (bloodSugarLimitHigh * 18))) {
                 setFocus(etBloodSugarMeasurement, true);
+                Toast.makeText(this, getString(R.string.incorrect_value), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
