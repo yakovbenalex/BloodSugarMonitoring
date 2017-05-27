@@ -64,6 +64,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
     EditText etComment;
 
     TextView tvDate;
+    TextView tvUnitBloodSugar;
 
     TimePicker timePickerAddMeasurement;
 
@@ -101,14 +102,20 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         etComment = (EditText) findViewById(R.id.etCommentEdit);
 
         tvDate = (TextView) findViewById(R.id.tvDate);
+        tvUnitBloodSugar = (TextView) findViewById(R.id.tvUnitBloodSugar);
 
         timePickerAddMeasurement = (TimePicker) findViewById(R.id.timePickerAddMeasurement);
 
         // set hint for editText
         setEditTextsHints(prefsUnitBloodSugarMmol);
 
-        // set views properties
+        // set views properties and other
         timePickerAddMeasurement.setIs24HourView(true);
+        if (prefsUnitBloodSugarMmol) {
+            tvUnitBloodSugar.setText(getString(R.string.mmol_l));
+        } else {
+            tvUnitBloodSugar.setText(getString(R.string.mg_dl));
+        }
 
         // set the listeners for views
         btnChooseDate.setOnClickListener(this);

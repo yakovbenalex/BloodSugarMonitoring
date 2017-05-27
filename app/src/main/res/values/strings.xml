@@ -15,7 +15,6 @@
     <string name="action_about">About</string>
 
     <!-- used in preferences -->
-    <string name="save_settings">Save settings</string>
     <string name="diabetes_type">Diabetes type</string>
     <string name="_1_type">1 type</string>
     <string name="_2_type">2 type</string>
@@ -51,7 +50,7 @@
     <string name="time_format_display">Time format display</string>
     <string name="blood_sugar_measurement">Blood sugar measurement</string>
 
-
+    <!--  -->
     <string name="measurement_has_been_saved">Measurement has been saved.</string>
     <string name="measurements">Measurements</string>
     <string name="statistics">Statistics</string>
@@ -75,15 +74,11 @@
     <string name="agreement_terms">By using this application, you agree to following terms and conditions:\n1. Developer of this application is not responsible for your health.\n2. Before making any decisions, first consult your doctor.</string>
     <string name="carbs_calculator">Carbs calculator</string>
     <string name="exit_are_you_sure">Exit: Are you sure?</string>
-    <string name="still_yes">Still, Yes</string>
-    <string name="never">Never</string>
     <string name="confirm">Confirm</string>
     <string name="click_the_back_button_again_to_cancel_the_agreement">Click the back button again to cancel the agreement!</string>
     <string name="information">Information</string>
 
-
-    <integer name="qwe">5</integer>
-    <string name="from_to">qwe</string>
+    <!--  -->
     <string name="count">Count</string>
     <string name="for_week">For week</string>
     <string name="for_month">For month</string>
@@ -96,7 +91,7 @@
     <string name="_nul">---</string>
     <string name="the_everyglic_application_is_intended_for_use_by_people_with_diabetes">The EveryGlic application is intended for use by people with diabetes.</string>
 
-
+    <!--  -->
     <string name="_InfoUsefulTips">ПОЛЕЗНЫЕ СОВЕТЫ\n\n1. Диета - не жёсткие ограничения, а разумный выбор. \nОбыкновенная овсянка содержит: протеин, цинк, магний. калий, селен, клетчатку, биотин, витамины С и В.\nСнижает уровень холестерина, уменьшает риск возникновения дерматитов, нормализует работу кишечника. \nМожно добавить орехи, яблоки, сухофрукты, немного сыра.\n\n2. Движение - жизнь, а жизнь - движение.\nФизическая активность позволяет запустить физиологические механизмы в человеческом организме, следовательно:\n•  Понизить содержание глюкозы в крови. Работающие мышцы могут поглощать в 20 раз больше глюкозы.\n•  Улучшить использование инсулина. При нагрузках доза инсулина может быть снижена.\n•  Сбросить лишние килограммы и нормализовать обменные процессы в организме.\nДопустимы любые виды спорта, кроме тяжёлых и длительных силовых упражнений, велосипедные и пешие прогулки.\n\n3. К нижним конечностям повышенное внимание.\nСледует ежедневно мыть ноги тёплой водой, осматривать кожу стоп, не ходить босиком, носить мягкую и просторную обувь.\nНельзя пользоваться грелками и пластырями, стричь ногти на ногах полукругом (только прямо), срезать мозоли.</string>
     <string name="_InfoEmergencyConditions">НЕОТЛОЖНЫЕ СОСТОЯНИЯ\n\n•\tДиабетический кетоацидоз - острое и тяжелое осложнение из-за недостаточности гормона инсулин. \nКлетки организма начинают питаться собственными жировыми запасами, в процессе происходит выработка кетоновых тел (ацетона).\n•\tГиперосмолярная гипергликемия и кома - угрожающая жизни патология с резким и длительным увеличением уровня глюкозы в крови. \n•\tГипогликемия и гипогликемическая кома - наиболее частое осложнение при интенсивной инсулинотерапим.\nОбусловлена быстрым и выраженным снижением уровня глюкозы в крови, вызывающим энергетическое голодание клеток, отек головного мозга.</string>
     <string name="_InfoChronicComplications">ХРОНИЧЕСКИЕ ОСЛОЖНЕНИЯ\n\n•\tРетинопатия - микрососудистые нарушения и изменения сетчатки, в терминальной стадии приводящие к полной потере зрения.\n•\tНефропатия - специфическое поражение почек, характеризуется развитием хронической почечной недостаточности.\n•\tЦереброваскулярная болезнь - патологические состояния, приводящие к нарушениям кровообращения в мозге.\n•\tНейропатия – комплекс синдромов, характеризуется поражением периферических и/или автономных нервных волокон.\n•\tНейроастеоартропатия – почти безболевое, прогрессирующая, деструктивное поражение одного или нескольких суставов.\n•\tСиндром диабетической стопы - патологические изменения с развитием язвенно-некротических процессов и гангрены стопы.</string>

@@ -10,12 +10,12 @@
         android:layout_height="5dip"
         android:background="@color/colorPrimaryDark" />
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/activity_item_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -155,7 +155,7 @@
                     android:layout_alignStart="@+id/etAmountBreadUnits"
                     android:layout_below="@+id/etAmountBreadUnits"
                     android:textAlignment="center"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textSizeCaption" />
 
             </RelativeLayout>
 

@@ -15,7 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/activity_item_padding">
+        android:paddingBottom="@dimen/activity_item_padding"
+        android:paddingLeft="@dimen/activity_item_padding"
+        android:paddingRight="@dimen/activity_item_padding">
 
         <RelativeLayout
             android:id="@+id/rlCapsInfo"
@@ -59,7 +61,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
-            android:layout_marginBottom="@dimen/activity_item_padding"
             android:background="@color/colorPrimary" />
 
         <ListView

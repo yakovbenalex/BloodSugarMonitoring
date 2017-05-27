@@ -14,9 +14,10 @@
         android:background="@color/colorPrimaryDark" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_item_padding"
+        android:padding="@dimen/activity_item_padding"
         android:orientation="vertical">
 
         <ScrollView
@@ -57,6 +58,16 @@
                         android:maxLength="4"
                         android:selectAllOnFocus="true"
                         android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvUnitBloodSugar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignStart="@+id/etBloodSugarMeasurementEdit"
+                        android:layout_below="@+id/etBloodSugarMeasurementEdit"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/textSizeCaption" />
 
                 </RelativeLayout>
 

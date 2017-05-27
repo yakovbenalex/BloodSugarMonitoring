@@ -4,4 +4,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_item_padding">7dp</dimen>
 
+    <!-- text -->
+    <dimen name="textSizeNormal">17sp</dimen>
+    <dimen name="textSizeNormalLarge">17sp</dimen>
+    <dimen name="textSizeNormalXLarge">23sp</dimen>
+    <dimen name="textSizeCaption">14sp</dimen>
+
 </resources>
