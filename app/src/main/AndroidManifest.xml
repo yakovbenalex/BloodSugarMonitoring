@@ -32,18 +32,19 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
+                <data
                     android:host="www.example.com"
-                    android:pathPrefix="/jason" />
+                    android:pathPrefix="/jason"
+                    android:scheme="http" />
                 <!-- note that the leading "/" is required for pathPrefix-->
                 <!-- Accepts URIs that begin with "example://jason” -->
-                <data android:scheme="example"
-                    android:host="jason" />
-
-
+                <data
+                    android:host="jason"
+                    android:scheme="example" />
             </intent-filter>
         </activity>
 
