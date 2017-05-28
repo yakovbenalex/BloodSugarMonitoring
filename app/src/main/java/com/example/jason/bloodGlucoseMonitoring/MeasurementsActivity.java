@@ -24,8 +24,10 @@ import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.timeF
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class MeasurementsActivity extends AppCompatActivity {
-
+    // views
     ListView lvMeasurementsAll;
+
+    // temporary variables
     int lvIndexPos = 0;
 
     // variables for preferences
@@ -52,15 +54,6 @@ public class MeasurementsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*
-        lvMeasurementsAll.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MeasurementsActivity.this, "456", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        */
 
         // get settings object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -131,5 +124,4 @@ public class MeasurementsActivity extends AppCompatActivity {
         lvMeasurementsAll.setAdapter(new ItemRecordsAdapter(this, data,
                 prefsBloodLowSugar, prefsBloodHighSugar, prefsUnitBloodSugarMmol, prefsTimeFormat24h));
     }
-
 }

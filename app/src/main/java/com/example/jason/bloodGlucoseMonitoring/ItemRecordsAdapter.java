@@ -12,8 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 class ItemRecordsAdapter extends BaseAdapter {
-
+    // array of ItemRecords
     private ArrayList<ItemRecords> data = new ArrayList<>();
+
     private Context context;
 
     // variables for preferences

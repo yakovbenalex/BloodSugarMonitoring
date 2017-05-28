@@ -11,13 +11,13 @@ import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_P
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 
 public class AgreementActivity extends AppCompatActivity implements View.OnClickListener {
-
     // temporary variables
     private static long back_pressed;
 
     // views declare
     Button btnConfirm;
 
+    // prefs vars
     private boolean firstRun;
 
     @Override
@@ -25,15 +25,17 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
 
+        // find views on screen by id
         btnConfirm = (Button) findViewById(R.id.btnConfirm);
 
+        // listeners
         btnConfirm.setOnClickListener(this);
 
         // get firstRun value
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         firstRun = sharedPref.getBoolean(KEY_PREFS_FIRST_RUN_AGREEMENT, true);
         if (!firstRun) {
-            btnConfirm.setText("Ok");
+            btnConfirm.setText(android.R.string.ok);
         }
     }
 
@@ -69,13 +71,5 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
             super.onBackPressed();
             finish();
         }
-
-        /*if (back_pressed + 2000 > System.currentTimeMillis()) {
-            moveTaskToBack(true);
-            finishAffinity();
-        } else {
-            Toast.makeText(getBaseContext(), "Click the back button again to cancel the agreement!", Toast.LENGTH_SHORT).show();
-        }
-        back_pressed = System.currentTimeMillis();*/
     }
 }

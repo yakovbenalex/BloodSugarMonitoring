@@ -16,7 +16,6 @@ import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_P
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.amountCarbsInBreadUnitDefault;
 
 public class CalculatorCarbsActivity extends AppCompatActivity {
-
     // keys
     private static final String KEY_PREFS_CALC_CARBS_STATE = "calcCarbsState";
     private static final String KEY_PREFS_CCS_CARBS_IN_100_GRAMS = "carbsIn100GramsOfProduct";
@@ -57,7 +56,6 @@ public class CalculatorCarbsActivity extends AppCompatActivity {
         etAmountBreadUnits = (EditText) findViewById(R.id.etAmountBreadUnits);
 
         tvCarbsInBreadUnit = (TextView) findViewById(R.id.tvCarbsInBreadUnit);
-
 
         // get preferences object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -161,7 +159,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity {
 
                 // for limit gramsInProduct value in editText
                 if (s.length() != 0 && Float.parseFloat(s) > 99.91) {
-                    etAmountBreadUnits.setText("99.9");
+                    etAmountBreadUnits.setText(R.string._99_9);
                     etAmountBreadUnits.setSelection(etAmountBreadUnits.getText().length());
                 }
 
@@ -209,7 +207,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity {
 
                 // for limit carbsIn100GramsOfProduct value in editText
                 if (s.length() != 0 && Float.parseFloat(s) > 100.01) {
-                    etCarbsIn100GramsOfProduct.setText("100.0");
+                    etCarbsIn100GramsOfProduct.setText(R.string._100_0);
                     etCarbsIn100GramsOfProduct.setSelection(etCarbsIn100GramsOfProduct.getText().length());
                 }
 

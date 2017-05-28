@@ -100,6 +100,9 @@
     <string name="EmergencyConditions">НЕОТЛОЖНЫЕ СОСТОЯНИЯ</string>
     <string name="ChronicComplications">ХРОНИЧЕСКИЕ ОСЛОЖНЕНИЯ</string>
     <string name="UrgentMedicalAssistance">СРОЧНАЯ ВРАЧЕБНАЯ ПОМОЩЬ</string>
+    <string name="edit_measurement">Edit measurement</string>
+    <string name="_99_9">99.9</string>
+    <string name="_100_0">100.0</string>
 
 
 </resources>

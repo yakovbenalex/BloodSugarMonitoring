@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,6 @@ import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitB
 
 // implements View.OnClickListener
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "MainActivity";
     // variables for preferences
     float prefsBloodLowSugar;
     float prefsBloodHighSugar;
@@ -59,10 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         firstRun = sharedPref.getBoolean(KEY_PREFS_FIRST_RUN_AGREEMENT, true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.logo);
-        getSupportActionBar().setLogo(R.drawable.logo);
 
         if (firstRun) {
             Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
@@ -84,14 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMeasurements.setOnClickListener(this);
         btnCalculatorCarbs.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
-
-        /*btnAddMeasurement.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MainActivity.this, "Add Measurement", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });*/
 
         lvMeasurements3Last.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -133,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.action_help:
+                Toast.makeText(this, "Help is not available", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(MainActivity.this, AgreementActivity.class);
 //                startActivity(intent);
                 break;

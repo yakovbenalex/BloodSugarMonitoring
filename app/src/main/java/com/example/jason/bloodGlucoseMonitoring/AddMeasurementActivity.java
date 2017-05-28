@@ -34,9 +34,9 @@ import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_P
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class AddMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
-
     // limit to back starts on 1970 (this is enough)
     private static final int yearLimitLowerBound = 1970;
+    // Sugar range limit
     private static final float bloodSugarLimitLow = 0.7f;
     private static final float bloodSugarLimitHigh = 55.5f;
 
@@ -47,15 +47,16 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
     String DATE_FORMAT = "dd/MM/yy - HH:mm";
     SimpleDateFormat sdf;
 
-    // id record and choose add or update measurement
+    // id record
     int idRec;
+    // choose add or update measurement
     boolean updateRec = false;
 
     // prefs vars
     boolean prefsTimeFormat24h;
     boolean prefsUnitBloodSugarMmol;
 
-    // views declare
+    // views
     Button btnChooseDate;
     Button btnSaveMeasurement;
     Button btnDeleteCurMeasurements;
@@ -160,6 +161,8 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         if (idRec != -1) {
             // display delete button
             btnDeleteCurMeasurements.setVisibility(View.VISIBLE);
+            setTitle(getString(R.string.edit_measurement));
+
             // load measurement
             loadRecords();
         } else {

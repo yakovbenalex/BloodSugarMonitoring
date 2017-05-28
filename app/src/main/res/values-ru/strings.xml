@@ -85,4 +85,7 @@
     <string name="EmergencyConditions">НЕОТЛОЖНЫЕ СОСТОЯНИЯ</string>
     <string name="UrgentMedicalAssistance">СРОЧНАЯ ВРАЧЕБНАЯ ПОМОЩЬ</string>
     <string name="UsefulTips">ПОЛЕЗНЫЕ СОВЕТЫ</string>
+    <string name="edit_measurement">Редактировать измерение</string>
+    <string name="_100_0">100.0</string>
+    <string name="_99_9">99.9</string>
 </resources>
