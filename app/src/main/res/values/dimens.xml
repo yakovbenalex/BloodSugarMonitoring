@@ -10,4 +10,7 @@
     <dimen name="textSizeNormalXLarge">23sp</dimen>
     <dimen name="textSizeCaption">14sp</dimen>
 
+    <!-- top separator -->
+    <dimen name="separator_action_bar">5dp</dimen>
+
 </resources>

@@ -7,8 +7,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dip"
-        android:layout_marginBottom="@dimen/activity_item_padding"
+        android:layout_height="@dimen/separator_action_bar"
         android:background="@color/colorPrimaryDark" />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -64,7 +63,6 @@
             </RelativeLayout>
 
             <View
-                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/colorPrimaryDark" />

@@ -14,49 +14,8 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_item_padding"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_above="@+id/btnResetToDefault"
-            android:layout_alignEnd="@+id/btnResetToDefault"
-            android:layout_alignStart="@+id/btnResetToDefault"
-            android:layout_marginLeft="@dimen/activity_item_padding"
-            android:layout_marginRight="@dimen/activity_item_padding"
-            android:background="@color/colorPrimary" />
-
-        <Button
-            android:id="@+id/btnResetToDefault"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:maxWidth="190dp"
-            android:text="@string/reset_to_default" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_above="@+id/btnSavePreferences"
-            android:layout_alignEnd="@+id/btnSavePreferences"
-            android:layout_alignStart="@+id/btnSavePreferences"
-            android:layout_marginLeft="@dimen/activity_item_padding"
-            android:layout_marginRight="@dimen/activity_item_padding"
-            android:background="@color/colorPrimary" />
-
-        <Button
-            android:id="@+id/btnSavePreferences"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/btnResetToDefault"
-            android:enabled="false"
-            android:minWidth="140dp"
-            android:text="@string/save" />
+        android:orientation="vertical"
+        android:padding="@dimen/activity_item_padding">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -266,8 +225,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dip"
-                    android:layout_marginBottom="14dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="@dimen/activity_item_padding"
+                    android:layout_marginTop="@dimen/activity_item_padding"
                     android:background="@color/colorPrimary" />
 
                 <RelativeLayout
@@ -332,6 +291,47 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_above="@+id/btnResetToDefault"
+            android:layout_alignEnd="@+id/btnResetToDefault"
+            android:layout_alignStart="@+id/btnResetToDefault"
+            android:layout_marginLeft="@dimen/activity_item_padding"
+            android:layout_marginRight="@dimen/activity_item_padding"
+            android:background="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/btnResetToDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:maxWidth="190dp"
+            android:text="@string/reset_to_default" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_above="@+id/btnSavePreferences"
+            android:layout_alignEnd="@+id/btnSavePreferences"
+            android:layout_alignStart="@+id/btnSavePreferences"
+            android:layout_marginLeft="@dimen/activity_item_padding"
+            android:layout_marginRight="@dimen/activity_item_padding"
+            android:background="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/btnSavePreferences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/btnResetToDefault"
+            android:enabled="false"
+            android:minWidth="140dp"
+            android:text="@string/save" />
 
     </RelativeLayout>
 

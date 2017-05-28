@@ -10,7 +10,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dip"
+        android:layout_height="@dimen/separator_action_bar"
         android:background="@color/colorPrimaryDark" />
 
     <RelativeLayout
@@ -92,7 +92,7 @@
                         android:layout_toEndOf="@+id/textViewBloodHighSugar"
                         android:inputType="textAutoComplete"
                         android:labelFor="@+id/etCommentEdit"
-                        android:maxLength="127"
+                        android:maxLength="255"
                         android:selectAllOnFocus="true"
                         android:textAlignment="textStart" />
 
@@ -177,14 +177,3 @@
     </RelativeLayout>
 
 </RelativeLayout>
-
-
-    <!--
-
-        <View
-        android:id="@+id/vSeparator"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#000" />
-
-    -->
