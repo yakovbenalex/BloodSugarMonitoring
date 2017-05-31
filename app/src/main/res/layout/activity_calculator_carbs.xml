@@ -49,7 +49,6 @@
                     android:maxLength="5"
                     android:selectAllOnFocus="true"
                     android:textAlignment="center" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -79,7 +78,6 @@
                     android:maxLength="9"
                     android:selectAllOnFocus="true"
                     android:textAlignment="center" />
-
             </RelativeLayout>
 
             <View
@@ -117,7 +115,6 @@
                     android:maxLength="9"
                     android:selectAllOnFocus="true"
                     android:textAlignment="center" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -156,11 +153,7 @@
                     android:layout_below="@+id/etAmountBreadUnits"
                     android:textAlignment="center"
                     android:textSize="@dimen/textSizeCaption" />
-
             </RelativeLayout>
-
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>

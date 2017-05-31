@@ -17,8 +17,8 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_item_padding"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/activity_item_padding">
 
         <ScrollView
             android:id="@+id/scrollView2"
@@ -68,7 +68,6 @@
                         android:layout_below="@+id/etBloodSugarMeasurementEdit"
                         android:textAlignment="center"
                         android:textSize="@dimen/textSizeCaption" />
-
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -95,7 +94,6 @@
                         android:maxLength="255"
                         android:selectAllOnFocus="true"
                         android:textAlignment="textStart" />
-
                 </RelativeLayout>
 
                 <TimePicker
@@ -103,9 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:headerBackground="@color/colorPrimary" />
-
             </LinearLayout>
-
         </ScrollView>
 
         <RelativeLayout
@@ -171,9 +167,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:text="@string/save" />
-
         </RelativeLayout>
-
     </RelativeLayout>
-
 </RelativeLayout>

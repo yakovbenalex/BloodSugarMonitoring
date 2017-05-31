@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -70,7 +69,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -92,7 +90,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <View
@@ -128,7 +125,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -150,7 +146,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -172,7 +167,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <View
@@ -208,7 +202,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -230,7 +223,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -252,7 +244,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <View
@@ -288,7 +279,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -310,7 +300,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -332,7 +321,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
-
             </RelativeLayout>
 
             <View
@@ -347,9 +335,6 @@
                 android:layout_marginBottom="@dimen/activity_item_padding"
                 android:layout_marginTop="@dimen/activity_item_padding"
                 android:background="@color/colorPrimary" />
-
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

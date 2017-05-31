@@ -59,7 +59,6 @@
                     android:paddingStart="11dp"
                     android:text="@string/sugar"
                     android:textAlignment="textEnd" />
-
             </RelativeLayout>
 
             <View
@@ -71,7 +70,6 @@
                 android:id="@+id/lvMeasurements3Last"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
         </LinearLayout>
 
         <TableLayout
@@ -89,7 +87,6 @@
                     android:layout_height="1dip"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryDark" />
-
             </TableRow>
 
             <TableRow
@@ -103,7 +100,6 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_btn_add"
                     android:text="@string/add" />
-
             </TableRow>
 
             <TableRow
@@ -115,7 +111,6 @@
                     android:layout_height="1dip"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryDark" />
-
             </TableRow>
 
             <TableRow
@@ -153,7 +148,6 @@
                     android:layout_height="1dip"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryDark" />
-
             </TableRow>
 
             <TableRow
@@ -180,11 +174,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_btn_info"
                     android:text="@string/information" />
-
             </TableRow>
-
         </TableLayout>
-
     </RelativeLayout>
-
 </RelativeLayout>

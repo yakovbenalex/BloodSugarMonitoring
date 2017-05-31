@@ -33,7 +33,6 @@ public class StatisticsActivity extends AppCompatActivity {
     private static final String KEY_MIN = "MIN";
     private static final String KEY_MAX = "MAX";
 
-
     private boolean prefsUnitBloodSugarMmol;
     String sugarFormat;
 
