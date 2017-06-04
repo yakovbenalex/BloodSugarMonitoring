@@ -33,7 +33,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/week" />
+                    android:text="@string/week"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeCaption" />
 
                 <View
                     android:layout_width="match_parent"
@@ -48,14 +50,18 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/current__f" />
+                    android:text="@string/current__f"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeCaption" />
 
                 <TextView
                     android:id="@+id/textViewWeekLast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="@string/last__f" />
+                    android:text="@string/last__f"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeCaption" />
 
             </RelativeLayout>
 
@@ -255,7 +261,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/month" />
+                    android:text="@string/month"
+                    android:textColor="#000"
+                    android:textSize="@dimen/textSizeCaption" />
 
                 <TextView
                     android:id="@+id/textViewMonthCurrent"
@@ -263,14 +271,18 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/current__m" />
+                    android:text="@string/current__m"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeCaption" />
 
                 <TextView
                     android:id="@+id/textViewMonthLast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="@string/last__m" />
+                    android:text="@string/last__m"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeCaption" />
 
                 <View
                     android:layout_width="match_parent"
@@ -477,7 +489,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/all_time" />
+                    android:text="@string/all_time"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeCaption" />
 
                 <View
                     android:layout_width="match_parent"
