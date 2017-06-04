@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -14,71 +16,124 @@ import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_MEASUREMENT;
 import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_TIME_IN_SECONDS;
 import static com.example.jason.bloodGlucoseMonitoring.DBHelper.TABLE_MEASUREMENTS;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.beginningWeekDefault;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
+import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodLowSugarDefault;
 import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class StatisticsActivity extends AppCompatActivity {
 
-    public static final int weekInSec = 7 * 24 * 3600; // 7 days
-    public static final int monthWithoutWeekInSec = 23 * 24 * 3600; // 30 - 7 days
+    private static final String TAG = "myLog";
 
     // statistics vars
-    long startWeekInSec;
-    long startMonthInSec;
+    long startLastWeekInSec;
+    long startCurWeekInSec;
+    long startLastMonthInSec;
+    long startCurMonthInSec;
 
     // select query vars
     private static final String KEY_COUNT = "COUNT";
     private static final String KEY_AVG = "AVG";
     private static final String KEY_MIN = "MIN";
     private static final String KEY_MAX = "MAX";
+    private static final boolean KEY_LOW_SUGAR = true;
+    private static final boolean KEY_HIGH_SUGAR = false;
 
-    private boolean prefsUnitBloodSugarMmol;
+    // variables for preferences
+    boolean prefsUnitBloodSugarMmol;
+    float prefsBloodLowSugar;
+    float prefsBloodHighSugar;
+    int prefsBeginningWeek;
+
     String sugarFormat;
 
     Calendar now;
 
     // views
-    TextView tvCountForAllTime;
-    TextView tvCountForWeek;
-    TextView tvCountForMonth;
+    TextView tvAllTimeCount;
+    TextView tvAllTimeCountLow;
+    TextView tvAllTimeCountHigh;
+    TextView tvAllTimeAvg;
+    TextView tvAllTimeMin;
+    TextView tvAllTimeMax;
 
-    TextView tvForWeekAvg;
-    TextView tvForWeekMin;
-    TextView tvForWeekMax;
+    TextView tvCurWeekCount;
+    TextView tvCurWeekCountLow;
+    TextView tvCurWeekCountHigh;
+    TextView tvCurWeekAvg;
+    TextView tvCurWeekMin;
+    TextView tvCurWeekMax;
 
-    TextView tvForMonthAvg;
-    TextView tvForMonthMin;
-    TextView tvForMonthMax;
+    TextView tvCurMonthCount;
+    TextView tvCurMonthCountLow;
+    TextView tvCurMonthCountHigh;
+    TextView tvCurMonthAvg;
+    TextView tvCurMonthMin;
+    TextView tvCurMonthMax;
 
-    TextView tvForAllTimeAvg;
-    TextView tvForAllTimeMin;
-    TextView tvForAllTimeMax;
+    TextView tvLastWeekCount;
+    TextView tvLastWeekCountLow;
+    TextView tvLastWeekCountHigh;
+    TextView tvLastWeekAvg;
+    TextView tvLastWeekMin;
+    TextView tvLastWeekMax;
+
+    TextView tvLastMonthCount;
+    TextView tvLastMonthCountLow;
+    TextView tvLastMonthCountHigh;
+    TextView tvLastMonthAvg;
+    TextView tvLastMonthMin;
+    TextView tvLastMonthMax;
 
     // SQLite database
     DBHelper dbHelper;
-
+    String DATE_FORMAT = "dd/MM EEE- ";
+    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        tvCountForAllTime = (TextView) findViewById(R.id.tvCountForAllTime);
-        tvCountForWeek = (TextView) findViewById(R.id.tvCountForWeek);
-        tvCountForMonth = (TextView) findViewById(R.id.tvCountForMonth);
+        // find views on screen by id
+        tvAllTimeCount = (TextView) findViewById(R.id.tvCountAllTime);
+        tvAllTimeCountLow = (TextView) findViewById(R.id.tvLastAllTimeCountLow);
+        tvAllTimeCountHigh = (TextView) findViewById(R.id.tvLastAllTimeCountHigh);
+        tvAllTimeAvg = (TextView) findViewById(R.id.tvAllTimeAvg);
+        tvAllTimeMin = (TextView) findViewById(R.id.tvAllTimeMin);
+        tvAllTimeMax = (TextView) findViewById(R.id.tvAllTimeMax);
 
-        tvForWeekAvg = (TextView) findViewById(R.id.tvForWeekAvg);
-        tvForWeekMin = (TextView) findViewById(R.id.tvForWeekMin);
-        tvForWeekMax = (TextView) findViewById(R.id.tvForWeekMax);
+        tvCurWeekCount = (TextView) findViewById(R.id.tvCurWeekCount);
+        tvCurWeekCountLow = (TextView) findViewById(R.id.tvCurWeekCountLow);
+        tvCurWeekCountHigh = (TextView) findViewById(R.id.tvCurWeekCountHigh);
+        tvCurWeekAvg = (TextView) findViewById(R.id.tvCurWeekAvg);
+        tvCurWeekMin = (TextView) findViewById(R.id.tvCurWeekMin);
+        tvCurWeekMax = (TextView) findViewById(R.id.tvCurWeekMax);
 
-        tvForMonthAvg = (TextView) findViewById(R.id.tvForMonthAvg);
-        tvForMonthMin = (TextView) findViewById(R.id.tvForMonthMin);
-        tvForMonthMax = (TextView) findViewById(R.id.tvForMonthMax);
+        tvCurMonthCount = (TextView) findViewById(R.id.tvCountCurMonth);
+        tvCurMonthCountLow = (TextView) findViewById(R.id.tvCurMonthCountLow);
+        tvCurMonthCountHigh = (TextView) findViewById(R.id.tvCurMonthCountHigh);
+        tvCurMonthAvg = (TextView) findViewById(R.id.tvCurMonthAvg);
+        tvCurMonthMin = (TextView) findViewById(R.id.tvCurMonthMin);
+        tvCurMonthMax = (TextView) findViewById(R.id.tvCurMonthMax);
 
-        tvForAllTimeAvg = (TextView) findViewById(R.id.tvForAllTimeAvg);
-        tvForAllTimeMin = (TextView) findViewById(R.id.tvForAllTimeMin);
-        tvForAllTimeMax = (TextView) findViewById(R.id.tvForAllTimeMax);
+        tvLastWeekCount = (TextView) findViewById(R.id.tvCountLastWeek);
+        tvLastWeekCountLow = (TextView) findViewById(R.id.tvLastWeekCountLow);
+        tvLastWeekCountHigh = (TextView) findViewById(R.id.tvLastWeekCountHigh);
+        tvLastWeekAvg = (TextView) findViewById(R.id.tvLastWeekAvg);
+        tvLastWeekMin = (TextView) findViewById(R.id.tvLastWeekMin);
+        tvLastWeekMax = (TextView) findViewById(R.id.tvLastWeekMax);
+
+        tvLastMonthCount = (TextView) findViewById(R.id.tvCountLastMonth);
+        tvLastMonthCountLow = (TextView) findViewById(R.id.tvLastMonthCountLow);
+        tvLastMonthCountHigh = (TextView) findViewById(R.id.tvLastMonthCountHigh);
+        tvLastMonthAvg = (TextView) findViewById(R.id.tvLastMonthAvg);
+        tvLastMonthMin = (TextView) findViewById(R.id.tvLastMonthMin);
+        tvLastMonthMax = (TextView) findViewById(R.id.tvLastMonthMax);
 
         dbHelper = new DBHelper(this);
     }
@@ -88,35 +143,42 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onResume();
 
         loadPreferences();
-        SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
-        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL,
-                unitBloodSugarMmolDefault);
 
         if (prefsUnitBloodSugarMmol) sugarFormat = "%1$.1f";
         else sugarFormat = "%1$.1f";
 
-        now = Calendar.getInstance();
+        // get starts last week in seconds
+        resetNowDate();
+        now.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 7);
+        startLastWeekInSec = now.getTimeInMillis() / 1000;
 
+        // get starts current week in seconds
+        resetNowDate();
+        now.set(Calendar.DAY_OF_WEEK, prefsBeginningWeek);
+        if (prefsBeginningWeek < 2) now.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 7);
+        startCurWeekInSec = now.getTimeInMillis() / 1000;
+
+        // get starts current month in seconds
+        resetNowDate();
+        now.set(Calendar.DAY_OF_MONTH, 1);
+        startCurMonthInSec = now.getTimeInMillis() / 1000;
+
+        // get starts last month in seconds
+        resetNowDate();
+        now.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 30);
+        startLastMonthInSec = now.getTimeInMillis() / 1000;
+
+        Log.d(TAG, "onResume: " + sdf.format(startCurWeekInSec * 1000) + prefsBeginningWeek);
+        loadStatistics();
+    }
+
+    // load preferences values
+    public void resetNowDate() {
+        now = Calendar.getInstance();
         // set starts of day  week in seconds
         now.set(Calendar.HOUR_OF_DAY, 0);
         now.set(Calendar.MINUTE, 0);
         now.set(Calendar.SECOND, 0);
-
-        // get starts week in seconds
-        now.setTimeInMillis(now.getTimeInMillis() - weekInSec * 1000);
-        startWeekInSec = now.getTimeInMillis() / 1000;
-
-        // get starts month in seconds
-        now.setTimeInMillis(now.getTimeInMillis() - monthWithoutWeekInSec * 1000);
-        startMonthInSec = now.getTimeInMillis() / 1000;
-        /*
-        // FUTURE - current week and month sugars
-        now.set(Calendar.DAY_OF_WEEK, 2);
-        startWeekInSec = now.getTimeInMillis() / 1000;
-        now.set(Calendar.DAY_OF_MONTH, 1);
-        startMonthInSec = now.getTimeInMillis() / 1000;*/
-
-        loadStatistics();
     }
 
     // load preferences values
@@ -127,6 +189,10 @@ public class StatisticsActivity extends AppCompatActivity {
         // get saved value
         prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE,
                 unitBloodSugarMmolDefault);
+
+        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
+        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
+        prefsBeginningWeek = sharedPref.getInt(KEY_PREFS_BEGINNING_WEEK, beginningWeekDefault);
     }
 
     // get String query
@@ -135,9 +201,28 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     // get String query from a given time
+    public String getStrQuery(String func, float boundarySugar, boolean lowSugar) {
+        String equalitySign;
+        if (lowSugar) equalitySign = " < ";
+        else equalitySign = " > ";
+        return "SELECT " + func + "(" + KEY_MEASUREMENT + ") FROM " + TABLE_MEASUREMENTS
+                + " WHERE " + KEY_MEASUREMENT + equalitySign + String.valueOf(boundarySugar);
+    }
+
+    // get String query from a given time
     public String getStrQuery(String func, long startTimeInSec) {
         return "SELECT " + func + "(" + KEY_MEASUREMENT + ") FROM " + TABLE_MEASUREMENTS
-                + " WHERE " + KEY_TIME_IN_SECONDS + " > " + startTimeInSec;
+                + " WHERE " + KEY_TIME_IN_SECONDS + " > " + String.valueOf(startTimeInSec);
+    }
+
+    // get String query from a given time
+    public String getStrQuery(String func, long startTimeInSec, float boundarySugar, boolean lowSugar) {
+        String equalitySign;
+        if (lowSugar) equalitySign = " < ";
+        else equalitySign = " > ";
+        return "SELECT " + func + "(" + KEY_MEASUREMENT + ") FROM " + TABLE_MEASUREMENTS
+                + " WHERE " + KEY_TIME_IN_SECONDS + " > " + startTimeInSec
+                + " AND " + KEY_MEASUREMENT + equalitySign + String.valueOf(boundarySugar);
     }
 
     // load statistics
@@ -145,99 +230,176 @@ public class StatisticsActivity extends AppCompatActivity {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         // statistics vars ---------------------start
-        //  --counts
-        int countAllTime;
-        int countWeek;
-        int countMonth;
-
-        // weeks sugars
-        float weekSugarAvg;
-        float weekSugarMin;
-        float weekSugarMax;
-
-        // months sugars
-        float monthSugarAvg;
-        float monthSugarMin;
-        float monthSugarMax;
-
         // all times sugars
-        float allTimeSugarAvg;//
-        float allTimeSugarMin;//
-        float allTimeSugarMax;//
+        int allTimeCount;
+        int allTimeCountLow;
+        int allTimeCountHigh;
+        float allTimeSugarAvg;
+        float allTimeSugarMin;
+        float allTimeSugarMax;
+
+        // last weeks sugars
+        int сurWeekCount;
+        int сurWeekCountLow;
+        int сurWeekCountHigh;
+        float curWeekSugarAvg;
+        float curWeekSugarMin;
+        float curWeekSugarMax;
+
+        // last months sugars
+        int сurMonthCount;
+        int сurMonthCountLow;
+        int сurMonthCountHigh;
+        float curMonthSugarAvg;
+        float curMonthSugarMin;
+        float curMonthSugarMax;
+
+        // last weeks sugars
+        int lastWeekCount;
+        int lastWeekCountLow;
+        int lastWeekCountHigh;
+        float lastWeekSugarAvg;
+        float lastWeekSugarMin;
+        float lastWeekSugarMax;
+
+        // last months sugars
+        int lastMonthCount;
+        int lastMonthCountLow;
+        int lastMonthCountHigh;
+        float lastMonthSugarAvg;
+        float lastMonthSugarMin;
+        float lastMonthSugarMax;
         // statistics vars ---------------------end
 
         // get all records count
         Cursor cursor = database.rawQuery(getStrQuery(KEY_COUNT), null);
         cursor.moveToFirst();
-        countAllTime = cursor.getInt(0);
+        allTimeCount = cursor.getInt(0);
 
         // set Info to textViews
-        tvCountForAllTime.setText(String.valueOf(countAllTime));
+        tvAllTimeCount.setText(String.valueOf(allTimeCount));
 
-        if (countAllTime > 0) {
-
+        if (allTimeCount > 0) {
             // work with count
-            // average
-            cursor = database.rawQuery(getStrQuery(KEY_COUNT, startWeekInSec), null);
+            // current week
+            cursor = database.rawQuery(getStrQuery(KEY_COUNT, startCurWeekInSec), null);
             cursor.moveToFirst();
-            countWeek = prefsUnitBloodSugarMmol ? cursor.getInt(0) : cursor.getInt(0) * 18;
+            сurWeekCount = cursor.getInt(0);
 
-            // minimum
-            cursor = database.rawQuery(getStrQuery(KEY_COUNT, startMonthInSec), null);
+            // current month
+            cursor = database.rawQuery(getStrQuery(KEY_COUNT, startCurMonthInSec), null);
             cursor.moveToFirst();
-            countMonth = prefsUnitBloodSugarMmol ? cursor.getInt(0) : cursor.getInt(0) * 18;
+            сurMonthCount = cursor.getInt(0);
+
+            // last week
+            cursor = database.rawQuery(getStrQuery(KEY_COUNT, startLastWeekInSec), null);
+            cursor.moveToFirst();
+            lastWeekCount = cursor.getInt(0);
+
+            // last month
+            cursor = database.rawQuery(getStrQuery(KEY_COUNT, startLastMonthInSec), null);
+            cursor.moveToFirst();
+            lastMonthCount = cursor.getInt(0);
 
             // set Info to textViews
-            tvCountForWeek.setText(String.valueOf(countWeek));
-            tvCountForMonth.setText(String.valueOf(countMonth));
+            tvCurWeekCount.setText(String.valueOf(сurWeekCount));
+            tvCurMonthCount.setText(String.valueOf(сurMonthCount));
+            tvLastWeekCount.setText(String.valueOf(lastWeekCount));
+            tvLastMonthCount.setText(String.valueOf(lastMonthCount));
 
-            // work with week sugars
-            if (countWeek > 0) {
+            // work with last week sugars
+            if (lastWeekCount > 0) {
                 // average
-                cursor = database.rawQuery(getStrQuery(KEY_AVG, startWeekInSec), null);
+                cursor = database.rawQuery(getStrQuery(KEY_AVG, startLastWeekInSec), null);
                 cursor.moveToFirst();
-                weekSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastWeekSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
 
                 // minimum
-                cursor = database.rawQuery(getStrQuery(KEY_MIN, startWeekInSec), null);
+                cursor = database.rawQuery(getStrQuery(KEY_MIN, startLastWeekInSec), null);
                 cursor.moveToFirst();
-                weekSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastWeekSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
 
                 // maximum
-                cursor = database.rawQuery(getStrQuery(KEY_MAX, startWeekInSec), null);
+                cursor = database.rawQuery(getStrQuery(KEY_MAX, startLastWeekInSec), null);
                 cursor.moveToFirst();
-                weekSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastWeekSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
 
                 // set Info to textViews
-                tvForWeekAvg.setText(String.format(Locale.ENGLISH, sugarFormat, weekSugarAvg));
-                tvForWeekMin.setText(String.format(Locale.ENGLISH, sugarFormat, weekSugarMin));
-                tvForWeekMax.setText(String.format(Locale.ENGLISH, sugarFormat, weekSugarMax));
+                tvLastWeekAvg.setText(String.format(Locale.ENGLISH, sugarFormat, lastWeekSugarAvg));
+                tvLastWeekMin.setText(String.format(Locale.ENGLISH, sugarFormat, lastWeekSugarMin));
+                tvLastWeekMax.setText(String.format(Locale.ENGLISH, sugarFormat, lastWeekSugarMax));
             }
 
-            // work with month sugars
-            if (countWeek > 0) {
+            // work with last month sugars
+            if (lastMonthCount > 0) {
                 // average
-                cursor = database.rawQuery(getStrQuery(KEY_AVG, startMonthInSec), null);
+                cursor = database.rawQuery(getStrQuery(KEY_AVG, startLastMonthInSec), null);
                 cursor.moveToFirst();
-                monthSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastMonthSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
 
                 // minimum
-                cursor = database.rawQuery(getStrQuery(KEY_MIN, startMonthInSec), null);
+                cursor = database.rawQuery(getStrQuery(KEY_MIN, startLastMonthInSec), null);
                 cursor.moveToFirst();
-                monthSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastMonthSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
 
                 // maximum
-                cursor = database.rawQuery(getStrQuery(KEY_MAX, startMonthInSec), null);
+                cursor = database.rawQuery(getStrQuery(KEY_MAX, startLastMonthInSec), null);
                 cursor.moveToFirst();
-                monthSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastMonthSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
 
                 // set Info to textViews
-                tvForMonthAvg.setText(String.format(Locale.ENGLISH, sugarFormat, monthSugarAvg));
-                tvForMonthMin.setText(String.format(Locale.ENGLISH, sugarFormat, monthSugarMin));
-                tvForMonthMax.setText(String.format(Locale.ENGLISH, sugarFormat, monthSugarMax));
+                tvLastMonthAvg.setText(String.format(Locale.ENGLISH, sugarFormat, lastMonthSugarAvg));
+                tvLastMonthMin.setText(String.format(Locale.ENGLISH, sugarFormat, lastMonthSugarMin));
+                tvLastMonthMax.setText(String.format(Locale.ENGLISH, sugarFormat, lastMonthSugarMax));
             }
 
-            // work with all time sugars
+            // current week sugars work
+            if (сurWeekCount > 0) {
+                // average
+                cursor = database.rawQuery(getStrQuery(KEY_AVG, startCurMonthInSec), null);
+                cursor.moveToFirst();
+                curWeekSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+
+                // minimum
+                cursor = database.rawQuery(getStrQuery(KEY_MIN, startCurWeekInSec), null);
+                cursor.moveToFirst();
+                curWeekSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+
+                // maximum
+                cursor = database.rawQuery(getStrQuery(KEY_MAX, startCurWeekInSec), null);
+                cursor.moveToFirst();
+                curWeekSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+
+                // set Info to textViews
+                tvCurWeekAvg.setText(String.format(Locale.ENGLISH, sugarFormat, curWeekSugarAvg));
+                tvCurWeekMin.setText(String.format(Locale.ENGLISH, sugarFormat, curWeekSugarMin));
+                tvCurWeekMax.setText(String.format(Locale.ENGLISH, sugarFormat, curWeekSugarMax));
+            }
+
+            //  current month sugars work
+            if (сurMonthCount > 0) {
+                // average
+                cursor = database.rawQuery(getStrQuery(KEY_AVG, startCurMonthInSec), null);
+                cursor.moveToFirst();
+                curMonthSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+
+                // minimum
+                cursor = database.rawQuery(getStrQuery(KEY_MIN, startCurMonthInSec), null);
+                cursor.moveToFirst();
+                curMonthSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+
+                // maximum
+                cursor = database.rawQuery(getStrQuery(KEY_MAX, startCurMonthInSec), null);
+                cursor.moveToFirst();
+                curMonthSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+
+                // set Info to textViews
+                tvCurMonthAvg.setText(String.format(Locale.ENGLISH, sugarFormat, curMonthSugarAvg));
+                tvCurMonthMin.setText(String.format(Locale.ENGLISH, sugarFormat, curMonthSugarMin));
+                tvCurMonthMax.setText(String.format(Locale.ENGLISH, sugarFormat, curMonthSugarMax));
+            }
+
+            // all time sugars work
             // average
             cursor = database.rawQuery(getStrQuery(KEY_AVG), null);
             cursor.moveToFirst();
@@ -254,9 +416,100 @@ public class StatisticsActivity extends AppCompatActivity {
             allTimeSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
 
             // set Info to textViews
-            tvForAllTimeAvg.setText(String.format(Locale.ENGLISH, sugarFormat, allTimeSugarAvg));
-            tvForAllTimeMin.setText(String.format(Locale.ENGLISH, sugarFormat, allTimeSugarMin));
-            tvForAllTimeMax.setText(String.format(Locale.ENGLISH, sugarFormat, allTimeSugarMax));
+            tvAllTimeAvg.setText(String.format(Locale.ENGLISH, sugarFormat, allTimeSugarAvg));
+            tvAllTimeMin.setText(String.format(Locale.ENGLISH, sugarFormat, allTimeSugarMin));
+            tvAllTimeMax.setText(String.format(Locale.ENGLISH, sugarFormat, allTimeSugarMax));
+
+
+            // count of low and high sugars for all time
+            cursor = database.rawQuery(getStrQuery(KEY_COUNT, prefsBloodLowSugar, KEY_LOW_SUGAR), null);
+            cursor.moveToFirst();
+            allTimeCountLow = cursor.getInt(0);
+
+            cursor = database.rawQuery(getStrQuery(KEY_COUNT, prefsBloodHighSugar, KEY_HIGH_SUGAR), null);
+            cursor.moveToFirst();
+            allTimeCountHigh = cursor.getInt(0);
+
+            // set Info to textViews
+            tvAllTimeCountLow.setText(String.valueOf(allTimeCountLow));
+            tvAllTimeCountHigh.setText(String.valueOf(allTimeCountHigh));
+
+            //  count of low sugars work
+            if (allTimeCountLow > 0) {
+                // current month low sugars
+                cursor = database.rawQuery(getStrQuery(KEY_COUNT, startCurMonthInSec, prefsBloodLowSugar, KEY_LOW_SUGAR), null);
+                cursor.moveToFirst();
+                сurMonthCountLow = cursor.getInt(0);
+
+                // last month low sugars
+                cursor = database.rawQuery(getStrQuery(KEY_COUNT, startLastMonthInSec, prefsBloodLowSugar, KEY_LOW_SUGAR), null);
+                cursor.moveToFirst();
+                lastMonthCountLow = cursor.getInt(0);
+
+                // current week low sugars
+                if (сurMonthCountLow > 0) {
+                    cursor = database.rawQuery(getStrQuery(KEY_COUNT, startCurWeekInSec, prefsBloodLowSugar, KEY_LOW_SUGAR), null);
+                    cursor.moveToFirst();
+                    сurWeekCountLow = cursor.getInt(0);
+                } else сurWeekCountLow = 0;
+
+                // last week low sugars
+                if (lastMonthCountLow > 0) {
+                    cursor = database.rawQuery(getStrQuery(KEY_COUNT, startLastWeekInSec, prefsBloodLowSugar, KEY_LOW_SUGAR), null);
+                    cursor.moveToFirst();
+                    lastWeekCountLow = cursor.getInt(0);
+                } else lastWeekCountLow = 0;
+
+                // set count of low sugars Info to textViews
+                tvCurWeekCountLow.setText(String.valueOf(сurWeekCountLow));
+                tvLastWeekCountLow.setText(String.valueOf(lastWeekCountLow));
+
+            } else {
+                сurMonthCountLow = 0;
+                lastMonthCountLow = 0;
+            }
+
+            //  count of high sugars work
+            if (allTimeCountHigh > 0) {
+                // current month high sugars
+                cursor = database.rawQuery(getStrQuery(KEY_COUNT, startCurMonthInSec, prefsBloodHighSugar, KEY_HIGH_SUGAR), null);
+                cursor.moveToFirst();
+                сurMonthCountHigh = cursor.getInt(0);
+
+                // last month high sugars
+                cursor = database.rawQuery(getStrQuery(KEY_COUNT, startLastMonthInSec, prefsBloodHighSugar, KEY_HIGH_SUGAR), null);
+                cursor.moveToFirst();
+                lastMonthCountHigh = cursor.getInt(0);
+
+                // current week high sugars
+                if (сurMonthCountHigh > 0) {
+                    cursor = database.rawQuery(getStrQuery(KEY_COUNT, startCurWeekInSec, prefsBloodHighSugar, KEY_HIGH_SUGAR), null);
+                    cursor.moveToFirst();
+                    сurWeekCountHigh = cursor.getInt(0);
+                } else сurWeekCountHigh = 0;
+
+                // last week high sugars
+                if (lastMonthCountHigh > 0) {
+                    cursor = database.rawQuery(getStrQuery(KEY_COUNT, startLastWeekInSec, prefsBloodHighSugar, KEY_HIGH_SUGAR), null);
+                    cursor.moveToFirst();
+                    lastWeekCountHigh = cursor.getInt(0);
+                } else lastWeekCountHigh = 0;
+
+                // set count of high sugars Info to textViews
+                tvCurWeekCountHigh.setText(String.valueOf(сurWeekCountHigh));
+                tvLastWeekCountHigh.setText(String.valueOf(lastWeekCountHigh));
+
+            } else {
+                сurMonthCountHigh = 0;
+                lastMonthCountHigh = 0;
+            }
+
+            // set count of low and high sugars Info to textViews
+            tvCurMonthCountLow.setText(String.valueOf(сurMonthCountLow));
+            tvLastMonthCountLow.setText(String.valueOf(lastMonthCountLow));
+
+            tvCurMonthCountHigh.setText(String.valueOf(сurMonthCountHigh));
+            tvLastMonthCountHigh.setText(String.valueOf(lastMonthCountHigh));
         }
         cursor.close();
         database.close();

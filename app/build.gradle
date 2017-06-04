@@ -16,12 +16,12 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
-        versionName '0.01'
+        versionName '0.02'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

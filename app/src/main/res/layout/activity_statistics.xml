@@ -14,20 +14,14 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_item_padding">
+        android:paddingLeft="@dimen/activity_item_padding"
+        android:paddingRight="@dimen/activity_item_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textViewCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingBottom="@dimen/activity_item_padding"
-                android:text="@string/count" />
+            android:orientation="vertical"
+            android:paddingRight="@dimen/activity_item_padding">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -35,40 +29,34 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewCountForAllTime"
+                    android:id="@+id/textViewWeekSugars"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/for_all_time" />
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/week" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_alignEnd="@+id/textViewWeekSugars"
+                    android:layout_below="@+id/textViewWeekSugars"
+                    android:background="@color/colorPrimary" />
 
                 <TextView
-                    android:id="@+id/tvCountForAllTime"
+                    android:id="@+id/textViewWeekCurrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/current__f" />
+
+                <TextView
+                    android:id="@+id/textViewWeekLast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="@string/_nul" />
-            </RelativeLayout>
+                    android:text="@string/last__f" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textViewCountForWeek"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/for_week" />
-
-                <TextView
-                    android:id="@+id/tvCountForWeek"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/_nul" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -77,34 +65,29 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewCountForMonth"
+                    android:id="@+id/textViewCountWeek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="@string/for_month" />
+                    android:text="@string/total" />
 
                 <TextView
-                    android:id="@+id/tvCountForMonth"
+                    android:id="@+id/tvCurWeekCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvCountLastWeek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:layout_marginBottom="@dimen/activity_item_padding"
-                android:layout_marginTop="@dimen/activity_item_padding"
-                android:background="@color/colorPrimary" />
-
-            <TextView
-                android:id="@+id/textViewWeekSugars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/week" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -112,7 +95,67 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForWeekAvg"
+                    android:id="@+id/textViewWeekCountLowSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/_low" />
+
+                <TextView
+                    android:id="@+id/tvCurWeekCountLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastWeekCountLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewWeekCountHighSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/_high" />
+
+                <TextView
+                    android:id="@+id/tvCurWeekCountHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastWeekCountHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewWeekAvg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -120,11 +163,20 @@
                     android:text="@string/average" />
 
                 <TextView
-                    android:id="@+id/tvForWeekAvg"
+                    android:id="@+id/tvCurWeekAvg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastWeekAvg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -133,7 +185,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForWeekMin"
+                    android:id="@+id/textViewWeekMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -141,11 +193,20 @@
                     android:text="@string/minimum" />
 
                 <TextView
-                    android:id="@+id/tvForWeekMin"
+                    android:id="@+id/tvCurWeekMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastWeekMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -154,7 +215,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForWeekMax"
+                    android:id="@+id/textViewWeekMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -162,26 +223,93 @@
                     android:text="@string/maximum" />
 
                 <TextView
-                    android:id="@+id/tvForWeekMax"
+                    android:id="@+id/tvCurWeekMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastWeekMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_marginBottom="@dimen/activity_item_padding"
-                android:layout_marginTop="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_pref_padding"
                 android:background="@color/colorPrimary" />
 
-            <TextView
-                android:id="@+id/textViewMonthSugars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/month" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewMonthSugars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/month" />
+
+                <TextView
+                    android:id="@+id/textViewMonthCurrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/current__m" />
+
+                <TextView
+                    android:id="@+id/textViewMonthLast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/last__m" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_alignEnd="@+id/textViewMonthSugars"
+                    android:layout_below="@+id/textViewMonthSugars"
+                    android:background="@color/colorPrimary" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewCountMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/tvCountCurMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvCountLastMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -189,7 +317,67 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForMonthAvg"
+                    android:id="@+id/textViewMonthCountLowSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/_low" />
+
+                <TextView
+                    android:id="@+id/tvCurMonthCountLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastMonthCountLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewMonthCountHighSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/_high" />
+
+                <TextView
+                    android:id="@+id/tvCurMonthCountHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastMonthCountHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewMonthAvg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -197,11 +385,20 @@
                     android:text="@string/average" />
 
                 <TextView
-                    android:id="@+id/tvForMonthAvg"
+                    android:id="@+id/tvCurMonthAvg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastMonthAvg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -210,7 +407,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForMonthMin"
+                    android:id="@+id/textViewMonthMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -218,11 +415,20 @@
                     android:text="@string/minimum" />
 
                 <TextView
-                    android:id="@+id/tvForMonthMin"
+                    android:id="@+id/tvCurMonthMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastMonthMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -231,7 +437,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForMonthMax"
+                    android:id="@+id/textViewMonthMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -239,26 +445,48 @@
                     android:text="@string/maximum" />
 
                 <TextView
-                    android:id="@+id/tvForMonthMax"
+                    android:id="@+id/tvCurMonthMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_nul" />
+
+                <TextView
+                    android:id="@+id/tvLastMonthMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_marginBottom="@dimen/activity_item_padding"
-                android:layout_marginTop="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_pref_padding"
                 android:background="@color/colorPrimary" />
 
-            <TextView
-                android:id="@+id/textViewAllTimeSugars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/all_time" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewAllTimeSugars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/all_time" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_alignEnd="@+id/textViewAllTimeSugars"
+                    android:layout_below="@+id/textViewAllTimeSugars"
+                    android:background="@color/colorPrimary" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -266,7 +494,73 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForAllTimeAvg"
+                    android:id="@+id/textViewCountAllTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/tvCountAllTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewAllTimeCountLowSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/_low" />
+
+                <TextView
+                    android:id="@+id/tvLastAllTimeCountLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewAllTimeCountHighSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/_high" />
+
+                <TextView
+                    android:id="@+id/tvLastAllTimeCountHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/_nul" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewAllTimeAvg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -274,11 +568,12 @@
                     android:text="@string/average" />
 
                 <TextView
-                    android:id="@+id/tvForAllTimeAvg"
+                    android:id="@+id/tvAllTimeAvg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -287,7 +582,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForAllTimeMin"
+                    android:id="@+id/textViewAllTimeMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -295,11 +590,12 @@
                     android:text="@string/minimum" />
 
                 <TextView
-                    android:id="@+id/tvForAllTimeMin"
+                    android:id="@+id/tvAllTimeMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -308,7 +604,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewForAllTimeMax"
+                    android:id="@+id/textViewAllTimeMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -316,25 +612,22 @@
                     android:text="@string/maximum" />
 
                 <TextView
-                    android:id="@+id/tvForAllTimeMax"
+                    android:id="@+id/tvAllTimeMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/_nul" />
+
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_marginTop="@dimen/activity_item_padding"
+                android:layout_marginTop="@dimen/activity_item_pref_padding"
                 android:background="@color/colorPrimary" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:layout_marginBottom="@dimen/activity_item_padding"
-                android:layout_marginTop="@dimen/activity_item_padding"
-                android:background="@color/colorPrimary" />
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

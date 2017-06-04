@@ -88,4 +88,19 @@
     <string name="edit_measurement">Редактировать измерение</string>
     <string name="_100_0">100.0</string>
     <string name="_99_9">99.9</string>
+    <string name="bu">ХЕ</string>
+    <string name="gr">гр</string>
+    <string name="current">Текущее</string>
+    <string name="last">Последнее</string>
+    <string name="_high">Высоких</string>
+    <string name="_low">Низких</string>
+    <string name="total">Всего</string>
+    <string name="current__f">Текущая</string>
+    <string name="current__m">Текущий</string>
+    <string name="last__f">Последняя</string>
+    <string name="last__m">Последний</string>
+    <string name="dws_mon">Пн</string>
+    <string name="dws_sun">Вс</string>
+    <string name="dws_sut">Сб</string>
+    <string name="beginning_of_the_week">Начало недели</string>
 </resources>

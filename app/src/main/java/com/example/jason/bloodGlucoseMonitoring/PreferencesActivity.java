@@ -44,6 +44,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final boolean diabetes1TypeDefault = true;
     protected static final boolean unitBloodSugarMmolDefault = true;
     protected static final boolean timeFormat24hDefault = true;
+    protected static final int beginningWeekDefault = 2;
 
     // keys
     protected static final String KEY_PREFS = "settings_pref";
@@ -54,6 +55,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final String KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT = "amountCarbohydratesInBreadUnit";
     protected static final String KEY_PREFS_FIRST_RUN_AGREEMENT = "firstRunAgreement";
     protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24hDefault";
+    protected static final String KEY_PREFS_BEGINNING_WEEK = "beginningWeek";
 
     // variables for preferences
     float prefsBloodLowSugar;
@@ -62,6 +64,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     boolean prefsDiabetes1Type;
     boolean prefsUnitBloodSugarMmol;
     boolean prefsTimeFormat24h;
+    int prefsBeginningWeek;
     boolean firstRun;
 
     // temporary variables
@@ -77,21 +80,25 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
     RadioButton rbDiabetesType1;
     RadioButton rbDiabetesType2;
-    RadioButton rbTimeFormat12h;
-    RadioButton rbTimeFormat24h;
     RadioButton rbUnitOfBloodSugarMmolL;
     RadioButton rbUnitOfBloodSugarMgdL;
+    RadioButton rbTimeFormat12h;
+    RadioButton rbTimeFormat24h;
+    RadioButton rbBeginningWeekSat;
+    RadioButton rbBeginningWeekSun;
+    RadioButton rbBeginningWeekMon;
 
     RadioGroup rgDiabetesType;
     RadioGroup rgUnitOfBloodSugar;
     RadioGroup rgTimeFormat;
+    RadioGroup rgBeginningWeek;
 
     EditText etBloodLowSugar;
     EditText etBloodHighSugar;
     EditText etAmountCarb;
 
     View vBtnDelMeas;
-    
+
     // SQLite database
     DBHelper dbHelper;
     //-------------------------------------DECLARE BLOCK END--------------------------------------//
@@ -114,14 +121,18 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         rbDiabetesType1 = (RadioButton) findViewById(R.id.rbDiabetesType1);
         rbDiabetesType2 = (RadioButton) findViewById(R.id.rbDiabetesType2);
-        rbTimeFormat12h = (RadioButton) findViewById(R.id.rbTimeFormat12h);
-        rbTimeFormat24h = (RadioButton) findViewById(R.id.rbTimeFormat24h);
         rbUnitOfBloodSugarMmolL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMmolL);
         rbUnitOfBloodSugarMgdL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMgdL);
+        rbTimeFormat12h = (RadioButton) findViewById(R.id.rbTimeFormat12h);
+        rbTimeFormat24h = (RadioButton) findViewById(R.id.rbTimeFormat24h);
+        rbBeginningWeekSat = (RadioButton) findViewById(R.id.rbBeginningWeekSat);
+        rbBeginningWeekSun = (RadioButton) findViewById(R.id.rbBeginningWeekSun);
+        rbBeginningWeekMon = (RadioButton) findViewById(R.id.rbBeginningWeekMon);
 
         rgDiabetesType = (RadioGroup) findViewById(R.id.rgDiabetesType);
         rgUnitOfBloodSugar = (RadioGroup) findViewById(R.id.rgUnitOfBloodSugar);
         rgTimeFormat = (RadioGroup) findViewById(R.id.rgTimeFormat);
+        rgBeginningWeek = (RadioGroup) findViewById(R.id.rgBeginningWeek);
 
         etBloodLowSugar = (EditText) findViewById(R.id.etBloodLowSugar);
         etBloodHighSugar = (EditText) findViewById(R.id.etBloodHighSugar);
@@ -175,6 +186,20 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         if (prefsTimeFormat24h) rbTimeFormat24h.setChecked(true);
         else rbTimeFormat12h.setChecked(true);
+
+        switch (prefsBeginningWeek) {
+            case 2:
+                rbBeginningWeekMon.setChecked(true);
+                break;
+            case 1:
+                rbBeginningWeekSun.setChecked(true);
+                break;
+            case 0:
+                rbBeginningWeekSat.setChecked(true);
+                break;
+            default:
+                break;
+        }
 
         // event on text change in editTexts
         etBloodLowSugar.addTextChangedListener(new TextWatcher() {
@@ -298,6 +323,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                 preferencesChanged(true, true);
             }
         });
+        rgBeginningWeek.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                preferencesChanged(true, true);
+            }
+        });
 
         // get firstRunAgreement value
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -408,6 +439,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         // get saved value for function of interface
         prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, timeFormat24hDefault);
+        prefsBeginningWeek = sharedPref.getInt(KEY_PREFS_BEGINNING_WEEK, beginningWeekDefault);
     }
 
     // save preferences in sharedPreferences
@@ -441,6 +473,25 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         if (rbTimeFormat24h.isChecked()) prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
         else prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, false);
 
+
+
+        switch (rgBeginningWeek.getCheckedRadioButtonId()) {
+            case R.id.rbBeginningWeekSat:
+                prefEditor.putInt(KEY_PREFS_BEGINNING_WEEK, 0);
+                break;
+
+            case R.id.rbBeginningWeekSun:
+                prefEditor.putInt(KEY_PREFS_BEGINNING_WEEK, 1);
+                break;
+
+            case R.id.rbBeginningWeekMon:
+                prefEditor.putInt(KEY_PREFS_BEGINNING_WEEK, 2);
+                break;
+
+            default:
+                break;
+        }
+
         // save change of preferences
         prefEditor.apply();
 
@@ -467,6 +518,20 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         if (timeFormat24hDefault) rbTimeFormat24h.setChecked(true);
         else rbTimeFormat12h.setChecked(true);
+
+        switch (beginningWeekDefault) {
+            case 2:
+                rbBeginningWeekMon.setChecked(true);
+                break;
+            case 1:
+                rbBeginningWeekSun.setChecked(true);
+                break;
+            case 0:
+                rbBeginningWeekSat.setChecked(true);
+                break;
+            default:
+                break;
+        }
 
         // set flag of changing settings to true and enabled button savePreferences
         preferencesChanged(true, true);

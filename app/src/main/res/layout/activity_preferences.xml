@@ -14,6 +14,8 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:padding="@dimen/activity_item_padding">
 
@@ -63,14 +65,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/_2_type" />
+
                     </RadioGroup>
+
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="@dimen/activity_item_padding"
-                    android:layout_marginTop="@dimen/activity_item_padding"
+                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
+                    android:layout_marginTop="@dimen/activity_item_pref_padding"
                     android:background="@color/colorPrimary" />
 
                 <RelativeLayout
@@ -108,14 +112,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mg_dl" />
+
                     </RadioGroup>
+
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="@dimen/activity_item_padding"
-                    android:layout_marginTop="@dimen/activity_item_padding"
+                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
+                    android:layout_marginTop="@dimen/activity_item_pref_padding"
                     android:background="@color/colorPrimary" />
 
                 <RelativeLayout
@@ -149,8 +155,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="@dimen/activity_item_padding"
-                    android:layout_marginTop="@dimen/activity_item_padding"
+                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
+                    android:layout_marginTop="@dimen/activity_item_pref_padding"
                     android:background="@color/colorPrimary" />
 
                 <RelativeLayout
@@ -184,8 +190,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="@dimen/activity_item_padding"
-                    android:layout_marginTop="@dimen/activity_item_padding"
+                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
+                    android:layout_marginTop="@dimen/activity_item_pref_padding"
                     android:background="@color/colorPrimary" />
 
                 <RelativeLayout
@@ -214,13 +220,14 @@
                         android:layout_toStartOf="@+id/etAmountCarbInBreadUnit"
                         android:maxLines="2"
                         android:text="@string/amount_of_carbohydrates_in_bread_unit" />
+
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dip"
-                    android:layout_marginBottom="@dimen/activity_item_padding"
-                    android:layout_marginTop="@dimen/activity_item_padding"
+                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
+                    android:layout_marginTop="@dimen/activity_item_pref_padding"
                     android:background="@color/colorPrimary" />
 
                 <RelativeLayout
@@ -256,14 +263,67 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/_24h" />
+
                     </RadioGroup>
+
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="@dimen/activity_item_padding"
-                    android:layout_marginTop="@dimen/activity_item_padding"
+                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
+                    android:layout_marginTop="@dimen/activity_item_pref_padding"
+                    android:background="@color/colorPrimary" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewBeginningWeek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@+id/rgBeginningWeek"
+                        android:text="@string/beginning_of_the_week" />
+
+                    <RadioGroup
+                        android:id="@+id/rgBeginningWeek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbBeginningWeekSat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/dws_sut" />
+
+                        <RadioButton
+                            android:id="@+id/rbBeginningWeekSun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dws_sun" />
+
+                        <RadioButton
+                            android:id="@+id/rbBeginningWeekMon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dws_mon" />
+
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
+                    android:layout_marginTop="@dimen/activity_item_pref_padding"
                     android:background="@color/colorPrimary" />
 
                 <Button
@@ -279,7 +339,9 @@
                     android:layout_marginLeft="@dimen/activity_item_padding"
                     android:layout_marginRight="@dimen/activity_item_padding"
                     android:background="@color/colorPrimary" />
+
             </LinearLayout>
+
         </ScrollView>
 
         <View
@@ -322,5 +384,7 @@
             android:enabled="false"
             android:minWidth="140dp"
             android:text="@string/save" />
+
     </RelativeLayout>
+
 </RelativeLayout>

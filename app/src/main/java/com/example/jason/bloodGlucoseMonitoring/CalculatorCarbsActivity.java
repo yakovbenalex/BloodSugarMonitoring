@@ -64,7 +64,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity {
         prefsAmountCarbsInBreadUnit = sharedPref.getFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT, amountCarbsInBreadUnitDefault);
 
         // set amount of carbs in bread unit
-        tvCarbsInBreadUnit.setText("1 BU = " + prefsAmountCarbsInBreadUnit + " gr");
+        tvCarbsInBreadUnit.setText("1 " + getString(R.string.bu) + " = " + prefsAmountCarbsInBreadUnit + " " + getString(R.string.gr));
 
         // editTexts listener
         etGramsInProduct.addTextChangedListener(new TextWatcher() {

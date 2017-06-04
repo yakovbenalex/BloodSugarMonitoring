@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_item_padding">7dp</dimen>
+    <dimen name="activity_item_pref_padding">4dp</dimen>
 
     <!-- text -->
     <dimen name="textSizeNormal">17sp</dimen>

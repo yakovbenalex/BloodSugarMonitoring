@@ -77,6 +77,9 @@
     <string name="confirm">Confirm</string>
     <string name="click_the_back_button_again_to_cancel_the_agreement">Click the back button again to cancel the agreement!</string>
     <string name="information">Information</string>
+    <string name="dws_sut">Sut</string>
+    <string name="dws_sun">Sun</string>
+    <string name="dws_mon">Mon</string>
 
     <!--  -->
     <string name="count">Count</string>
@@ -103,6 +106,18 @@
     <string name="edit_measurement">Edit measurement</string>
     <string name="_99_9">99.9</string>
     <string name="_100_0">100.0</string>
+    <string name="bu">BU</string>
+    <string name="gr">gr</string>
+    <string name="current">Current</string>
+    <string name="current__f">Current</string>
+    <string name="current__m">Current</string>
+    <string name="last">Last</string>
+    <string name="total">Total</string>
+    <string name="_high">High</string>
+    <string name="_low">Low</string>
+    <string name="last__f">last</string>
+    <string name="last__m">last</string>
 
+    <string name="beginning_of_the_week">Beginning of the week</string>
 
 </resources>
