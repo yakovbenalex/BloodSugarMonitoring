@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.content.Context;
 import android.graphics.Color;

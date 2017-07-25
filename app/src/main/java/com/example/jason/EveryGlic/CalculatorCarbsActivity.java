@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.isEmpty;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.amountCarbsInBreadUnitDefault;
+import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
+import static com.example.jason.EveryGlic.MyWorks.isEmpty;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
+import static com.example.jason.EveryGlic.PreferencesActivity.amountCarbsInBreadUnitDefault;
 
 public class CalculatorCarbsActivity extends AppCompatActivity {
     // keys

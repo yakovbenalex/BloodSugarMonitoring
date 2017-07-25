@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 class DBHelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "bloodGlucoseMonitoring";
+    static final String DATABASE_NAME = "bloodGlucoseMonitoring";
     static final String TABLE_MEASUREMENTS = "measurements";
 
     static final String KEY_ID = "_id";

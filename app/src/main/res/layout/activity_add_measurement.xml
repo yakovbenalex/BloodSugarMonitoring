@@ -6,7 +6,7 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.example.jason.bloodGlucoseMonitoring.AddMeasurementActivity">
+    tools:context="com.example.jason.EveryGlic.AddMeasurementActivity">
 
     <View
         android:layout_width="match_parent"

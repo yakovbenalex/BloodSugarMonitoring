@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -6,7 +6,7 @@
     <string name="agreement">Agreement</string>
     <string name="about">About</string>
     <string name="calculator_of_carbs">Calculator of carbs</string>
-    <string name="developerInfo">Developer - Opalev Yakov, FSPO GUAP, group C324.</string>
+    <string name="developerInfo">Developer - Opalev Yakov.</string>
 
     <!-- used in action menu -->
     <string name="action_settings">Settings</string>

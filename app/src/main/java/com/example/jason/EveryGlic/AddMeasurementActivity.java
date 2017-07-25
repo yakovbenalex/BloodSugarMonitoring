@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
@@ -23,15 +23,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.numberInRange;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.requiredFiledEmpty;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.roundUp;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.setFocus;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
+import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
+import static com.example.jason.EveryGlic.MyWorks.numberInRange;
+import static com.example.jason.EveryGlic.MyWorks.requiredFiledEmpty;
+import static com.example.jason.EveryGlic.MyWorks.roundUp;
+import static com.example.jason.EveryGlic.MyWorks.setFocus;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static com.example.jason.EveryGlic.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class AddMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
     // limit to back starts on 1970 (this is enough)

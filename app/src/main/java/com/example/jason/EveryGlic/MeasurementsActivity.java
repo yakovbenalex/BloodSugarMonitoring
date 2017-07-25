@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,16 +12,16 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_TIME_IN_SECONDS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodLowSugarDefault;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.timeFormat24hDefault;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
+import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static com.example.jason.EveryGlic.PreferencesActivity.bloodHighSugarDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.bloodLowSugarDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.timeFormat24hDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class MeasurementsActivity extends AppCompatActivity {
     // views

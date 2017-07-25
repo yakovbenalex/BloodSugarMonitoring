@@ -322,8 +322,47 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="@dimen/activity_item_pref_padding"
                     android:layout_marginTop="@dimen/activity_item_pref_padding"
+                    android:background="@color/colorPrimary" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnBackupDB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Backup" />
+
+                        <View
+                            android:id="@+id/vBuRestoreDB"
+                            android:layout_width="1dip"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPrimary" />
+
+                        <Button
+                            android:id="@+id/btnRestoreDB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Restore" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/vBtnsBuRestore"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
                     android:background="@color/colorPrimary" />
 
                 <Button
@@ -336,8 +375,6 @@
                     android:id="@+id/vBtnDelMeas"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginLeft="@dimen/activity_item_padding"
-                    android:layout_marginRight="@dimen/activity_item_padding"
                     android:background="@color/colorPrimary" />
 
             </LinearLayout>

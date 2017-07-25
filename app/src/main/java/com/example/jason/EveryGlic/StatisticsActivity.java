@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -12,18 +12,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_MEASUREMENT;
-import static com.example.jason.bloodGlucoseMonitoring.DBHelper.KEY_TIME_IN_SECONDS;
-import static com.example.jason.bloodGlucoseMonitoring.DBHelper.TABLE_MEASUREMENTS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.beginningWeekDefault;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodHighSugarDefault;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.bloodLowSugarDefault;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.unitBloodSugarMmolDefault;
+import static com.example.jason.EveryGlic.DBHelper.KEY_MEASUREMENT;
+import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static com.example.jason.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
+import static com.example.jason.EveryGlic.PreferencesActivity.beginningWeekDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.bloodHighSugarDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.bloodLowSugarDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.unitBloodSugarMmolDefault;
 
 public class StatisticsActivity extends AppCompatActivity {
 

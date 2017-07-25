@@ -40,7 +40,7 @@
     <string name="all_required_fields_must_be_filled">Все обязательные поля должны быть заполнены</string>
     <string name="for_all_time">За всё время</string>
     <string name="delete_all_measurements">Удалить все измерения</string>
-    <string name="developerInfo">Разработчик - Опалев Яков, ФСПО ГУАП, группа С324.</string>
+    <string name="developerInfo">Разработчик - Опалев Яков.</string>
     <string name="measurement_has_been_saved">Измерение сохранено.</string>
     <string name="amount_of_bread_units">Количество хлебных единиц</string>
     <string name="amount_of_carbohydrates_in_bread_unit">Количество углеводов в хлебной единице</string>

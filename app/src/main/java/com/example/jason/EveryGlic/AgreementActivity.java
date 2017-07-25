@@ -1,4 +1,4 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.bloodGlucoseMonitoring.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 
 public class AgreementActivity extends AppCompatActivity implements View.OnClickListener {
     // temporary variables

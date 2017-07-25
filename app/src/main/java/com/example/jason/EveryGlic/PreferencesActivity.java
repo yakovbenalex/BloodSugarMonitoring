@@ -1,10 +1,11 @@
-package com.example.jason.bloodGlucoseMonitoring;
+package com.example.jason.EveryGlic;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +19,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.Locale;
 
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.getStringNumberWithAccuracy;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.isEmpty;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.numberInRange;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.roundUp;
-import static com.example.jason.bloodGlucoseMonitoring.MyWorks.setFocus;
+import static com.example.jason.EveryGlic.DBHelper.DATABASE_NAME;
+import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
+import static com.example.jason.EveryGlic.MyWorks.isEmpty;
+import static com.example.jason.EveryGlic.MyWorks.numberInRange;
+import static com.example.jason.EveryGlic.MyWorks.roundUp;
+import static com.example.jason.EveryGlic.MyWorks.setFocus;
 
 
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
@@ -76,6 +82,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     // views declare
     Button btnSavePreferences;
     Button btnResetToDefault;
+    Button btnBackupDB;
+    Button btnRestoreDB;
     Button btnDeleteAllMeasurements;
 
     RadioButton rbDiabetesType1;
@@ -97,6 +105,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     EditText etBloodHighSugar;
     EditText etAmountCarb;
 
+    View vBuRestoreDB;
+    View vBtnsBuRestore;
     View vBtnDelMeas;
 
     // SQLite database
@@ -117,6 +127,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         // find views on screen by id
         btnSavePreferences = (Button) findViewById(R.id.btnSavePreferences);
         btnResetToDefault = (Button) findViewById(R.id.btnResetToDefault);
+        btnBackupDB = (Button) findViewById(R.id.btnBackupDB);
+        btnRestoreDB = (Button) findViewById(R.id.btnRestoreDB);
         btnDeleteAllMeasurements = (Button) findViewById(R.id.btnDeleteAllMeasurements);
 
         rbDiabetesType1 = (RadioButton) findViewById(R.id.rbDiabetesType1);
@@ -138,11 +150,15 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         etBloodHighSugar = (EditText) findViewById(R.id.etBloodHighSugar);
         etAmountCarb = (EditText) findViewById(R.id.etAmountCarbInBreadUnit);
 
+        vBuRestoreDB = findViewById(R.id.vBuRestoreDB);
+        vBtnsBuRestore = findViewById(R.id.vBtnsBuRestore);
         vBtnDelMeas = findViewById(R.id.vBtnDelMeas);
 
         // listeners for views
         btnSavePreferences.setOnClickListener(this);
         btnResetToDefault.setOnClickListener(this);
+        btnBackupDB.setOnClickListener(this);
+        btnRestoreDB.setOnClickListener(this);
         btnDeleteAllMeasurements.setOnClickListener(this);
 
         rbDiabetesType1.setOnClickListener(this);
@@ -337,7 +353,11 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         // check for first run app
         if (firstRun) {
             // hide button delete all measurements
+            btnRestoreDB.setVisibility(View.INVISIBLE);
+            btnBackupDB.setVisibility(View.INVISIBLE);
             btnDeleteAllMeasurements.setVisibility(View.INVISIBLE);
+            vBuRestoreDB.setVisibility(View.INVISIBLE);
+            vBtnsBuRestore.setVisibility(View.INVISIBLE);
             vBtnDelMeas.setVisibility(View.INVISIBLE);
 
             preferencesChanged(true, true);
@@ -351,20 +371,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            // saving preferences
-            case R.id.btnSavePreferences:
-                if (isCorrectInputValues()) {
-                    savePreferences();
-                    Toast.makeText(this, R.string.settings_have_been_saved, Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                break;
-
-            // reset preferences to default but not save
-            case R.id.btnResetToDefault:
-                resetPreferencesToDefault();
-                break;
-
             // delete all measurements
             case R.id.btnDeleteAllMeasurements:
                 // Alert dialog to confirm delete all measurements
@@ -390,6 +396,68 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                     }
                 });
                 alert.show();
+                break;
+
+            // reset preferences to default but not save
+            case R.id.btnResetToDefault:
+                resetPreferencesToDefault();
+                break;
+
+            // saving preferences
+            case R.id.btnSavePreferences:
+                if (isCorrectInputValues()) {
+                    savePreferences();
+                    Toast.makeText(this, R.string.settings_have_been_saved, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+
+            // backup DB
+            case R.id.btnBackupDB:
+                try {
+                    File sd = Environment.getExternalStorageDirectory();
+                    File data = Environment.getDataDirectory();
+
+                    if (sd.canWrite()) {
+                        String currentDBPath = "//data/" + getApplicationContext().getPackageName() + "/databases/" + DATABASE_NAME;
+                        File currentDB = new File(data, currentDBPath);
+                        File backupDB = new File(sd, DATABASE_NAME);
+
+                        if (currentDB.exists()) {
+                            FileChannel src = new FileInputStream(currentDB).getChannel();
+                            FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                            dst.transferFrom(src, 0, src.size());
+                            src.close();
+                            dst.close();
+                            Toast.makeText(getApplicationContext(), "Backup is successful to SD card", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (Exception e) {
+                }
+                break;
+
+            // Restore  DB
+            case R.id.btnRestoreDB:
+                try {
+                    File sd = Environment.getExternalStorageDirectory();
+                    File data = Environment.getDataDirectory();
+
+                    if (sd.canWrite()) {
+                        String currentDBPath = "//data/" + getApplicationContext().getPackageName() + "/databases/" + DATABASE_NAME;
+                        File currentDB = new File(data, currentDBPath);
+                        File backupDB = new File(sd, DATABASE_NAME);
+
+                        if (currentDB.exists()) {
+                            FileChannel src = new FileInputStream(backupDB).getChannel();
+                            FileChannel dst = new FileOutputStream(currentDB).getChannel();
+                            dst.transferFrom(src, 0, src.size());
+                            src.close();
+                            dst.close();
+                            Toast.makeText(getApplicationContext(), "Database Restored successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (Exception e) {
+                }
                 break;
 
             default:
@@ -472,7 +540,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         if (rbTimeFormat24h.isChecked()) prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
         else prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, false);
-
 
 
         switch (rgBeginningWeek.getCheckedRadioButtonId()) {
