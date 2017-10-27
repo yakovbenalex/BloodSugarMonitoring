@@ -119,5 +119,6 @@
     <string name="last__m">last</string>
 
     <string name="beginning_of_the_week">Beginning of the week</string>
+    <string name="backup">Backup</string>
 
 </resources>

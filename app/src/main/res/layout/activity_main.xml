@@ -68,9 +68,9 @@
 
             <ListView
                 android:id="@+id/lvMeasurements3Last"
-                android:layout_marginTop="@dimen/activity_item_pref_padding"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_item_pref_padding" />
 
         </LinearLayout>
 
