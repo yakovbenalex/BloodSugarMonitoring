@@ -32,7 +32,7 @@
     <string name="please_press_again_to_back_to_menu">Click the back button again to back to menu!</string>
     <string name="changes_will_not_saved">Changes will not saved!!!</string>
     <string name="settings_have_been_saved">Settings have been saved</string>
-    <string name="grams_in_product">Grams in product</string>
+    <string name="grams_of_product">Grams of product</string>
     <string name="carbohydrates_per_100g_product">Carbohydrates per 100g product</string>
     <string name="amount_of_bread_units">Amount of bread units</string>
     <string name="carbs_in_grams_of_product">Carbs in grams of product</string>
@@ -120,5 +120,6 @@
 
     <string name="beginning_of_the_week">Beginning of the week</string>
     <string name="backup">Backup</string>
+    <string name="empty">Empty</string>
 
 </resources>

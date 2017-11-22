@@ -30,7 +30,6 @@ import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.isEmpty;
 import static com.example.jason.EveryGlic.MyWorks.numberInRange;
 import static com.example.jason.EveryGlic.MyWorks.roundUp;
-import static com.example.jason.EveryGlic.MyWorks.setFocus;
 
 
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
@@ -62,6 +61,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final String KEY_PREFS_FIRST_RUN_AGREEMENT = "firstRunAgreement";
     protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24hDefault";
     protected static final String KEY_PREFS_BEGINNING_WEEK = "beginningWeek";
+
+    private static final String TAG = "PreferencesActivity";
 
     // variables for preferences
     float prefsBloodLowSugar;
@@ -629,8 +630,11 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     }
 
     // set focus and additional option: show message, clear editText if needs
-    public void setFocusWithMessage(EditText et, boolean clearET, boolean showMessage, String message) {
-        setFocus(et, clearET);
+    public void setFocusWithMessage(EditText et, boolean clearEditText, boolean showMessage, String message) {
+        et.requestFocus();
+        if (clearEditText) {
+            et.setText("");
+        }
         if (showMessage) Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 

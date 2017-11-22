@@ -11,6 +11,7 @@
         android:background="@color/colorPrimaryDark" />
 
     <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -25,8 +26,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/activity_item_padding">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textViewCarbsIn100GramsProduct"
@@ -54,17 +54,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/activity_item_padding">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewGramsInProduct"
+                    android:id="@+id/textViewGramsOfProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/etGramsInProduct"
-                    android:text="@string/grams_in_product" />
+                    android:text="@string/grams_of_product" />
 
                 <EditText
                     android:id="@+id/etGramsInProduct"
@@ -83,8 +82,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_marginBottom="@dimen/activity_item_padding"
-                android:layout_marginTop="@dimen/activity_item_padding"
                 android:background="@color/colorPrimary" />
 
             <RelativeLayout
@@ -115,9 +112,11 @@
                     android:maxLength="9"
                     android:selectAllOnFocus="true"
                     android:textAlignment="center" />
+
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlAoBU"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -155,8 +154,84 @@
                     android:textSize="@dimen/textSizeCaption" />
             </RelativeLayout>
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginLeft="@dimen/activity_item_padding"
+                    android:layout_marginRight="@dimen/activity_item_padding"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvStack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/view1"
+                    android:layout_toStartOf="@+id/tvStackSum"
+                    android:paddingBottom="7dp"
+                    android:paddingRight="@dimen/activity_item_padding"
+                    android:paddingTop="7dp"
+                    android:text="Empty"
+                    android:textAlignment="textStart" />
+
+                <TextView
+                    android:id="@+id/tvStackSum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/view1"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dp"
+                    android:text="0.0"
+                    android:textAlignment="textStart" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_below="@+id/tvStack"
+                    android:layout_marginLeft="@dimen/activity_item_padding"
+                    android:layout_marginRight="@dimen/activity_item_padding"
+                    android:background="@color/colorPrimary" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
     </ScrollView>
+
+    <!--android:layout_alignStart="@+id/etAmountBreadUnits"-->
+    <!--android:layout_below="@+id/etAmountBreadUnits"-->
+
+    <Button
+        android:id="@+id/btnClearStack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scrollView1"
+        android:text="Clear" />
+
+    <Button
+        android:id="@+id/btnDeleteLastInStack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scrollView1"
+        android:layout_toEndOf="@+id/btnClearStack"
+        android:text="Delete last" />
+
+    <Button
+        android:id="@+id/btnAddToStack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnDeleteLastInStack"
+        android:layout_alignBottom="@+id/btnDeleteLastInStack"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/btnDeleteLastInStack"
+        android:text="Add" />
 
 </RelativeLayout>

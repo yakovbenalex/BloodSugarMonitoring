@@ -8,12 +8,21 @@ class DBHelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
     static final String DATABASE_NAME = "bloodGlucoseMonitoring";
-    static final String TABLE_MEASUREMENTS = "measurements";
 
+    //KEYS shared
     static final String KEY_ID = "_id";
-    static final String KEY_MEASUREMENT = "measurement";
     static final String KEY_TIME_IN_SECONDS = "dateAndTime";
+
+    //table measurements
+    static final String TABLE_MEASUREMENTS = "measurements";
+    //KEYS for table measurements
+    static final String KEY_MEASUREMENT = "measurement";
     static final String KEY_COMMENT = "comment";
+
+    //table calcCarbsStackHistory
+    static final String TABLE_CALC_CARBS_STACK_HISTORY = "calcCarbsStackHistory";
+    //KEYS for table calcCarbsStackHistory
+    static final String KEY_STACK_VALUE = "stackValue";
 
 
     DBHelper(Context context) {
@@ -27,6 +36,12 @@ class DBHelper extends SQLiteOpenHelper{
                 + KEY_MEASUREMENT + " real, "
                 + KEY_TIME_IN_SECONDS + " integer, "
                 + KEY_COMMENT + " text " + ")");
+
+        db.execSQL("create table " + TABLE_CALC_CARBS_STACK_HISTORY + "("
+                + KEY_ID + " integer primary key, "
+                + KEY_STACK_VALUE + " real, "
+                + KEY_TIME_IN_SECONDS + " integer "
+                + ")");
     }
 
     @Override

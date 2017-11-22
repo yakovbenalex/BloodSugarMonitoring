@@ -23,11 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.example.jason.EveryGlic.MyWorks.clearET;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.numberInRange;
 import static com.example.jason.EveryGlic.MyWorks.requiredFiledEmpty;
 import static com.example.jason.EveryGlic.MyWorks.roundUp;
-import static com.example.jason.EveryGlic.MyWorks.setFocus;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
@@ -36,6 +36,7 @@ import static com.example.jason.EveryGlic.PreferencesActivity.unitBloodSugarMmol
 public class AddMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
     // limit to back starts on 1970 (this is enough)
     private static final int yearLimitLowerBound = 1970;
+
     // Sugar range limit
     private static final float bloodSugarLimitLow = 0.7f;
     private static final float bloodSugarLimitHigh = 55.5f;
@@ -95,17 +96,17 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         sdf = new SimpleDateFormat(DATE_FORMAT);
 
         // find views on screen by id
-        btnChooseDate = (Button) findViewById(R.id.btnChooseDate);
-        btnSaveMeasurement = (Button) findViewById(R.id.btnSaveMeasurement);
-        btnDeleteCurMeasurements = (Button) findViewById(R.id.btnDeleteCurMeasurements);
+        btnChooseDate = findViewById(R.id.btnChooseDate);
+        btnSaveMeasurement = findViewById(R.id.btnSaveMeasurement);
+        btnDeleteCurMeasurements = findViewById(R.id.btnDeleteCurMeasurements);
 
-        etBloodSugarMeasurement = (EditText) findViewById(R.id.etBloodSugarMeasurementEdit);
-        etComment = (EditText) findViewById(R.id.etCommentEdit);
+        etBloodSugarMeasurement = findViewById(R.id.etBloodSugarMeasurementEdit);
+        etComment = findViewById(R.id.etCommentEdit);
 
-        tvDate = (TextView) findViewById(R.id.tvDate);
-        tvUnitBloodSugar = (TextView) findViewById(R.id.tvUnitBloodSugar);
+        tvDate = findViewById(R.id.tvDate);
+        tvUnitBloodSugar = findViewById(R.id.tvUnitBloodSugar);
 
-        timePickerAddMeasurement = (TimePicker) findViewById(R.id.timePickerAddMeasurement);
+        timePickerAddMeasurement = findViewById(R.id.timePickerAddMeasurement);
 
         // set hint for editText
         setEditTextsHints(prefsUnitBloodSugarMmol);
@@ -378,14 +379,16 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         if (prefsUnitBloodSugarMmol) {
             if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
                     bloodSugarLimitLow, bloodSugarLimitHigh)) {
-                setFocus(etBloodSugarMeasurement, true);
+                etBloodSugarMeasurement.requestFocus();
+                clearET(etBloodSugarMeasurement);
                 Toast.makeText(this, getString(R.string.incorrect_value), Toast.LENGTH_SHORT).show();
                 return false;
             }
         } else {
             if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
                     (int) (bloodSugarLimitLow * 18), (int) (bloodSugarLimitHigh * 18))) {
-                setFocus(etBloodSugarMeasurement, true);
+                etBloodSugarMeasurement.requestFocus();
+                clearET(etBloodSugarMeasurement);
                 Toast.makeText(this, getString(R.string.incorrect_value), Toast.LENGTH_SHORT).show();
                 return false;
             }

@@ -56,7 +56,7 @@
     <string name="hypoglycemia_low_sugar">Гипогликемия (низкий сахар)</string>
     <string name="carbs_in_grams_of_product">Углеводов в продукте</string>
     <string name="reset_to_default">По умолчанию</string>
-    <string name="grams_in_product">Грамм в продукте</string>
+    <string name="grams_of_product">Грамм продукта</string>
     <string name="blood_sugar_measurement">Уровень сахара</string>
     <string name="carbs_calculator">Калькулятор</string>
     <string name="exit_are_you_sure">Выйти: Вы уверены?</string>
@@ -103,4 +103,6 @@
     <string name="dws_sun">Вс</string>
     <string name="dws_sut">Сб</string>
     <string name="beginning_of_the_week">Начало недели</string>
+    <string name="empty">Пусто</string>
+    <string name="backup">Резервная копия</string>
 </resources>

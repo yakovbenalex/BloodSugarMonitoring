@@ -51,10 +51,14 @@ class MyWorks {
         return et.getText().toString().trim().length() == 0;
     }
 
-    // set focus and additional option: show message, clear editText if needs
-    static void setFocus(EditText et, boolean clearET) {
-        if (clearET) et.setText("");
+    // set focus and additional option: clear editText if needs
+    static void setFocus(EditText et) {
         et.requestFocus();
+    }
+
+    // set focus and additional option: clear editText if needs
+    static void clearET(EditText et) {
+        et.setText("");
     }
 
     // request focus for empty required fields and return true if so
