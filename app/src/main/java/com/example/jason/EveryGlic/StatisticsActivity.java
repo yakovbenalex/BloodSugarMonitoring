@@ -100,40 +100,40 @@ public class StatisticsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistics);
 
         // find views on screen by id
-        tvAllTimeCount = (TextView) findViewById(R.id.tvCountAllTime);
-        tvAllTimeCountLow = (TextView) findViewById(R.id.tvLastAllTimeCountLow);
-        tvAllTimeCountHigh = (TextView) findViewById(R.id.tvLastAllTimeCountHigh);
-        tvAllTimeAvg = (TextView) findViewById(R.id.tvAllTimeAvg);
-        tvAllTimeMin = (TextView) findViewById(R.id.tvAllTimeMin);
-        tvAllTimeMax = (TextView) findViewById(R.id.tvAllTimeMax);
+        tvAllTimeCount = findViewById(R.id.tvCountAllTime);
+        tvAllTimeCountLow = findViewById(R.id.tvLastAllTimeCountLow);
+        tvAllTimeCountHigh = findViewById(R.id.tvLastAllTimeCountHigh);
+        tvAllTimeAvg = findViewById(R.id.tvAllTimeAvg);
+        tvAllTimeMin = findViewById(R.id.tvAllTimeMin);
+        tvAllTimeMax = findViewById(R.id.tvAllTimeMax);
 
-        tvCurWeekCount = (TextView) findViewById(R.id.tvCurWeekCount);
-        tvCurWeekCountLow = (TextView) findViewById(R.id.tvCurWeekCountLow);
-        tvCurWeekCountHigh = (TextView) findViewById(R.id.tvCurWeekCountHigh);
-        tvCurWeekAvg = (TextView) findViewById(R.id.tvCurWeekAvg);
-        tvCurWeekMin = (TextView) findViewById(R.id.tvCurWeekMin);
-        tvCurWeekMax = (TextView) findViewById(R.id.tvCurWeekMax);
+        tvCurWeekCount = findViewById(R.id.tvCurWeekCount);
+        tvCurWeekCountLow = findViewById(R.id.tvCurWeekCountLow);
+        tvCurWeekCountHigh = findViewById(R.id.tvCurWeekCountHigh);
+        tvCurWeekAvg = findViewById(R.id.tvCurWeekAvg);
+        tvCurWeekMin = findViewById(R.id.tvCurWeekMin);
+        tvCurWeekMax = findViewById(R.id.tvCurWeekMax);
 
-        tvCurMonthCount = (TextView) findViewById(R.id.tvCountCurMonth);
-        tvCurMonthCountLow = (TextView) findViewById(R.id.tvCurMonthCountLow);
-        tvCurMonthCountHigh = (TextView) findViewById(R.id.tvCurMonthCountHigh);
-        tvCurMonthAvg = (TextView) findViewById(R.id.tvCurMonthAvg);
-        tvCurMonthMin = (TextView) findViewById(R.id.tvCurMonthMin);
-        tvCurMonthMax = (TextView) findViewById(R.id.tvCurMonthMax);
+        tvCurMonthCount = findViewById(R.id.tvCountCurMonth);
+        tvCurMonthCountLow = findViewById(R.id.tvCurMonthCountLow);
+        tvCurMonthCountHigh = findViewById(R.id.tvCurMonthCountHigh);
+        tvCurMonthAvg = findViewById(R.id.tvCurMonthAvg);
+        tvCurMonthMin = findViewById(R.id.tvCurMonthMin);
+        tvCurMonthMax = findViewById(R.id.tvCurMonthMax);
 
-        tvLastWeekCount = (TextView) findViewById(R.id.tvCountLastWeek);
-        tvLastWeekCountLow = (TextView) findViewById(R.id.tvLastWeekCountLow);
-        tvLastWeekCountHigh = (TextView) findViewById(R.id.tvLastWeekCountHigh);
-        tvLastWeekAvg = (TextView) findViewById(R.id.tvLastWeekAvg);
-        tvLastWeekMin = (TextView) findViewById(R.id.tvLastWeekMin);
-        tvLastWeekMax = (TextView) findViewById(R.id.tvLastWeekMax);
+        tvLastWeekCount = findViewById(R.id.tvCountLastWeek);
+        tvLastWeekCountLow = findViewById(R.id.tvLastWeekCountLow);
+        tvLastWeekCountHigh = findViewById(R.id.tvLastWeekCountHigh);
+        tvLastWeekAvg = findViewById(R.id.tvLastWeekAvg);
+        tvLastWeekMin = findViewById(R.id.tvLastWeekMin);
+        tvLastWeekMax = findViewById(R.id.tvLastWeekMax);
 
-        tvLastMonthCount = (TextView) findViewById(R.id.tvCountLastMonth);
-        tvLastMonthCountLow = (TextView) findViewById(R.id.tvLastMonthCountLow);
-        tvLastMonthCountHigh = (TextView) findViewById(R.id.tvLastMonthCountHigh);
-        tvLastMonthAvg = (TextView) findViewById(R.id.tvLastMonthAvg);
-        tvLastMonthMin = (TextView) findViewById(R.id.tvLastMonthMin);
-        tvLastMonthMax = (TextView) findViewById(R.id.tvLastMonthMax);
+        tvLastMonthCount = findViewById(R.id.tvCountLastMonth);
+        tvLastMonthCountLow = findViewById(R.id.tvLastMonthCountLow);
+        tvLastMonthCountHigh = findViewById(R.id.tvLastMonthCountHigh);
+        tvLastMonthAvg = findViewById(R.id.tvLastMonthAvg);
+        tvLastMonthMin = findViewById(R.id.tvLastMonthMin);
+        tvLastMonthMax = findViewById(R.id.tvLastMonthMax);
 
         dbHelper = new DBHelper(this);
     }

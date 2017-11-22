@@ -66,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // find view on screen by id
-        btnCalculatorCarbs = (Button) findViewById(R.id.btnCalculatorCarbs);
-        btnAddMeasurement = (Button) findViewById(R.id.btnAddMeasurement);
-        btnMeasurements = (Button) findViewById(R.id.btnMeasurements);
-        btnStatistics = (Button) findViewById(R.id.btnStatistics);
-        btnInfo = (Button) findViewById(R.id.btnInfo);
+        btnCalculatorCarbs = findViewById(R.id.btnCalculatorCarbs);
+        btnAddMeasurement = findViewById(R.id.btnAddMeasurement);
+        btnMeasurements = findViewById(R.id.btnMeasurements);
+        btnStatistics = findViewById(R.id.btnStatistics);
+        btnInfo = findViewById(R.id.btnInfo);
 
-        lvMeasurements3Last = (ListView) findViewById(R.id.lvMeasurements3Last);
+        lvMeasurements3Last = findViewById(R.id.lvMeasurements3Last);
 
         // listeners for views
         btnAddMeasurement.setOnClickListener(this);

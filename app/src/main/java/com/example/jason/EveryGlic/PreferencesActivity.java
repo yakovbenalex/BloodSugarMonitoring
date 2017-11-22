@@ -126,30 +126,30 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         isChangeSetting = false;
 
         // find views on screen by id
-        btnSavePreferences = (Button) findViewById(R.id.btnSavePreferences);
-        btnResetToDefault = (Button) findViewById(R.id.btnResetToDefault);
-        btnBackupDB = (Button) findViewById(R.id.btnBackupDB);
-        btnRestoreDB = (Button) findViewById(R.id.btnRestoreDB);
-        btnDeleteAllMeasurements = (Button) findViewById(R.id.btnDeleteAllMeasurements);
+        btnSavePreferences = findViewById(R.id.btnSavePreferences);
+        btnResetToDefault = findViewById(R.id.btnResetToDefault);
+        btnBackupDB = findViewById(R.id.btnBackupDB);
+        btnRestoreDB = findViewById(R.id.btnRestoreDB);
+        btnDeleteAllMeasurements = findViewById(R.id.btnDeleteAllMeasurements);
 
-        rbDiabetesType1 = (RadioButton) findViewById(R.id.rbDiabetesType1);
-        rbDiabetesType2 = (RadioButton) findViewById(R.id.rbDiabetesType2);
-        rbUnitOfBloodSugarMmolL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMmolL);
-        rbUnitOfBloodSugarMgdL = (RadioButton) findViewById(R.id.rbUnitOfBloodSugarMgdL);
-        rbTimeFormat12h = (RadioButton) findViewById(R.id.rbTimeFormat12h);
-        rbTimeFormat24h = (RadioButton) findViewById(R.id.rbTimeFormat24h);
-        rbBeginningWeekSat = (RadioButton) findViewById(R.id.rbBeginningWeekSat);
-        rbBeginningWeekSun = (RadioButton) findViewById(R.id.rbBeginningWeekSun);
-        rbBeginningWeekMon = (RadioButton) findViewById(R.id.rbBeginningWeekMon);
+        rbDiabetesType1 = findViewById(R.id.rbDiabetesType1);
+        rbDiabetesType2 = findViewById(R.id.rbDiabetesType2);
+        rbUnitOfBloodSugarMmolL = findViewById(R.id.rbUnitOfBloodSugarMmolL);
+        rbUnitOfBloodSugarMgdL = findViewById(R.id.rbUnitOfBloodSugarMgdL);
+        rbTimeFormat12h = findViewById(R.id.rbTimeFormat12h);
+        rbTimeFormat24h = findViewById(R.id.rbTimeFormat24h);
+        rbBeginningWeekSat = findViewById(R.id.rbBeginningWeekSat);
+        rbBeginningWeekSun = findViewById(R.id.rbBeginningWeekSun);
+        rbBeginningWeekMon = findViewById(R.id.rbBeginningWeekMon);
 
-        rgDiabetesType = (RadioGroup) findViewById(R.id.rgDiabetesType);
-        rgUnitOfBloodSugar = (RadioGroup) findViewById(R.id.rgUnitOfBloodSugar);
-        rgTimeFormat = (RadioGroup) findViewById(R.id.rgTimeFormat);
-        rgBeginningWeek = (RadioGroup) findViewById(R.id.rgBeginningWeek);
+        rgDiabetesType = findViewById(R.id.rgDiabetesType);
+        rgUnitOfBloodSugar = findViewById(R.id.rgUnitOfBloodSugar);
+        rgTimeFormat = findViewById(R.id.rgTimeFormat);
+        rgBeginningWeek = findViewById(R.id.rgBeginningWeek);
 
-        etBloodLowSugar = (EditText) findViewById(R.id.etBloodLowSugar);
-        etBloodHighSugar = (EditText) findViewById(R.id.etBloodHighSugar);
-        etAmountCarb = (EditText) findViewById(R.id.etAmountCarbInBreadUnit);
+        etBloodLowSugar = findViewById(R.id.etBloodLowSugar);
+        etBloodHighSugar = findViewById(R.id.etBloodHighSugar);
+        etAmountCarb = findViewById(R.id.etAmountCarbInBreadUnit);
 
         vBuRestoreDB = findViewById(R.id.vBuRestoreDB);
         vBtnsBuRestore = findViewById(R.id.vBtnsBuRestore);

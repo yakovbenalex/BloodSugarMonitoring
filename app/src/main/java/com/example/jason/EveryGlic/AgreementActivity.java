@@ -26,7 +26,7 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_agreement);
 
         // find views on screen by id
-        btnConfirm = (Button) findViewById(R.id.btnConfirm);
+        btnConfirm = findViewById(R.id.btnConfirm);
 
         // listeners
         btnConfirm.setOnClickListener(this);

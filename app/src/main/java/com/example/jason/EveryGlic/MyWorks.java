@@ -52,11 +52,6 @@ class MyWorks {
     }
 
     // set focus and additional option: clear editText if needs
-    static void setFocus(EditText et) {
-        et.requestFocus();
-    }
-
-    // set focus and additional option: clear editText if needs
     static void clearET(EditText et) {
         et.setText("");
     }

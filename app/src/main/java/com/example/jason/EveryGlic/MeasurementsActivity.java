@@ -44,7 +44,7 @@ public class MeasurementsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurements);
 
-        lvMeasurementsAll = (ListView) findViewById(R.id.lvMeasurementsAll);
+        lvMeasurementsAll = findViewById(R.id.lvMeasurementsAll);
 
         lvMeasurementsAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -21,12 +21,12 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_info);
 
         // find views on screen by id
-        btnInfoUsefulTips = (Button) findViewById(R.id.btnInfoUsefulTips);
-        btnInfoEmergencyConditions = (Button) findViewById(R.id.btnInfoEmergencyConditions);
-        btnInfoChronicComplications = (Button) findViewById(R.id.btnInfoChronicComplications);
-        btnInfoUrgentMedicalAssistance = (Button) findViewById(R.id.btnInfoUrgentMedicalAssistance);
+        btnInfoUsefulTips = findViewById(R.id.btnInfoUsefulTips);
+        btnInfoEmergencyConditions = findViewById(R.id.btnInfoEmergencyConditions);
+        btnInfoChronicComplications = findViewById(R.id.btnInfoChronicComplications);
+        btnInfoUrgentMedicalAssistance = findViewById(R.id.btnInfoUrgentMedicalAssistance);
 
-        tvInfo = (TextView) findViewById(R.id.tvInfo);
+        tvInfo = findViewById(R.id.tvInfo);
 
         // set the listeners for views
         btnInfoUsefulTips.setOnClickListener(this);

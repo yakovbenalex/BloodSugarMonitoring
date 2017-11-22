@@ -62,9 +62,9 @@ class ItemRecordsAdapter extends BaseAdapter {
         }
 
         // find views on screen by id
-        TextView tvListDate = (TextView) someView.findViewById(R.id.tvListDate);
-        TextView tvListTime = (TextView) someView.findViewById(R.id.tvListTime);
-        TextView tvListSugar = (TextView) someView.findViewById(R.id.tvListSugar);
+        TextView tvListDate = someView.findViewById(R.id.tvListDate);
+        TextView tvListTime = someView.findViewById(R.id.tvListTime);
+        TextView tvListSugar = someView.findViewById(R.id.tvListSugar);
 
         // get data
         float sugar = data.get(i).getMeasurementSugar();
