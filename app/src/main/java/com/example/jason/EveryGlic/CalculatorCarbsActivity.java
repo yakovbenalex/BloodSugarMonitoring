@@ -19,7 +19,7 @@ import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.isEmpty;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
-import static com.example.jason.EveryGlic.PreferencesActivity.amountCarbsInBreadUnitDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
 
 public class CalculatorCarbsActivity extends AppCompatActivity implements View.OnClickListener {
     // keys (CCS - Calculator carbs state)
@@ -100,7 +100,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
 
         // get saved value
         prefsAmountCarbsInBreadUnit = sharedPref.getFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT,
-                amountCarbsInBreadUnitDefault);
+                AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT);
 
         // set amount of carbs in bread unit
         strTemp = "1 " + getString(R.string.bu) + " = " + prefsAmountCarbsInBreadUnit + " " + getString(R.string.gr);

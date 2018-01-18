@@ -1,5 +1,6 @@
 package com.example.jason.EveryGlic;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,10 +26,10 @@ import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LO
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.EveryGlic.PreferencesActivity.bloodHighSugarDefault;
-import static com.example.jason.EveryGlic.PreferencesActivity.bloodLowSugarDefault;
-import static com.example.jason.EveryGlic.PreferencesActivity.timeFormat24hDefault;
-import static com.example.jason.EveryGlic.PreferencesActivity.unitBloodSugarMmolDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 
 // implements View.OnClickListener
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+//        if (dbHelper == null) {
+//            dbHelper = new DBHelper(this);
+//        }
         dbHelper = new DBHelper(this);
     }
 
@@ -110,36 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onPrepareOptionsMenu(Menu menu) {
         //
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intentPreferencesActivity = new Intent(MainActivity.this, PreferencesActivity.class);
-                startActivity(intentPreferencesActivity);
-                break;
-
-            case R.id.action_help:
-                Toast.makeText(this, "Help is not available", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(MainActivity.this, AgreementActivity.class);
-//                startActivity(intent);
-                break;
-
-            case R.id.action_agreement:
-                Intent intentAgreementActivity = new Intent(MainActivity.this, AgreementActivity.class);
-                startActivity(intentAgreementActivity);
-                break;
-
-            case R.id.action_about:
-                Intent intentAboutActivity = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(intentAboutActivity);
-                break;
-
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -173,6 +147,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intentPreferencesActivity = new Intent(MainActivity.this, PreferencesActivity.class);
+                startActivity(intentPreferencesActivity);
+                break;
+
+            case R.id.action_help:
+                Toast.makeText(this, "Help is not available", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(MainActivity.this, AgreementActivity.class);
+//                startActivity(intent);
+                break;
+
+            case R.id.action_agreement:
+                Intent intentAgreementActivity = new Intent(MainActivity.this, AgreementActivity.class);
+                startActivity(intentAgreementActivity);
+                break;
+
+            case R.id.action_about:
+                // old version of showing the aboutActivity
+//                Intent intentAboutActivity = new Intent(MainActivity.this, AboutActivity.class);
+//                startActivity(intentAboutActivity);
+
+                // custom dialog
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.activity_info_about);
+                dialog.setTitle(R.string.about);
+                dialog.show();
+                break;
+
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void load3LastRecords() {
@@ -214,10 +227,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
 
         // get saved value for diabetes
-        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, unitBloodSugarMmolDefault);
-        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
-        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
-        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, timeFormat24hDefault);
+        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, UNIT_BLOOD_SUGAR_MMOL_DEFAULT);
+        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, BLOOD_LOW_SUGAR_DEFAULT);
+        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, BLOOD_HIGH_SUGAR_DEFAULT);
+        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, TIME_FORMAT_24H_DEFAULT);
     }
 
     @Override

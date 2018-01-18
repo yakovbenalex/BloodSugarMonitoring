@@ -20,10 +20,10 @@ import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNIN
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
-import static com.example.jason.EveryGlic.PreferencesActivity.beginningWeekDefault;
-import static com.example.jason.EveryGlic.PreferencesActivity.bloodHighSugarDefault;
-import static com.example.jason.EveryGlic.PreferencesActivity.bloodLowSugarDefault;
-import static com.example.jason.EveryGlic.PreferencesActivity.unitBloodSugarMmolDefault;
+import static com.example.jason.EveryGlic.PreferencesActivity.BEGINNING_WEEK_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -188,11 +188,11 @@ public class StatisticsActivity extends AppCompatActivity {
 
         // get saved value
         prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE,
-                unitBloodSugarMmolDefault);
+                UNIT_BLOOD_SUGAR_MMOL_DEFAULT);
 
-        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
-        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
-        prefsBeginningWeek = sharedPref.getInt(KEY_PREFS_BEGINNING_WEEK, beginningWeekDefault);
+        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, BLOOD_LOW_SUGAR_DEFAULT);
+        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, BLOOD_HIGH_SUGAR_DEFAULT);
+        prefsBeginningWeek = sharedPref.getInt(KEY_PREFS_BEGINNING_WEEK, BEGINNING_WEEK_DEFAULT);
     }
 
     // get String query

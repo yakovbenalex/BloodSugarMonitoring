@@ -35,21 +35,21 @@ import static com.example.jason.EveryGlic.MyWorks.roundUp;
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
     //-------------------------------------DECLARE BLOCK START------------------------------------//
     // value range for seekBar BloodLowSugar and BloodHighSugar (without much need not to change)
-    protected static final float bloodLowSugarLowerBound = 3.2f;
-    protected static final float bloodLowSugarUpperBound = 4.9f;
-    protected static final float bloodHighSugarLowerBound = 7.8f;
-    protected static final float bloodHighSugarUpperBound = 12f;
-    protected static final float amountCarbsInBreadUnitLowerBound = 10f;
-    protected static final float amountCarbsInBreadUnitUpperBound = 15f;
+    protected static final float BLOOD_LOW_SUGAR_LOWER_BOUND = 3.2f;
+    protected static final float BLOOD_LOW_SUGAR_UPPER_BOUND = 4.9f;
+    protected static final float BLOOD_HIGH_SUGAR_LOWER_BOUND = 7.8f;
+    protected static final float BLOOD_HIGH_SUGAR_UPPER_BOUND = 12f;
+    protected static final float AMOUNT_CARBS_IN_BREAD_UNIT_LOWER_BOUND = 10f;
+    protected static final float AMOUNT_CARBS_IN_BREAD_UNIT_UPPER_BOUND = 15f;
 
     // default preferences value
-    protected static final float bloodLowSugarDefault = 3.8f;
-    protected static final float bloodHighSugarDefault = 8.9f;
-    protected static final float amountCarbsInBreadUnitDefault = 12f;
-    protected static final boolean diabetes1TypeDefault = true;
-    protected static final boolean unitBloodSugarMmolDefault = true;
-    protected static final boolean timeFormat24hDefault = true;
-    protected static final int beginningWeekDefault = 2;
+    protected static final float BLOOD_LOW_SUGAR_DEFAULT = 3.8f;
+    protected static final float BLOOD_HIGH_SUGAR_DEFAULT = 8.9f;
+    protected static final float AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT = 12f;
+    protected static final boolean DIABETES_1_TYPE_DEFAULT = true;
+    protected static final boolean UNIT_BLOOD_SUGAR_MMOL_DEFAULT = true;
+    protected static final boolean TIME_FORMAT_24H_DEFAULT = true;
+    protected static final int BEGINNING_WEEK_DEFAULT = 2;
 
     // keys
     protected static final String KEY_PREFS = "settings_pref";
@@ -59,7 +59,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final String KEY_PREFS_BLOOD_HIGH_SUGAR = "bloodHighSugar";
     protected static final String KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT = "amountCarbohydratesInBreadUnit";
     protected static final String KEY_PREFS_FIRST_RUN_AGREEMENT = "firstRunAgreement";
-    protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24hDefault";
+    protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24hDefault2";
     protected static final String KEY_PREFS_BEGINNING_WEEK = "beginningWeek";
 
     private static final String TAG = "PreferencesActivity";
@@ -175,7 +175,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         // set hint for editText
         setEditTextsHints(prefsUnitBloodSugarMmol);
         etAmountCarb.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
-                amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound));
+                AMOUNT_CARBS_IN_BREAD_UNIT_LOWER_BOUND, AMOUNT_CARBS_IN_BREAD_UNIT_UPPER_BOUND));
 
         // set preferences values
         etAmountCarb.setText(String.valueOf(prefsAmountCarbsInBreadUnit));
@@ -385,7 +385,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                                 //Canceled.
                             }
                         });
-                alert.setNeutralButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SQLiteDatabase database = dbHelper.getWritableDatabase();
                         database.delete(DBHelper.TABLE_MEASUREMENTS, null, null);
@@ -393,7 +393,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                         Toast.makeText(PreferencesActivity.this, getString(
                                 R.string.all_measurements_has_been_deleted),
                                 Toast.LENGTH_LONG).show();
-                        finish();
+
+                        finish(); //exit from preferences
                     }
                 });
                 alert.show();
@@ -498,17 +499,17 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
 
         // get saved value for diabetes
-        prefsDiabetes1Type = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE, diabetes1TypeDefault);
+        prefsDiabetes1Type = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE, DIABETES_1_TYPE_DEFAULT);
         prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL,
-                unitBloodSugarMmolDefault);
-        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, bloodLowSugarDefault);
-        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, bloodHighSugarDefault);
+                UNIT_BLOOD_SUGAR_MMOL_DEFAULT);
+        prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, BLOOD_LOW_SUGAR_DEFAULT);
+        prefsBloodHighSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_HIGH_SUGAR, BLOOD_HIGH_SUGAR_DEFAULT);
         prefsAmountCarbsInBreadUnit = sharedPref.getFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT,
-                amountCarbsInBreadUnitDefault);
+                AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT);
 
         // get saved value for function of interface
-        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, timeFormat24hDefault);
-        prefsBeginningWeek = sharedPref.getInt(KEY_PREFS_BEGINNING_WEEK, beginningWeekDefault);
+        prefsTimeFormat24h = sharedPref.getBoolean(KEY_PREFS_TIME_FORMAT_24H, TIME_FORMAT_24H_DEFAULT);
+        prefsBeginningWeek = sharedPref.getInt(KEY_PREFS_BEGINNING_WEEK, BEGINNING_WEEK_DEFAULT);
     }
 
     // save preferences in sharedPreferences
@@ -571,23 +572,23 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     public void resetPreferencesToDefault() {
         // set default preferences for views
 
-        etAmountCarb.setText((String.valueOf(amountCarbsInBreadUnitDefault)));
+        etAmountCarb.setText((String.valueOf(AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT)));
 
-        if (diabetes1TypeDefault) rbDiabetesType1.setChecked(true);
+        if (DIABETES_1_TYPE_DEFAULT) rbDiabetesType1.setChecked(true);
         else rbDiabetesType2.setChecked(true);
 
         if (rbUnitOfBloodSugarMmolL.isChecked()) {
-            etBloodLowSugar.setText((String.valueOf(bloodLowSugarDefault)));
-            etBloodHighSugar.setText((String.valueOf(bloodHighSugarDefault)));
+            etBloodLowSugar.setText((String.valueOf(BLOOD_LOW_SUGAR_DEFAULT)));
+            etBloodHighSugar.setText((String.valueOf(BLOOD_HIGH_SUGAR_DEFAULT)));
         } else {
-            etBloodLowSugar.setText((String.valueOf((int) (bloodLowSugarDefault * 18))));
-            etBloodHighSugar.setText((String.valueOf((int) (bloodHighSugarDefault * 18))));
+            etBloodLowSugar.setText((String.valueOf((int) (BLOOD_LOW_SUGAR_DEFAULT * 18))));
+            etBloodHighSugar.setText((String.valueOf((int) (BLOOD_HIGH_SUGAR_DEFAULT * 18))));
         }
 
-        if (timeFormat24hDefault) rbTimeFormat24h.setChecked(true);
+        if (TIME_FORMAT_24H_DEFAULT) rbTimeFormat24h.setChecked(true);
         else rbTimeFormat12h.setChecked(true);
 
-        switch (beginningWeekDefault) {
+        switch (BEGINNING_WEEK_DEFAULT) {
             case 2:
                 rbBeginningWeekMon.setChecked(true);
                 break;
@@ -618,14 +619,14 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     public void setEditTextsHints(boolean unitBloodSugarMmol) {
         if (unitBloodSugarMmol) {
             etBloodLowSugar.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
-                    bloodLowSugarLowerBound, bloodLowSugarUpperBound));
+                    BLOOD_LOW_SUGAR_LOWER_BOUND, BLOOD_LOW_SUGAR_UPPER_BOUND));
             etBloodHighSugar.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
-                    bloodHighSugarLowerBound, bloodHighSugarUpperBound));
+                    BLOOD_HIGH_SUGAR_LOWER_BOUND, BLOOD_HIGH_SUGAR_UPPER_BOUND));
         } else {
             etBloodLowSugar.setHint(String.format(getString(R.string.from_toD),
-                    (int) (bloodLowSugarLowerBound * 18), (int) (bloodLowSugarUpperBound * 18)));
+                    (int) (BLOOD_LOW_SUGAR_LOWER_BOUND * 18), (int) (BLOOD_LOW_SUGAR_UPPER_BOUND * 18)));
             etBloodHighSugar.setHint(String.format(getString(R.string.from_toD),
-                    (int) (bloodHighSugarLowerBound * 18), (int) (bloodHighSugarUpperBound * 18)));
+                    (int) (BLOOD_HIGH_SUGAR_LOWER_BOUND * 18), (int) (BLOOD_HIGH_SUGAR_UPPER_BOUND * 18)));
         }
     }
 
@@ -658,29 +659,29 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         // check on range input value and set focus on them
         if (rbUnitOfBloodSugarMmolL.isChecked()) {
             if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()),
-                    bloodLowSugarLowerBound, bloodLowSugarUpperBound)) {
+                    BLOOD_LOW_SUGAR_LOWER_BOUND, BLOOD_LOW_SUGAR_UPPER_BOUND)) {
                 setFocusWithMessage(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
             if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()),
-                    bloodHighSugarLowerBound, bloodHighSugarUpperBound)) {
+                    BLOOD_HIGH_SUGAR_LOWER_BOUND, BLOOD_HIGH_SUGAR_UPPER_BOUND)) {
                 setFocusWithMessage(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
         } else {
             if (!numberInRange(Float.parseFloat(etBloodLowSugar.getText().toString()),
-                    (int) (bloodLowSugarLowerBound * 18), bloodLowSugarUpperBound * 18)) {
+                    (int) (BLOOD_LOW_SUGAR_LOWER_BOUND * 18), BLOOD_LOW_SUGAR_UPPER_BOUND * 18)) {
                 setFocusWithMessage(etBloodLowSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
             if (!numberInRange(Float.parseFloat(etBloodHighSugar.getText().toString()),
-                    (int) (bloodHighSugarLowerBound * 18), bloodHighSugarUpperBound * 18)) {
+                    (int) (BLOOD_HIGH_SUGAR_LOWER_BOUND * 18), BLOOD_HIGH_SUGAR_UPPER_BOUND * 18)) {
                 setFocusWithMessage(etBloodHighSugar, true, true, getString(R.string.incorrect_value));
                 return false;
             }
         }
         if (!numberInRange(Float.parseFloat(etAmountCarb.getText().toString()),
-                amountCarbsInBreadUnitLowerBound, amountCarbsInBreadUnitUpperBound)) {
+                AMOUNT_CARBS_IN_BREAD_UNIT_LOWER_BOUND, AMOUNT_CARBS_IN_BREAD_UNIT_UPPER_BOUND)) {
             setFocusWithMessage(etAmountCarb, true, true, getString(R.string.incorrect_value));
             return false;
         }
