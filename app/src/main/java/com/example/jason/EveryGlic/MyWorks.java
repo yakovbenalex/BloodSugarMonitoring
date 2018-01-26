@@ -1,11 +1,19 @@
 package com.example.jason.EveryGlic;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 
 
 class MyWorks {
+
+    private static final String TAG = "myLog";
 
     // round float number to scale
     static BigDecimal roundUp(float value, int digits) {
@@ -64,4 +72,51 @@ class MyWorks {
         }
         return false;
     }
+
+    //
+    static boolean parseMenuItem(Context context, String calledActivityName, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intentPreferencesActivity = new Intent(context, PreferencesActivity.class);
+                context.startActivity(intentPreferencesActivity);
+                break;
+
+            case R.id.action_info:
+                Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show();
+                switch (calledActivityName){
+                    case "MainActivity":
+                        Toast.makeText(context, "MainActivity", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case "PreferencesActivity":
+                        Toast.makeText(context, "PreferencesActivity", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        Toast.makeText(context, "There is no information for this screen", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                break;
+
+            case R.id.action_agreement:
+                Intent intentAgreementActivity = new Intent(context, AgreementActivity.class);
+                context.startActivity(intentAgreementActivity);
+                break;
+
+            case R.id.action_about:
+                // custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.activity_info_about);
+                dialog.setTitle(R.string.about);
+                dialog.show();
+                break;
+
+            default:
+                break;
+        }
+        Log.d(TAG, "parseMenuItem: " + context + " ");
+        return true;
+    }
+
+
 }

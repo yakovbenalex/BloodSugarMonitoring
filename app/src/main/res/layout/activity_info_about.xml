@@ -38,7 +38,7 @@
                 android:text="@string/developerInfo"
                 android:textColor="@android:color/black"
                 android:textIsSelectable="true"
-                android:textSize="21sp" />
+                android:textSize="16sp" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

@@ -105,4 +105,5 @@
     <string name="beginning_of_the_week">Начало недели</string>
     <string name="empty">Пусто</string>
     <string name="backup">Резервная копия</string>
+    <string name="info">Инфо</string>
 </resources>

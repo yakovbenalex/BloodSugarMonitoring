@@ -1,33 +1,36 @@
 package com.example.jason.EveryGlic;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static com.example.jason.EveryGlic.MyWorks.parseMenuItem;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
@@ -51,8 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ListView lvMeasurements3Last;
 
     DBHelper dbHelper;
+    private static final String TAG = "myLog";
 
+    ActionBar tb;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,15 +91,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lvMeasurements3Last.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentAddMeasurementActivity = new Intent(MainActivity.this, AddMeasurementActivity.class);
+                Intent intentAddMeasurementActivity = new Intent(MainActivity.this, AddOrChangeMeasurementActivity.class);
                 intentAddMeasurementActivity.putExtra("idRec", id);
                 startActivity(intentAddMeasurementActivity);
             }
         });
 
-//        if (dbHelper == null) {
-//            dbHelper = new DBHelper(this);
-//        }
         dbHelper = new DBHelper(this);
     }
 
@@ -105,18 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        //
-        return true;
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCalculatorCarbs:
@@ -125,8 +116,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnAddMeasurement:
-                Intent intentAddMeasurementActivity = new Intent(this, AddMeasurementActivity.class);
+                Intent intentAddMeasurementActivity = new Intent(this, AddOrChangeMeasurementActivity.class);
                 startActivity(intentAddMeasurementActivity);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("http://mail.ru"));
+                startActivity(intent);*/
                 break;
 
             case R.id.btnMeasurements:
@@ -149,11 +143,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        /*switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intentPreferencesActivity = new Intent(MainActivity.this, PreferencesActivity.class);
                 startActivity(intentPreferencesActivity);
@@ -171,10 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.action_about:
-                // old version of showing the aboutActivity
-//                Intent intentAboutActivity = new Intent(MainActivity.this, AboutActivity.class);
-//                startActivity(intentAboutActivity);
-
                 // custom dialog
                 final Dialog dialog = new Dialog(this);
                 dialog.setContentView(R.layout.activity_info_about);
@@ -184,14 +184,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             default:
                 break;
-        }
+        }*/
+        Log.d(TAG, "onOptionsItemSelected: " + getApplicationContext());
+        parseMenuItem(MainActivity.this, "MainActivity", item);
         return super.onOptionsItemSelected(item);
     }
 
+    // load 3 last records for MainActivity
     private void load3LastRecords() {
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         ArrayList<ItemRecords> data = new ArrayList<>();
 
+        // variables to filling them from database
         int id;
         float measurement;
         long timeInSeconds;
@@ -200,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS, null, null, null, null, null,
                 DBHelper.KEY_TIME_IN_SECONDS + " DESC", "3");
 
+        // if available at least one records, get data from database
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
             int idMeasurement = cursor.getColumnIndex(DBHelper.KEY_MEASUREMENT);
@@ -210,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 measurement = cursor.getFloat(idMeasurement);
                 timeInSeconds = cursor.getLong(idTimeInSeconds);
                 comment = cursor.getString(idComment);
+                // add data to item for data of listView adapter
                 data.add(new ItemRecords(id, measurement, timeInSeconds, comment));
             } while (cursor.moveToNext());
         } //else { //No Records }
@@ -221,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 prefsBloodLowSugar, prefsBloodHighSugar, prefsUnitBloodSugarMmol, prefsTimeFormat24h));
     }
 
-
+    // load settings from shared preferences
     public void loadPreferences() {
         // get settings object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -238,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         openQuitDialog();
     }
 
+    // open exit confirmation dialog
     private void openQuitDialog() {
         AlertDialog.Builder quitDialog = new AlertDialog.Builder(MainActivity.this);
         quitDialog.setTitle(R.string.exit_are_you_sure);

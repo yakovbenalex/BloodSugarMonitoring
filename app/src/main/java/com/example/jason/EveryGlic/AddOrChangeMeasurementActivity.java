@@ -33,7 +33,7 @@ import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FOR
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
 import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
-public class AddMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddOrChangeMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
     // limit to back starts on 1970 (this is enough)
     private static final int yearLimitLowerBound = 1970;
 
@@ -206,7 +206,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
                                 DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
 
                         deleteRecord(idRec);
-                        Toast.makeText(AddMeasurementActivity.this,
+                        Toast.makeText(AddOrChangeMeasurementActivity.this,
                                 getString(R.string.the_current_measurement_has_been_deleted),
                                 Toast.LENGTH_LONG).show();
                         finish();
@@ -224,7 +224,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
                 // check date to more than current and reset if so
                 now = Calendar.getInstance();
                 if (dateAndTime.getTimeInMillis() > now.getTimeInMillis()) {
-                    Toast.makeText(AddMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
+                    Toast.makeText(AddOrChangeMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
                             + getString(R.string.date_cannot_be_greater_than_the_current), Toast.LENGTH_SHORT).show();
                 } else {
                     if (isCorrectInputValues()) {
@@ -259,7 +259,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
             // checking on current date and reset date to current
             now = Calendar.getInstance();
             if (dateAndTime.getTimeInMillis() > now.getTimeInMillis()) {
-                Toast.makeText(AddMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
+                Toast.makeText(AddOrChangeMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
                         + getString(R.string.date_cannot_be_greater_than_the_current) + "\n"
                         + getString(R.string.date_has_been_reset), Toast.LENGTH_SHORT).show();
 
@@ -267,7 +267,7 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
                 dateAndTime.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
             } else {
                 if (year < yearLimitLowerBound) {
-                    Toast.makeText(AddMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
+                    Toast.makeText(AddOrChangeMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
                             + String.format(getString(R.string.date_cannot_be_less_than__year), yearLimitLowerBound) + "\n"
                             + getString(R.string.date_has_been_reset), Toast.LENGTH_SHORT).show();
 
@@ -282,7 +282,6 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
     //writing record
     public void writeRecord(float measurement, long date, String comment, boolean updateRec) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-
         ContentValues contentValues = new ContentValues();
 
         if (prefsUnitBloodSugarMmol) {

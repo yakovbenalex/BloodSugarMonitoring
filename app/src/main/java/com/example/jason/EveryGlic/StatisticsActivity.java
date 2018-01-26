@@ -168,7 +168,7 @@ public class StatisticsActivity extends AppCompatActivity {
         now.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 30);
         startLastMonthInSec = now.getTimeInMillis() / 1000;
 
-        Log.d(TAG, "onResume: " + sdf.format(startCurWeekInSec * 1000) + prefsBeginningWeek);
+        Log.d(TAG, "StatisticsActivity, onResume: " + sdf.format(startCurWeekInSec * 1000) + prefsBeginningWeek);
         loadStatistics();
     }
 

@@ -13,17 +13,19 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 public class MeasurementsActivity extends AppCompatActivity {
+    private static final String TAG = "myLog";
+
     // views
     ListView lvMeasurementsAll;
 
@@ -49,7 +51,7 @@ public class MeasurementsActivity extends AppCompatActivity {
         lvMeasurementsAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MeasurementsActivity.this, AddMeasurementActivity.class);
+                Intent intent = new Intent(MeasurementsActivity.this, AddOrChangeMeasurementActivity.class);
                 intent.putExtra("idRec", id);
                 startActivity(intent);
             }

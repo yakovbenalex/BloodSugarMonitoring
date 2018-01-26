@@ -74,7 +74,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_carbs);
-        Log.d(TAG, "onCreate: ");
+        Log.d(TAG, "CalculatorCarbsActivity, onCreate: ");
 
         // find views on screen by id
         etGramsOfProduct = findViewById(R.id.etGramsInProduct);
@@ -325,7 +325,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                 stackSum += stackForCalc.get(i);
             }
             tvStackSum.setText(String.valueOf(stackSum));
-            Log.d(TAG, "stackGet: " + stackForCalc.get(stackForCalc.size() - 1));
+            Log.d(TAG, "CalculatorCarbsActivity, stackGet: " + stackForCalc.get(stackForCalc.size() - 1));
         } else {
             tvStackSum.setText("= 0.0");
         }
@@ -441,7 +441,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
     protected void onPause() {
         super.onPause();
 
-        Log.d(TAG, "onPause: ");
+        Log.d(TAG, "CalculatorCarbsActivity, onPause: ");
 
         // save editText values on pause
         SharedPreferences sharedPrefState = getSharedPreferences(
@@ -475,7 +475,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
+        Log.d(TAG, "CalculatorCarbsActivity, onResume: ");
 
         // get shared preferences for Calc Carbs
         SharedPreferences sharedPrefState = getSharedPreferences(

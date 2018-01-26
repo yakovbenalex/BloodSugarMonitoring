@@ -121,5 +121,6 @@
     <string name="beginning_of_the_week">Beginning of the week</string>
     <string name="backup">Backup</string>
     <string name="empty">Empty</string>
+    <string name="info">Info</string>
 
 </resources>
