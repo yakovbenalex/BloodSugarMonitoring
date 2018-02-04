@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/activity_item_padding"
         android:padding="@dimen/activity_item_padding">
 
         <LinearLayout
@@ -207,6 +208,16 @@
 
     <!--android:layout_alignStart="@+id/etAmountBreadUnits"-->
     <!--android:layout_below="@+id/etAmountBreadUnits"-->
+    <View
+        android:id="@+id/viewBtn1"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_above="@id/btnClearStack"
+        android:layout_alignEnd="@id/btnClearStack"
+        android:layout_alignStart="@id/btnClearStack"
+        android:layout_marginLeft="@dimen/activity_item_padding"
+        android:layout_marginRight="@dimen/activity_item_padding"
+        android:background="@color/colorPrimary" />
 
     <Button
         android:id="@+id/btnClearStack"
@@ -216,6 +227,17 @@
         android:layout_below="@+id/scrollView1"
         android:text="Clear" />
 
+    <View
+        android:id="@+id/viewBtn2"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_above="@id/btnDeleteLastInStack"
+        android:layout_alignEnd="@id/btnDeleteLastInStack"
+        android:layout_alignStart="@id/btnDeleteLastInStack"
+        android:layout_marginLeft="@dimen/activity_item_padding"
+        android:layout_marginRight="@dimen/activity_item_padding"
+        android:background="@color/colorPrimary" />
+
     <Button
         android:id="@+id/btnDeleteLastInStack"
         android:layout_width="wrap_content"
@@ -223,6 +245,17 @@
         android:layout_below="@+id/scrollView1"
         android:layout_toEndOf="@+id/btnClearStack"
         android:text="Delete last" />
+
+    <View
+        android:id="@+id/viewBtn3"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_above="@id/btnAddToStack"
+        android:layout_alignEnd="@id/btnAddToStack"
+        android:layout_alignStart="@id/btnAddToStack"
+        android:layout_marginLeft="@dimen/activity_item_padding"
+        android:layout_marginRight="@dimen/activity_item_padding"
+        android:background="@color/colorPrimary" />
 
     <Button
         android:id="@+id/btnAddToStack"

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +16,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.isEmpty;
+import static com.example.jason.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
-import static com.example.jason.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
 
 public class CalculatorCarbsActivity extends AppCompatActivity implements View.OnClickListener {
     // keys (CCS - Calculator carbs state)
@@ -30,6 +32,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
     private static final String KEY_PREFS_CCS_AMOUNT_BREAD_UNITS = "amountBreadUnits";
     private static final String KEY_PREFS_CCS_STACK = "stack";
 
+    private static final String STACK_DEFAULT_EMPTY_VALUE = "0.0";
     private static final String TAG = "myLog";
 
     // temporary variables
@@ -319,15 +322,15 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         });
 
         // set textView stackSum to 0.0 if stack is empty
-        if (!stackForCalc.isEmpty()) {
-            // calculate stack's sum
+        if (stackForCalc.isEmpty()) {
+            tvStackSum.setText("= 0.0");
+        } else {
+            // calculate stack's sum and set value to textView stackSum
             for (int i = 0; i < stackForCalc.size(); i++) {
                 stackSum += stackForCalc.get(i);
             }
             tvStackSum.setText(String.valueOf(stackSum));
             Log.d(TAG, "CalculatorCarbsActivity, stackGet: " + stackForCalc.get(stackForCalc.size() - 1));
-        } else {
-            tvStackSum.setText("= 0.0");
         }
     }
 
@@ -345,6 +348,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     tvStackSum.setText("= 0.0");
                 }
 
+                saveStackHistoryState();
                 /* Later this place for save stack to history
                 *
                 *
@@ -425,7 +429,6 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
             default:
                 break;
         }
-
     }
 
     // my logs for stack
@@ -435,41 +438,6 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     + stackForCalc.isEmpty()
                     + "\nlast stack value: " + stackForCalc.get(stackForCalc.size() - 1));
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Log.d(TAG, "CalculatorCarbsActivity, onPause: ");
-
-        // save editText values on pause
-        SharedPreferences sharedPrefState = getSharedPreferences(
-                KEY_PREFS_CALC_CARBS_STATE, MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefStateEditor = sharedPrefState.edit();
-
-        // put editTexts state(their value) to shared preferences
-        sharedPrefStateEditor.putString(
-                KEY_PREFS_CCS_CARBS_IN_100_GRAMS, etCarbsIn100GramsOfProduct.getText().toString());
-        sharedPrefStateEditor.putString(
-                KEY_PREFS_CCS_GRAMS_IN_PRODUCT, etGramsOfProduct.getText().toString());
-        sharedPrefStateEditor.putString(
-                KEY_PREFS_CCS_CARBS_IN_GRAMS_PRODUCT, etCarbsInGramsOfProduct.getText().toString());
-        sharedPrefStateEditor.putString(
-                KEY_PREFS_CCS_AMOUNT_BREAD_UNITS, etAmountBreadUnits.getText().toString());
-
-        if (!stackForCalc.isEmpty()) {
-            // build string to further split on elements for ArrayList
-            StringBuilder strStackTemp = new StringBuilder();
-            for (Float curStackVal : stackForCalc) {
-                strStackTemp.append(curStackVal).append(",");
-            }
-            // save stack history to shared prefs
-            sharedPrefStateEditor.putString(KEY_PREFS_CCS_STACK, tvStack.getText().toString());
-        }
-
-        // apply shared preferences changes
-        sharedPrefStateEditor.apply();
     }
 
     @Override
@@ -493,18 +461,18 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
 
         try {
             // get last state of stack's history
-            String stack = sharedPrefState.getString(KEY_PREFS_CCS_STACK, "0.0");
+            String stack = sharedPrefState.getString(KEY_PREFS_CCS_STACK, STACK_DEFAULT_EMPTY_VALUE);
             String[] stackArr = stack.split(" ");
             stackSum = 0.0f;
 
             Log.d(TAG, stack + "\n");
 
             // check on empty stack history
-            if (stack == "0.0") { //Objects.equals(stack, "0.0")
+            if (stack.equals(STACK_DEFAULT_EMPTY_VALUE)) {
                 tvStack.setText(R.string.empty);
             } else {
                 // fill stack Array and calculate stack's sum
-                // i+2 because stackArr={1,+,2}
+                // i+2 because stack value alternate with plus sign (stackArr={1,+,2,+,3})
                 for (int i = 0; i < stackArr.length; i = i + 2) {
                     stackForCalc.add(Float.parseFloat(stackArr[i]));
                     stackSum += Float.parseFloat(stackArr[i]);
@@ -513,7 +481,6 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                 tvStack.setText(stack);
                 strTemp = "= " + getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
                 tvStackSum.setText(strTemp);
-//                tvStackSum.setText("= " + String.valueOf(stackSum));
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -521,6 +488,60 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
 
         myLog("btnAddToStack");
         etCarbsIn100GramsOfProduct.requestFocus();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "CalculatorCarbsActivity, onPause: ");
+
+        SharedPreferences sharedPrefState = getSharedPreferences(
+                KEY_PREFS_CALC_CARBS_STATE, MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefStateEditor = sharedPrefState.edit();
+
+        // save editText values on pause
+        // put editTexts state(their value) to shared preferences
+        sharedPrefStateEditor.putString(
+                KEY_PREFS_CCS_CARBS_IN_100_GRAMS, etCarbsIn100GramsOfProduct.getText().toString());
+        sharedPrefStateEditor.putString(
+                KEY_PREFS_CCS_GRAMS_IN_PRODUCT, etGramsOfProduct.getText().toString());
+        sharedPrefStateEditor.putString(
+                KEY_PREFS_CCS_CARBS_IN_GRAMS_PRODUCT, etCarbsInGramsOfProduct.getText().toString());
+        sharedPrefStateEditor.putString(
+                KEY_PREFS_CCS_AMOUNT_BREAD_UNITS, etAmountBreadUnits.getText().toString());
+
+        // apply shared preferences changes
+        sharedPrefStateEditor.apply();
+
+        saveStackHistoryState();
+    }
+
+    // save stack history state to shared prefs
+    protected void saveStackHistoryState() {
+        SharedPreferences sharedPrefState = getSharedPreferences(
+                KEY_PREFS_CALC_CARBS_STATE, MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefStateEditor = sharedPrefState.edit();
+
+        if (!stackForCalc.isEmpty()) {
+            // build string to further split on elements for ArrayList
+            StringBuilder strStackTemp = new StringBuilder();
+            for (Float curStackVal : stackForCalc) {
+                strStackTemp.append(curStackVal).append(",");
+            }
+            // save stack history to shared prefs
+            sharedPrefStateEditor.putString(KEY_PREFS_CCS_STACK, tvStack.getText().toString());
+        } else {
+            sharedPrefStateEditor.putString(KEY_PREFS_CCS_STACK, STACK_DEFAULT_EMPTY_VALUE);
+        }
+
+        // apply shared preferences changes
+        sharedPrefStateEditor.apply();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        createInfoItemInActionBar(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     // for save fields values

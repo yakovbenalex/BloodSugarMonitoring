@@ -22,7 +22,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItem;
+import static com.example.jason.EveryGlic.MyWorks.parseMenuItemMain;
 import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         dbHelper = new DBHelper(this);
+        dbHelper.getDatabaseName().isEmpty();
     }
 
     @Override
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }*/
         Log.d(TAG, "onOptionsItemSelected: " + getApplicationContext());
-        parseMenuItem(MainActivity.this, "MainActivity", item);
+        parseMenuItemMain(MainActivity.this, "MainActivity", item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -201,7 +202,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         long timeInSeconds;
         String comment;
 
-        Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS, null, null, null, null, null,
+        Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS,
+                null, null, null, null, null,
                 DBHelper.KEY_TIME_IN_SECONDS + " DESC", "3");
 
         // if available at least one records, get data from database

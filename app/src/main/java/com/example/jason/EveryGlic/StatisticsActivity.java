@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.Locale;
 import static com.example.jason.EveryGlic.DBHelper.KEY_MEASUREMENT;
 import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
 import static com.example.jason.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
+import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
@@ -170,6 +172,12 @@ public class StatisticsActivity extends AppCompatActivity {
 
         Log.d(TAG, "StatisticsActivity, onResume: " + sdf.format(startCurWeekInSec * 1000) + prefsBeginningWeek);
         loadStatistics();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        createInfoItemInActionBar(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     // load preferences values

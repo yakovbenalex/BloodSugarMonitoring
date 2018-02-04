@@ -2,9 +2,12 @@ package com.example.jason.EveryGlic;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 
 public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
     // views
@@ -13,6 +16,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     Button btnInfoChronicComplications;
     Button btnInfoUrgentMedicalAssistance;
 
+    // field to output info
     TextView tvInfo;
 
     @Override
@@ -58,4 +62,12 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        createInfoItemInActionBar(menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 }

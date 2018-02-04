@@ -35,17 +35,6 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data
-                    android:host="www.example.com"
-                    android:pathPrefix="/jason"
-                    android:scheme="http" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://jason” -->
-                <data
-                    android:host="jason"
-                    android:scheme="example" />
             </intent-filter>
         </activity>
 
@@ -81,7 +70,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.example.jason.EveryGlic.InfoActivity"
-            android:label="@string/information"
+            android:label="@string/useful_articles"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
     </application>

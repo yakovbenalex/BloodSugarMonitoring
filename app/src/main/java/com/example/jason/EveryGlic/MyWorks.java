@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
+
+import static com.example.jason.EveryGlic.PreferencesActivity.IDM_INFO;
 
 
 class MyWorks {
@@ -73,8 +76,8 @@ class MyWorks {
         return false;
     }
 
-    //
-    static boolean parseMenuItem(Context context, String calledActivityName, MenuItem item) {
+    // for parse menu item on ActionBar (all items)
+    static boolean parseMenuItemMain(Context context, String calledActivityName, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intentPreferencesActivity = new Intent(context, PreferencesActivity.class);
@@ -114,9 +117,16 @@ class MyWorks {
             default:
                 break;
         }
-        Log.d(TAG, "parseMenuItem: " + context + " ");
+        Log.d(TAG, "parseMenuItemMain: " + context + " ");
         return true;
     }
 
+    // for parse menu item on ActionBar (info item only)
+    static boolean createInfoItemInActionBar(Menu menu) {
+        menu.add(Menu.NONE, IDM_INFO, Menu.NONE, R.string.info)
+                .setIcon(R.drawable.ic_action_info)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return true;
+    }
 
 }

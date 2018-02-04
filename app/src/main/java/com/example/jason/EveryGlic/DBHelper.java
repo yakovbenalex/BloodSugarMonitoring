@@ -37,11 +37,6 @@ class DBHelper extends SQLiteOpenHelper{
                 + KEY_TIME_IN_SECONDS + " integer, "
                 + KEY_COMMENT + " text " + ")");
 
-        db.execSQL("create table " + TABLE_CALC_CARBS_STACK_HISTORY + "("
-                + KEY_ID + " integer primary key, "
-                + KEY_STACK_VALUE + " real, "
-                + KEY_TIME_IN_SECONDS + " integer "
-                + ")");
     }
 
     @Override

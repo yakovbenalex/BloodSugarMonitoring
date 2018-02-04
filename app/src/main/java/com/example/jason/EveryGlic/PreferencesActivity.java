@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import java.nio.channels.FileChannel;
 import java.util.Locale;
 
 import static com.example.jason.EveryGlic.DBHelper.DATABASE_NAME;
+import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.isEmpty;
 import static com.example.jason.EveryGlic.MyWorks.numberInRange;
@@ -50,6 +53,9 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final boolean UNIT_BLOOD_SUGAR_MMOL_DEFAULT = true;
     protected static final boolean TIME_FORMAT_24H_DEFAULT = true;
     protected static final int BEGINNING_WEEK_DEFAULT = 2;
+
+    // keys for option menu
+    static final int IDM_INFO = 101;
 
     // keys
     protected static final String KEY_PREFS = "settings_pref";
@@ -367,6 +373,22 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             Intent intent = new Intent(PreferencesActivity.this, AgreementActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        createInfoItemInActionBar(menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case IDM_INFO:
+                Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

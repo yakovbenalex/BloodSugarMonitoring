@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,6 +25,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static com.example.jason.EveryGlic.MyWorks.clearET;
+import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.numberInRange;
 import static com.example.jason.EveryGlic.MyWorks.requiredFiledEmpty;
@@ -172,6 +174,12 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
         // display date and time
         setCaptionDateTime();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        createInfoItemInActionBar(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

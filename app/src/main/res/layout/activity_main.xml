@@ -175,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_btn_info"
-                    android:text="@string/information" />
+                    android:text="@string/useful_articles" />
             </TableRow>
         </TableLayout>
     </RelativeLayout>
