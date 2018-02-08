@@ -636,7 +636,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         btnSavePreferences.setEnabled(setEnabledBtnSavePreferences);
     }
 
-
     // set hints for editTexts
     public void setEditTextsHints(boolean unitBloodSugarMmol) {
         if (unitBloodSugarMmol) {

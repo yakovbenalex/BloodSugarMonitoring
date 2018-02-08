@@ -287,7 +287,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         }
     };
 
-    //writing record
+    //writing measurement record
     public void writeRecord(float measurement, long date, String comment, boolean updateRec) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -313,11 +313,13 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         database.close();
     }
 
-    // delete measurement by id
+    // delete measurement record by id
     public void deleteRecord(int idRec) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        database.delete(DBHelper.TABLE_MEASUREMENTS, DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
+        database.delete(DBHelper.TABLE_MEASUREMENTS
+                , DBHelper.KEY_ID + " = " + String.valueOf(idRec)
+                , null);
         database.close();
     }
 

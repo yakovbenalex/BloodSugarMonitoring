@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
@@ -77,7 +78,7 @@ class MyWorks {
     }
 
     // for parse menu item on ActionBar (all items)
-    static boolean parseMenuItemMain(Context context, String calledActivityName, MenuItem item) {
+    static boolean parseMenuItemMain(Context context, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intentPreferencesActivity = new Intent(context, PreferencesActivity.class);
@@ -86,7 +87,8 @@ class MyWorks {
 
             case R.id.action_info:
                 Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show();
-                switch (calledActivityName){
+                // for identify called activity
+                switch (context.getClass().getSimpleName()) {
                     case "MainActivity":
                         Toast.makeText(context, "MainActivity", Toast.LENGTH_SHORT).show();
                         break;
@@ -119,6 +121,17 @@ class MyWorks {
         }
         Log.d(TAG, "parseMenuItemMain: " + context + " ");
         return true;
+    }
+
+    // scroll to bottom of textView
+    static void scrollToBottomOfTextView(final TextView tv) {
+        tv.post(new Runnable() {
+            public void run() {
+                if (tv.getLineCount() > tv.getMaxLines()) {
+                    tv.scrollTo(0, tv.getLineHeight() * (tv.getLineCount() - tv.getMaxLines()) + 2);
+                }
+            }
+        });
     }
 
     // for parse menu item on ActionBar (info item only)

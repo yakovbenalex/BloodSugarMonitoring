@@ -70,7 +70,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.example.jason.EveryGlic.InfoActivity"
-            android:label="@string/useful_articles"
+            android:label="@string/helpful"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
     </application>

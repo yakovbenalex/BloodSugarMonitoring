@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -56,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DBHelper dbHelper;
     private static final String TAG = "myLog";
 
-    ActionBar tb;
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,49 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dbHelper = new DBHelper(this);
         dbHelper.getDatabaseName().isEmpty();
-    }
-
-    @Override
-    protected void onResume() {
-        loadPreferences();
-        load3LastRecords();
-        super.onResume();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnCalculatorCarbs:
-                Intent intentCalculatorCarbsActivity = new Intent(this, CalculatorCarbsActivity.class);
-                startActivity(intentCalculatorCarbsActivity);
-                break;
-
-            case R.id.btnAddMeasurement:
-                Intent intentAddMeasurementActivity = new Intent(this, AddOrChangeMeasurementActivity.class);
-                startActivity(intentAddMeasurementActivity);
-                /*Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://mail.ru"));
-                startActivity(intent);*/
-                break;
-
-            case R.id.btnMeasurements:
-                Intent intentMeasurementsActivity = new Intent(this, MeasurementsActivity.class);
-                startActivity(intentMeasurementsActivity);
-                break;
-
-            case R.id.btnStatistics:
-                Intent intentStatisticsActivity = new Intent(this, StatisticsActivity.class);
-                startActivity(intentStatisticsActivity);
-                break;
-
-            case R.id.btnInfo:
-                Intent intentInfoActivity = new Intent(this, InfoActivity.class);
-                startActivity(intentInfoActivity);
-                break;
-
-            default:
-                break;
-        }
     }
 
     @Override
@@ -186,9 +137,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }*/
-        Log.d(TAG, "onOptionsItemSelected: " + getApplicationContext());
-        parseMenuItemMain(MainActivity.this, "MainActivity", item);
+        parseMenuItemMain(this, item);
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnAddMeasurement:
+                /*Intent intentAddMeasurementActivity = new Intent(this, AddOrChangeMeasurementActivity.class);
+                startActivity(intentAddMeasurementActivity);*/
+
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("http://mail.ru"));
+                startActivity(intent);*/
+
+
+                Log.d(TAG, "onCreate: ");
+
+                break;
+
+            case R.id.btnCalculatorCarbs:
+                Intent intentCalculatorCarbsActivity = new Intent(this, CalculatorCarbsActivity.class);
+                startActivity(intentCalculatorCarbsActivity);
+                break;
+
+            case R.id.btnMeasurements:
+                Intent intentMeasurementsActivity = new Intent(this, MeasurementsActivity.class);
+                startActivity(intentMeasurementsActivity);
+                break;
+
+            case R.id.btnStatistics:
+                Intent intentStatisticsActivity = new Intent(this, StatisticsActivity.class);
+                startActivity(intentStatisticsActivity);
+                break;
+
+            case R.id.btnInfo:
+                Intent intentInfoActivity = new Intent(this, InfoActivity.class);
+                startActivity(intentInfoActivity);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        loadPreferences();
+        load3LastRecords();
+        super.onResume();
     }
 
     // load 3 last records for MainActivity

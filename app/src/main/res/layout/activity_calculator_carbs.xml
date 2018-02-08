@@ -35,11 +35,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/etCarbsInProduct"
+                    android:layout_toStartOf="@+id/etCarbsIn100GramsOfProduct"
                     android:text="@string/carbohydrates_per_100g_product" />
 
                 <EditText
-                    android:id="@+id/etCarbsInProduct"
+                    android:id="@+id/etCarbsIn100GramsOfProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -50,6 +50,7 @@
                     android:maxLength="5"
                     android:selectAllOnFocus="true"
                     android:textAlignment="center" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -153,19 +154,18 @@
                     android:layout_below="@+id/etAmountBreadUnits"
                     android:textAlignment="center"
                     android:textSize="@dimen/textSizeCaption" />
-            </RelativeLayout>
 
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_item_padding">
 
                 <View
                     android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginLeft="@dimen/activity_item_padding"
-                    android:layout_marginRight="@dimen/activity_item_padding"
                     android:background="@color/colorPrimary" />
 
                 <TextView
@@ -173,12 +173,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/view1"
+                    android:layout_below="@+id/view1"
                     android:layout_toStartOf="@+id/tvStackSum"
-                    android:paddingBottom="7dp"
+                    android:maxLines="3"
                     android:paddingRight="@dimen/activity_item_padding"
-                    android:paddingTop="7dp"
-                    android:text="Empty"
-                    android:textAlignment="textStart" />
+                    android:scrollbars="vertical"
+                    android:text="@string/empty" />
 
                 <TextView
                     android:id="@+id/tvStackSum"
@@ -186,9 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/view1"
-                    android:paddingBottom="7dp"
-                    android:paddingTop="7dp"
-                    android:text="0.0"
+                    android:text="@string/_nul"
                     android:textAlignment="textStart" />
 
                 <View
@@ -196,75 +194,77 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:layout_below="@+id/tvStack"
-                    android:layout_marginLeft="@dimen/activity_item_padding"
-                    android:layout_marginRight="@dimen/activity_item_padding"
                     android:background="@color/colorPrimary" />
 
             </RelativeLayout>
-
         </LinearLayout>
-
     </ScrollView>
 
-    <!--android:layout_alignStart="@+id/etAmountBreadUnits"-->
-    <!--android:layout_below="@+id/etAmountBreadUnits"-->
-    <View
-        android:id="@+id/viewBtn1"
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_above="@id/btnClearStack"
-        android:layout_alignEnd="@id/btnClearStack"
-        android:layout_alignStart="@id/btnClearStack"
-        android:layout_marginLeft="@dimen/activity_item_padding"
-        android:layout_marginRight="@dimen/activity_item_padding"
-        android:background="@color/colorPrimary" />
-
-    <Button
-        android:id="@+id/btnClearStack"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/scrollView1"
-        android:text="Clear" />
+        android:layout_below="@id/scrollView1">
 
-    <View
-        android:id="@+id/viewBtn2"
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_above="@id/btnDeleteLastInStack"
-        android:layout_alignEnd="@id/btnDeleteLastInStack"
-        android:layout_alignStart="@id/btnDeleteLastInStack"
-        android:layout_marginLeft="@dimen/activity_item_padding"
-        android:layout_marginRight="@dimen/activity_item_padding"
-        android:background="@color/colorPrimary" />
+        <View
+            android:id="@+id/viewStackBtnsUp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/activity_item_padding"
+            android:layout_marginRight="@dimen/activity_item_padding"
+            android:background="@color/colorPrimary" />
 
-    <Button
-        android:id="@+id/btnDeleteLastInStack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scrollView1"
-        android:layout_toEndOf="@+id/btnClearStack"
-        android:text="Delete last" />
+        <Button
+            android:id="@+id/btnClearStack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/viewStackBtnsDown"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/viewStackBtnsUp"
+            android:text="@string/clear" />
 
-    <View
-        android:id="@+id/viewBtn3"
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_above="@id/btnAddToStack"
-        android:layout_alignEnd="@id/btnAddToStack"
-        android:layout_alignStart="@id/btnAddToStack"
-        android:layout_marginLeft="@dimen/activity_item_padding"
-        android:layout_marginRight="@dimen/activity_item_padding"
-        android:background="@color/colorPrimary" />
+        <View
+            android:id="@+id/viewBtn1ClearStack"
+            android:layout_width="1dip"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/viewStackBtnsDown"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/btnClearStack"
+            android:background="@color/colorPrimary" />
 
-    <Button
-        android:id="@+id/btnAddToStack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnDeleteLastInStack"
-        android:layout_alignBottom="@+id/btnDeleteLastInStack"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/btnDeleteLastInStack"
-        android:text="Add" />
+        <Button
+            android:id="@+id/btnDeleteLastInStack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/viewBtn1ClearStack"
+            android:layout_toStartOf="@+id/btnAddToStack"
+            android:text="@string/delete_last" />
 
+        <View
+            android:id="@+id/viewBtn2ClearStack"
+            android:layout_width="1dip"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/viewStackBtnsDown"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/btnDeleteLastInStack"
+            android:background="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/btnAddToStack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/viewStackBtnsDown"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/viewStackBtnsUp"
+            android:text="@string/add" />
+
+        <View
+            android:id="@+id/viewStackBtnsDown"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/btnDeleteLastInStack"
+            android:layout_marginLeft="@dimen/activity_item_padding"
+            android:layout_marginRight="@dimen/activity_item_padding"
+            android:background="@color/colorPrimary" />
+
+    </RelativeLayout>
 </RelativeLayout>

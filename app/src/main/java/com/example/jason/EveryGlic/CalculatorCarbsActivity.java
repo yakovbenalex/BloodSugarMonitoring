@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.Calendar;
 import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.isEmpty;
+import static com.example.jason.EveryGlic.MyWorks.scrollToBottomOfTextView;
 import static com.example.jason.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
@@ -77,11 +79,11 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_carbs);
-        Log.d(TAG, "CalculatorCarbsActivity, onCreate: ");
+//        Log.d(TAG, "CalculatorCarbsActivity, onCreate: ");
 
         // find views on screen by id
         etGramsOfProduct = findViewById(R.id.etGramsInProduct);
-        etCarbsIn100GramsOfProduct = findViewById(R.id.etCarbsInProduct);
+        etCarbsIn100GramsOfProduct = findViewById(R.id.etCarbsIn100GramsOfProduct);
         etCarbsInGramsOfProduct = findViewById(R.id.etCarbsInGramsOfProduct);
         etAmountBreadUnits = findViewById(R.id.etAmountBreadUnits);
 
@@ -330,8 +332,14 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                 stackSum += stackForCalc.get(i);
             }
             tvStackSum.setText(String.valueOf(stackSum));
-            Log.d(TAG, "CalculatorCarbsActivity, stackGet: " + stackForCalc.get(stackForCalc.size() - 1));
+//            Log.d(TAG, "CalculatorCarbsActivity, stackGet: " + stackForCalc.get(stackForCalc.size() - 1));
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        createInfoItemInActionBar(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -349,11 +357,10 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                 }
 
                 saveStackHistoryState();
-                /* Later this place for save stack to history
-                *
-                *
-                *
-                * */
+                tvStack.scrollTo(0, 0);
+
+//                qwe = 1;
+//                tvStack.setText("");
                 break;
 
             // remove last value from stack
@@ -361,13 +368,15 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                 if (!stackForCalc.isEmpty()) {
                     // subtract last stack value from stack sum
                     stackSum -= stackForCalc.get(stackForCalc.size() - 1);
-                    tvStackSum.setText(getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false));
+
+                    strTemp = "= " + getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
+                    tvStackSum.setText(strTemp);
 
                     // remove last value in stack's textView
                     if (stackForCalc.size() == 1) {
                         tvStack.setText(R.string.empty);
                         tvStackSum.setText("= 0.0");
-                        Toast.makeText(this, "All value deleted."
+                        Toast.makeText(this, R.string.all_value_deleted
                                 , Toast.LENGTH_SHORT).show();
                     } else {
                         String stackCurState = tvStack.getText().toString();
@@ -381,6 +390,11 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     // remove last stack's value from ArrayList
                     stackForCalc.remove(stackForCalc.size() - 1);
                 }
+
+                scrollToBottomOfTextView(tvStack);
+
+//                tvStack.append(" + " + qwe);
+//                qwe++;
 
                 break;
 
@@ -419,11 +433,22 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                         }
                     }
                 } else {
-                    Toast.makeText(this, "Field Amount of bread units should not be empty."
+                    Toast.makeText(this
+                            , "Field Amount of bread units should not be empty."
                             , Toast.LENGTH_SHORT).show();
                 }
 
-                myLog("btnAddToStack");
+                /*// for scrollable textView
+                tvStack.setMovementMethod(new ScrollingMovementMethod());*/
+
+                scrollToBottomOfTextView(tvStack);
+
+                /*tvStack.setText("");
+                for (int i = 0; i < 21; i++) {
+                    tvStack.append(i + " + ");
+                }*/
+
+//                myLog("btnAddToStack");
                 break;
 
             default:
@@ -431,19 +456,10 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         }
     }
 
-    // my logs for stack
-    public void myLog(String caller) {
-        if (!stackForCalc.isEmpty()) {
-            Log.d(TAG, "\n" + caller + "\nsize(): " + stackForCalc.size() + "\nisEmpty(): "
-                    + stackForCalc.isEmpty()
-                    + "\nlast stack value: " + stackForCalc.get(stackForCalc.size() - 1));
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "CalculatorCarbsActivity, onResume: ");
+//        Log.d(TAG, "CalculatorCarbsActivity, onResume: ");
 
         // get shared preferences for Calc Carbs
         SharedPreferences sharedPrefState = getSharedPreferences(
@@ -465,7 +481,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
             String[] stackArr = stack.split(" ");
             stackSum = 0.0f;
 
-            Log.d(TAG, stack + "\n");
+//            Log.d(TAG, stack + "\n");
 
             // check on empty stack history
             if (stack.equals(STACK_DEFAULT_EMPTY_VALUE)) {
@@ -486,8 +502,13 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
             e.printStackTrace();
         }
 
-        myLog("btnAddToStack");
+//        myLog("btnAddToStack");
         etCarbsIn100GramsOfProduct.requestFocus();
+
+        // for scrollable textView
+        tvStack.setMovementMethod(new ScrollingMovementMethod());
+        // scroll to end of tvStack textView
+        scrollToBottomOfTextView(tvStack);
     }
 
     @Override
@@ -538,15 +559,18 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         sharedPrefStateEditor.apply();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        createInfoItemInActionBar(menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
     // for save fields values
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    // my logs for stack
+    public void myLog(String caller) {
+        if (!stackForCalc.isEmpty()) {
+            Log.d(TAG, "\n" + caller + "\nsize(): " + stackForCalc.size() + "\nisEmpty(): "
+                    + stackForCalc.isEmpty()
+                    + "\nlast stack value: " + stackForCalc.get(stackForCalc.size() - 1));
+        }
     }
 }

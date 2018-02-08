@@ -76,7 +76,7 @@
     <string name="exit_are_you_sure">Exit: Are you sure?</string>
     <string name="confirm">Confirm</string>
     <string name="click_the_back_button_again_to_cancel_the_agreement">Click the back button again to cancel the agreement!</string>
-    <string name="useful_articles">Useful articles</string>
+    <string name="helpful">Helpful</string>
     <string name="dws_sut">Sut</string>
     <string name="dws_sun">Sun</string>
     <string name="dws_mon">Mon</string>
@@ -122,5 +122,8 @@
     <string name="backup">Backup</string>
     <string name="empty">Empty</string>
     <string name="info">Info</string>
+    <string name="clear">Clear</string>
+    <string name="delete_last">Delete last</string>
+    <string name="all_value_deleted">All value deleted.</string>
 
 </resources>
