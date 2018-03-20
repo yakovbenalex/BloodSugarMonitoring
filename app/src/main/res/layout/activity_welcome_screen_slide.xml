@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/flViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/viewBtnsWelcomeScreen"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/welcome_screen_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </android.support.v4.view.ViewPager>
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/viewBtnsWelcomeScreen"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_above="@id/btnNext"
+        android:background="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/btnSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@id/viewBtnsSep"
+        android:text="@string/skip" />
+
+    <View
+        android:layout_width="1dip"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewBtnsSep"
+        android:layout_below="@+id/viewBtnsWelcomeScreen"
+        android:layout_centerInParent="true"
+        android:background="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@id/viewBtnsSep"
+        android:text="@string/next" />
+
+</RelativeLayout>

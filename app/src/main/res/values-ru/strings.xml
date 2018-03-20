@@ -109,4 +109,23 @@
     <string name="clear">Очистить</string>
     <string name="delete_last">Удалить последнее</string>
     <string name="all_value_deleted">Все значения удалены.</string>
+    <string name="_TipText">Текст статьи</string>
+    <string name="help_is_only_in_russian">Сейчас справка доступна только на русском языке!\n</string>
+    <string name="languageNotSupport">В будущем будет добавлен ваш язык, возможно =).</string>
+    <string name="attention">Внимание!</string>
+    <string name="there_is_no_information_for_this_screen">Для этого экрана справки нет</string>
+    <string name="title_image">Картинка заголовка</string>
+    <string name="welcome_screen1_title">Добро пожаловать!</string>
+    <string name="welcome_screen2_title">Новое измерение</string>
+    <string name="welcome_screen3_title">База измерений</string>
+    <string name="welcome_screen4_title">Калькулятор углеводов</string>
+    <string name="welcome_screen5_title">И многое другое</string>
+    <string name="welcome_screen1_content">Приложение для оперативного мониторинга гликемии.</string>
+    <string name="welcome_screen2_content">Добавляйте новое значение гликемии, введя уровень сахара, дату и время (можно писать комментарии).</string>
+    <string name="welcome_screen3_content">Контролируйте уровень гликемии - просматривайте, изменяйте, удаляйте введённые ранее значения сахара.</string>
+    <string name="welcome_screen4_content">Считайте количество ХЕ и углеводов, указав их значение на 100 гр. готового продукта.</string>
+    <string name="welcome_screen5_content">Настройте параметры приложения. Получайте статистику за различные периоды (неделю, месяц, всё время) и полезную информацию по контролю измерений. \nВаш помощник всегда рядом!</string>
+    <string name="next">Дальше</string>
+    <string name="skip">Пропустить</string>
+    <string name="start">Начать</string>
 </resources>

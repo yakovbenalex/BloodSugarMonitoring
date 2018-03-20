@@ -11,7 +11,14 @@
     <dimen name="textSizeNormalXLarge">23sp</dimen>
     <dimen name="textSizeCaption">14sp</dimen>
 
+
+    <dimen name="icon_size_default">52dp</dimen>
+
     <!-- top separator -->
     <dimen name="separator_action_bar">5dp</dimen>
+
+    <!-- welcome screen -->
+    <dimen name="welcome_screen_top_padding">32dp</dimen>
+    <dimen name="welcome_screen_start_end_padding">32dp</dimen>
 
 </resources>

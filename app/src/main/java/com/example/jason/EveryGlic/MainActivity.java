@@ -19,12 +19,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
+import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
 import static com.example.jason.EveryGlic.MyWorks.parseMenuItemMain;
 import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_CUR_APP_VER_CODE;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_DB_NEED_UPDATE;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
@@ -56,15 +60,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        // get SharedPreferences settings object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+
         firstRun = sharedPref.getBoolean(KEY_PREFS_FIRST_RUN_AGREEMENT, true);
 
+        // check for first run app
         if (firstRun) {
             Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
             startActivity(intent);
+            intent = new Intent(MainActivity.this, WelcomeScreenActivity.class);
+            startActivity(intent);
         }
+
+//        Trace.beginSection("MainActivity.onCreate");
+        setContentView(R.layout.activity_main);
+//        Trace.endSection();
+
+        int prefsCurAppVersion = sharedPref.getInt(KEY_PREFS_CUR_APP_VER_CODE, 1);
+
+        Log.d(TAG, "prefsCurAppVersion: " + prefsCurAppVersion + "\n"
+                + "BuildConfig.VERSION_CODE: " + BuildConfig.VERSION_CODE);
+
+        if (BuildConfig.VERSION_CODE > prefsCurAppVersion) {
+            Log.d(TAG, "putBoolean(KEY_PREFS_DB_NEED_UPDATE: true ");
+            prefEditor.putBoolean(KEY_PREFS_DB_NEED_UPDATE, true);
+            prefEditor.putInt(KEY_PREFS_CUR_APP_VER_CODE, BuildConfig.VERSION_CODE);
+        }
+
+        // save change of preferences
+        prefEditor.apply();
 
         // find view on screen by id
         btnCalculatorCarbs = findViewById(R.id.btnCalculatorCarbs);
@@ -98,47 +124,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        //
+        createInfoItemInActionBar(menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intentPreferencesActivity = new Intent(MainActivity.this, PreferencesActivity.class);
-                startActivity(intentPreferencesActivity);
-                break;
-
-            case R.id.action_help:
-                Toast.makeText(this, "Help is not available", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(MainActivity.this, AgreementActivity.class);
-//                startActivity(intent);
-                break;
-
-            case R.id.action_agreement:
-                Intent intentAgreementActivity = new Intent(MainActivity.this, AgreementActivity.class);
-                startActivity(intentAgreementActivity);
-                break;
-
-            case R.id.action_about:
-                // custom dialog
-                final Dialog dialog = new Dialog(this);
-                dialog.setContentView(R.layout.activity_info_about);
-                dialog.setTitle(R.string.about);
-                dialog.show();
-                break;
-
-            default:
-                break;
-        }*/
         parseMenuItemMain(this, item);
-
+        parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -146,16 +139,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnAddMeasurement:
-                /*Intent intentAddMeasurementActivity = new Intent(this, AddOrChangeMeasurementActivity.class);
-                startActivity(intentAddMeasurementActivity);*/
-
-                /*Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://mail.ru"));
-                startActivity(intent);*/
-
-
-                Log.d(TAG, "onCreate: ");
-
+                Intent intentAddMeasurementActivity = new Intent(this, AddOrChangeMeasurementActivity.class);
+                startActivity(intentAddMeasurementActivity);
                 break;
 
             case R.id.btnCalculatorCarbs:

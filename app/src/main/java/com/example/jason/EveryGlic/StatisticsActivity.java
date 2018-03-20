@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -17,14 +18,15 @@ import static com.example.jason.EveryGlic.DBHelper.KEY_MEASUREMENT;
 import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
 import static com.example.jason.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
 import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
+import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
+import static com.example.jason.EveryGlic.PreferencesActivity.BEGINNING_WEEK_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
-import static com.example.jason.EveryGlic.PreferencesActivity.BEGINNING_WEEK_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 public class StatisticsActivity extends AppCompatActivity {
@@ -51,6 +53,7 @@ public class StatisticsActivity extends AppCompatActivity {
     float prefsBloodHighSugar;
     int prefsBeginningWeek;
 
+    // For date and time
     String sugarFormat;
 
     Calendar now;
@@ -174,10 +177,22 @@ public class StatisticsActivity extends AppCompatActivity {
         loadStatistics();
     }
 
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        createInfoItemInActionBar(menu);
+        return super.onCreateOptionsMenu(menu);
+    }*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         createInfoItemInActionBar(menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        parseMenuItemInfo(this, item);
+        return super.onOptionsItemSelected(item);
     }
 
     // load preferences values
@@ -287,6 +302,7 @@ public class StatisticsActivity extends AppCompatActivity {
         // set Info to textViews
         tvAllTimeCount.setText(String.valueOf(allTimeCount));
 
+        // if measurement doesn't exist then don't try get statistics data
         if (allTimeCount > 0) {
             // work with count
             // current week

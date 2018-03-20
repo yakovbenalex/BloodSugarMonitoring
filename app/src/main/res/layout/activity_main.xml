@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.jason.EveryGlic.MainActivity">
 
     <View
@@ -74,6 +75,12 @@
 
         </LinearLayout>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         <TableLayout
             android:id="@+id/tableButtons"
             android:layout_width="match_parent"
@@ -100,7 +107,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_btn_add"
+                    android:drawableTop="@drawable/ic_btn_add"
                     android:text="@string/add" />
             </TableRow>
 
@@ -124,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_btn_stat"
+                    android:drawableTop="@drawable/ic_btn_stat"
                     android:text="@string/statistics" />
 
                 <View
@@ -137,7 +144,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_btn_meas"
+                    android:drawableTop="@drawable/ic_btn_meas"
                     android:text="@string/measurements" />
             </TableRow>
 
@@ -161,7 +168,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_btn_calc"
+                    android:drawableTop="@drawable/ic_btn_calc"
                     android:text="@string/carbs_calculator" />
 
                 <View
@@ -174,7 +181,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_btn_info"
+                    android:drawableTop="@drawable/ic_btn_info"
                     android:text="@string/helpful" />
             </TableRow>
         </TableLayout>

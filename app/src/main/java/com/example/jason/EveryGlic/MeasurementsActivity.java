@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
 import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
+import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
 import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
@@ -99,6 +101,12 @@ public class MeasurementsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         createInfoItemInActionBar(menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        parseMenuItemInfo(this, item);
+        return super.onOptionsItemSelected(item);
     }
 
     // load records from DB

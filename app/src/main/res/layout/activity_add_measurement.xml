@@ -24,6 +24,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/rlControlPanel"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
 
@@ -96,11 +97,7 @@
                         android:textAlignment="textStart" />
                 </RelativeLayout>
 
-                <TimePicker
-                    android:id="@+id/timePickerAddMeasurement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:headerBackground="@color/colorPrimary" />
+
             </LinearLayout>
         </ScrollView>
 
@@ -108,7 +105,20 @@
             android:id="@+id/rlControlPanel"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/tvDateAndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/btnChooseTime"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:padding="@dimen/activity_item_padding"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite" />
 
             <View
                 android:id="@+id/view3"
@@ -129,16 +139,25 @@
                 android:layout_alignParentStart="true"
                 android:text="@string/date" />
 
-            <TextView
-                android:id="@+id/tvDate"
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_above="@+id/btnChooseTime"
+                android:layout_alignEnd="@+id/btnChooseTime"
+                android:layout_alignStart="@+id/btnChooseTime"
+                android:layout_marginLeft="@dimen/activity_item_padding"
+                android:layout_marginRight="@dimen/activity_item_padding"
+                android:background="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/btnChooseTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/btnSaveMeasurement"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorPrimary"
-                android:padding="@dimen/activity_item_padding"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite" />
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/btnChooseDate"
+                android:text="@string/time" />
+
 
             <Button
                 android:id="@+id/btnDeleteCurMeasurements"

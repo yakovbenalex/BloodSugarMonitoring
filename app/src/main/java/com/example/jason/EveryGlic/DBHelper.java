@@ -19,12 +19,6 @@ class DBHelper extends SQLiteOpenHelper{
     static final String KEY_MEASUREMENT = "measurement";
     static final String KEY_COMMENT = "comment";
 
-    //table calcCarbsStackHistory
-    static final String TABLE_CALC_CARBS_STACK_HISTORY = "calcCarbsStackHistory";
-    //KEYS for table calcCarbsStackHistory
-    static final String KEY_STACK_VALUE = "stackValue";
-
-
     DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

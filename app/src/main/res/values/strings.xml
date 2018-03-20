@@ -81,7 +81,7 @@
     <string name="dws_sun">Sun</string>
     <string name="dws_mon">Mon</string>
 
-    <!--  -->
+    <!-- statistics strings -->
     <string name="count">Count</string>
     <string name="for_week">For week</string>
     <string name="for_month">For month</string>
@@ -92,9 +92,11 @@
     <string name="month">Month</string>
     <string name="all_time">All time</string>
     <string name="_nul">---</string>
+
     <string name="info_about">The EveryGlic application is intended for use by people with diabetes.</string>
 
     <!--  -->
+    <string name="_TipText">Tip text</string>
     <string name="_InfoUsefulTips">ПОЛЕЗНЫЕ СОВЕТЫ\n\n1. Диета - не жёсткие ограничения, а разумный выбор. \nОбыкновенная овсянка содержит: протеин, цинк, магний. калий, селен, клетчатку, биотин, витамины С и В.\nСнижает уровень холестерина, уменьшает риск возникновения дерматитов, нормализует работу кишечника. \nМожно добавить орехи, яблоки, сухофрукты, немного сыра.\n\n2. Движение - жизнь, а жизнь - движение.\nФизическая активность позволяет запустить физиологические механизмы в человеческом организме, следовательно:\n•  Понизить содержание глюкозы в крови. Работающие мышцы могут поглощать в 20 раз больше глюкозы.\n•  Улучшить использование инсулина. При нагрузках доза инсулина может быть снижена.\n•  Сбросить лишние килограммы и нормализовать обменные процессы в организме.\nДопустимы любые виды спорта, кроме тяжёлых и длительных силовых упражнений, велосипедные и пешие прогулки.\n\n3. К нижним конечностям повышенное внимание.\nСледует ежедневно мыть ноги тёплой водой, осматривать кожу стоп, не ходить босиком, носить мягкую и просторную обувь.\nНельзя пользоваться грелками и пластырями, стричь ногти на ногах полукругом (только прямо), срезать мозоли.</string>
     <string name="_InfoEmergencyConditions">НЕОТЛОЖНЫЕ СОСТОЯНИЯ\n\n•\tДиабетический кетоацидоз - острое и тяжелое осложнение из-за недостаточности гормона инсулин. \nКлетки организма начинают питаться собственными жировыми запасами, в процессе происходит выработка кетоновых тел (ацетона).\n•\tГиперосмолярная гипергликемия и кома - угрожающая жизни патология с резким и длительным увеличением уровня глюкозы в крови. \n•\tГипогликемия и гипогликемическая кома - наиболее частое осложнение при интенсивной инсулинотерапим.\nОбусловлена быстрым и выраженным снижением уровня глюкозы в крови, вызывающим энергетическое голодание клеток, отек головного мозга.</string>
     <string name="_InfoChronicComplications">ХРОНИЧЕСКИЕ ОСЛОЖНЕНИЯ\n\n•\tРетинопатия - микрососудистые нарушения и изменения сетчатки, в терминальной стадии приводящие к полной потере зрения.\n•\tНефропатия - специфическое поражение почек, характеризуется развитием хронической почечной недостаточности.\n•\tЦереброваскулярная болезнь - патологические состояния, приводящие к нарушениям кровообращения в мозге.\n•\tНейропатия – комплекс синдромов, характеризуется поражением периферических и/или автономных нервных волокон.\n•\tНейроастеоартропатия – почти безболевое, прогрессирующая, деструктивное поражение одного или нескольких суставов.\n•\tСиндром диабетической стопы - патологические изменения с развитием язвенно-некротических процессов и гангрены стопы.</string>
@@ -125,5 +127,28 @@
     <string name="clear">Clear</string>
     <string name="delete_last">Delete last</string>
     <string name="all_value_deleted">All value deleted.</string>
+    <string name="help_is_only_in_russian">At this time, the help is only in Russian!\n</string>
+    <string name="languageNotSupport">In the future will be added your language, perhaps =).</string>
+    <string name="attention">Attention!</string>
+    <string name="there_is_no_information_for_this_screen">There is no information for this screen</string>
+
+
+    <!-- welcome screen titles -->
+    <string name="welcome_screen1_title">Добро пожаловать!</string>
+    <string name="welcome_screen2_title">Новое измерение</string>
+    <string name="welcome_screen3_title">База измерений</string>
+    <string name="welcome_screen4_title">Калькулятор углеводов</string>
+    <string name="welcome_screen5_title">И многое другое</string>
+    <!-- welcome screen contents -->
+    <string name="welcome_screen1_content">Приложение для оперативного мониторинга гликемии.</string>
+    <string name="welcome_screen2_content">Добавляйте новое значение гликемии, введя уровень сахара, дату и время (можно писать комментарии).</string>
+    <string name="welcome_screen3_content">Контролируйте уровень гликемии - просматривайте, изменяйте, удаляйте введённые ранее значения сахара.</string>
+    <string name="welcome_screen4_content">Считайте количество ХЕ и углеводов, указав их значение на 100 гр. готового продукта.</string>
+    <string name="welcome_screen5_content">Настройте параметры приложения. Получайте статистику за различные периоды (неделю, месяц, всё время) и полезную информацию по контролю измерений. \nВаш помощник всегда рядом!</string>
+
+    <string name="title_image">Title image</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
 
 </resources>

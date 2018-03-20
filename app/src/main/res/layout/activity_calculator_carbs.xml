@@ -163,7 +163,7 @@
                 android:layout_marginTop="@dimen/activity_item_padding">
 
                 <View
-                    android:id="@+id/view1"
+                    android:id="@+id/viewBtnsWelcomeScreen"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:background="@color/colorPrimary" />
@@ -172,8 +172,8 @@
                     android:id="@+id/tvStack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/view1"
-                    android:layout_below="@+id/view1"
+                    android:layout_alignStart="@+id/viewBtnsWelcomeScreen"
+                    android:layout_below="@+id/viewBtnsWelcomeScreen"
                     android:layout_toStartOf="@+id/tvStackSum"
                     android:maxLines="3"
                     android:paddingRight="@dimen/activity_item_padding"
@@ -185,7 +185,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/view1"
+                    android:layout_below="@+id/viewBtnsWelcomeScreen"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeNormal"
                     android:text="@string/_nul"
                     android:textAlignment="textStart" />
 

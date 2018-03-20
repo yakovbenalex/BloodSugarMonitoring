@@ -1,6 +1,7 @@
 package com.example.jason.EveryGlic;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,6 +30,7 @@ import static com.example.jason.EveryGlic.MyWorks.clearET;
 import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.numberInRange;
+import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
 import static com.example.jason.EveryGlic.MyWorks.requiredFiledEmpty;
 import static com.example.jason.EveryGlic.MyWorks.roundUp;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
@@ -61,16 +64,17 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
     // views
     Button btnChooseDate;
+    Button btnChooseTime;
     Button btnSaveMeasurement;
     Button btnDeleteCurMeasurements;
 
     EditText etBloodSugarMeasurement;
     EditText etComment;
 
-    TextView tvDate;
+    TextView tvDateAndTime;
     TextView tvUnitBloodSugar;
 
-    TimePicker timePickerAddMeasurement;
+    TimePicker timePicker;
 
     // SQLite database
     DBHelper dbHelper;
@@ -99,22 +103,23 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
         // find views on screen by id
         btnChooseDate = findViewById(R.id.btnChooseDate);
+        btnChooseTime = findViewById(R.id.btnChooseTime);
         btnSaveMeasurement = findViewById(R.id.btnSaveMeasurement);
         btnDeleteCurMeasurements = findViewById(R.id.btnDeleteCurMeasurements);
 
         etBloodSugarMeasurement = findViewById(R.id.etBloodSugarMeasurementEdit);
         etComment = findViewById(R.id.etCommentEdit);
 
-        tvDate = findViewById(R.id.tvDate);
+        tvDateAndTime = findViewById(R.id.tvDateAndTime);
         tvUnitBloodSugar = findViewById(R.id.tvUnitBloodSugar);
 
-        timePickerAddMeasurement = findViewById(R.id.timePickerAddMeasurement);
 
         // set hint for editText
         setEditTextsHints(prefsUnitBloodSugarMmol);
 
         // set views properties and other
-        timePickerAddMeasurement.setIs24HourView(true);
+//        timePicker.setIs24HourView(true);
+
         if (prefsUnitBloodSugarMmol) {
             tvUnitBloodSugar.setText(getString(R.string.mmol_l));
         } else {
@@ -123,17 +128,9 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
         // set the listeners for views
         btnChooseDate.setOnClickListener(this);
+        btnChooseTime.setOnClickListener(this);
         btnSaveMeasurement.setOnClickListener(this);
         btnDeleteCurMeasurements.setOnClickListener(this);
-
-        timePickerAddMeasurement.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                dateAndTime.set(Calendar.MINUTE, minute);
-                setCaptionDateTime();
-            }
-        });
 
         // event on text change in editTexts
         etBloodSugarMeasurement.addTextChangedListener(new TextWatcher() {
@@ -183,6 +180,12 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        parseMenuItemInfo(this, item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             // show dialog to choose date
@@ -191,6 +194,15 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
                         dateAndTime.get(Calendar.YEAR),
                         dateAndTime.get(Calendar.MONTH),
                         dateAndTime.get(Calendar.DAY_OF_MONTH))
+                        .show();
+                break;
+
+            // show dialog to choose time
+            case R.id.btnChooseTime:
+                new TimePickerDialog(this, timePickerDialog,
+                        dateAndTime.get(Calendar.HOUR_OF_DAY),
+                        dateAndTime.get(Calendar.MINUTE),
+                        prefsTimeFormat24h)
                         .show();
                 break;
 
@@ -206,9 +218,11 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
                         // Canceled.
                     }
                 });
+
                 // confirm delete current measurement
                 alertDelCurMes.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        // delete current measurement from database
                         SQLiteDatabase database = dbHelper.getWritableDatabase();
                         database.delete(DBHelper.TABLE_MEASUREMENTS,
                                 DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
@@ -256,7 +270,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
     // set date to caption
     public void setCaptionDateTime() {
-        tvDate.setText(sdf.format(dateAndTime.getTimeInMillis()));
+        tvDateAndTime.setText(sdf.format(dateAndTime.getTimeInMillis()));
     }
 
     // listener for DatePickerDialog
@@ -282,6 +296,27 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
                     // set current date
                     dateAndTime.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
                 }
+            }
+            setCaptionDateTime();
+        }
+    };
+
+    // listener for TimePickerDialog
+    TimePickerDialog.OnTimeSetListener timePickerDialog = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            now = Calendar.getInstance();
+            dateAndTime.set(dateAndTime.get(Calendar.YEAR), dateAndTime.get(Calendar.MONTH), dateAndTime.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+
+            // checking on current date and reset date to current
+            now = Calendar.getInstance();
+            if (dateAndTime.getTimeInMillis() > now.getTimeInMillis()) {
+                Toast.makeText(AddOrChangeMeasurementActivity.this, getString(R.string.incorrect_date) + "\n"
+                        + getString(R.string.date_cannot_be_greater_than_the_current) + "\n"
+                        + getString(R.string.date_has_been_reset), Toast.LENGTH_SHORT).show();
+
+                // set current date
+                dateAndTime.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
             }
             setCaptionDateTime();
         }
@@ -355,8 +390,8 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
             }*/
         /*try {
             //time picker set
-            timePickerAddMeasurement.setCurrentHour(dateAndTime.get(Calendar.HOUR_OF_DAY));
-            timePickerAddMeasurement.setCurrentMinute(dateAndTime.get(Calendar.MINUTE));
+            timePicker.setCurrentHour(dateAndTime.get(Calendar.HOUR_OF_DAY));
+            timePicker.setCurrentMinute(dateAndTime.get(Calendar.MINUTE));
         } catch (Exception e) {
             Log.d(TAG, "loadRecords: setCurrent");
         }*/

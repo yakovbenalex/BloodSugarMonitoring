@@ -215,11 +215,11 @@
                         android:id="@+id/textViewAmountCarbsInBreadUnit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:text="@string/amount_of_carbohydrates_in_bread_unit"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@+id/etAmountCarbInBreadUnit" />
+                        android:layout_alignParentTop="true"
+                        android:layout_toStartOf="@+id/etAmountCarbInBreadUnit"
+                        android:maxLines="2"
+                        android:text="@string/amount_of_carbohydrates_in_bread_unit" />
 
                 </RelativeLayout>
 
@@ -320,49 +320,10 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/vBtnDelAllMeasTop"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:layout_marginTop="@dimen/activity_item_pref_padding"
-                    android:background="@color/colorPrimary" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/btnBackupDB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/backup" />
-
-                        <View
-                            android:id="@+id/vBuRestoreDB"
-                            android:layout_width="1dip"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorPrimary" />
-
-                        <Button
-                            android:id="@+id/btnRestoreDB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Restore" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/vBtnsBuRestore"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
                     android:background="@color/colorPrimary" />
 
                 <Button
@@ -372,7 +333,7 @@
                     android:text="@string/delete_all_measurements" />
 
                 <View
-                    android:id="@+id/vBtnDelMeas"
+                    android:id="@+id/vBtnDelAllMeasBottom"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:background="@color/colorPrimary" />

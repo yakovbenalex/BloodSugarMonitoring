@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.isEmpty;
+import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
 import static com.example.jason.EveryGlic.MyWorks.scrollToBottomOfTextView;
 import static com.example.jason.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
@@ -342,6 +344,11 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        parseMenuItemInfo(this, item);
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
