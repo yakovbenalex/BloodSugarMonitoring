@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,37 +9,25 @@
         android:layout_height="@dimen/separator_action_bar"
         android:background="@color/colorPrimaryDark" />
 
-    <RelativeLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:maxWidth="560dp"
+        android:padding="@dimen/activity_item_padding"
+        android:text="@string/agreement_terms" />
+
+    <View
+        android:id="@+id/vBtnsChooseDateAndTimeTop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_item_padding">
+        android:layout_height="1dip"
+        android:background="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:maxWidth="560dp"
-            android:text="@string/agreement_terms" />
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm" />
 
-        <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_above="@+id/btnConfirm"
-            android:layout_alignEnd="@+id/btnConfirm"
-            android:layout_alignStart="@+id/btnConfirm"
-            android:layout_marginLeft="@dimen/activity_item_padding"
-            android:layout_marginRight="@dimen/activity_item_padding"
-            android:background="@color/colorPrimary" />
-
-        <Button
-            android:id="@+id/btnConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="@string/confirm" />
-    </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

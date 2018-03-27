@@ -23,6 +23,7 @@
                 android:id="@+id/textInfoRules"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/info_about"
                 android:minWidth="190dp"
                 android:text="@string/info_about"
                 android:textIsSelectable="true"
@@ -39,6 +40,8 @@
                 android:textColor="@android:color/black"
                 android:textIsSelectable="true"
                 android:textSize="16sp" />
+
         </RelativeLayout>
     </ScrollView>
+
 </RelativeLayout>

@@ -5,18 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvWelcomeScreenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:paddingTop="@dimen/welcome_screen_top_padding"
-            android:text="@string/_TipText"
+            android:layout_gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/textSizeNormalXLarge" />
 
@@ -24,8 +23,7 @@
             android:id="@+id/ivWelcomeScreenImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvWelcomeScreenTitle"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:contentDescription="@string/title_image"
             android:paddingTop="@dimen/welcome_screen_top_padding"
             app:srcCompat="@drawable/logo" />
@@ -34,15 +32,10 @@
             android:id="@+id/tvWelcomeScreenContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/ivWelcomeScreenImage"
-            android:paddingEnd="@dimen/welcome_screen_start_end_padding"
-            android:paddingStart="@dimen/welcome_screen_start_end_padding"
-            android:paddingTop="@dimen/welcome_screen_top_padding"
-            android:paddingBottom="@dimen/welcome_screen_top_padding"
-            android:text="@string/_TipText"
+            android:layout_gravity="center"
+            android:padding="@dimen/welcome_screen_top_padding"
             android:textAlignment="center" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

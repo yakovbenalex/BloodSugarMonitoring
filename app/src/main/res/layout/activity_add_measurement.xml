@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,22 +16,20 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_item_padding">
+        android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@+id/scrollView2"
+            android:id="@+id/svAddOrChangeMeas"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/rlControlPanel"
-            android:layout_alignParentStart="true"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true">
 
             <LinearLayout
+                android:id="@+id/llAddOrChangeMeas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/activity_item_padding">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -44,6 +42,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/etBloodSugarMeasurementEdit"
+                        android:labelFor="@id/etBloodSugarMeasurementEdit"
                         android:maxLines="2"
                         android:text="@string/blood_sugar_measurement" />
 
@@ -81,9 +80,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/etCommentEdit"
                         android:layout_alignParentStart="true"
+                        android:labelFor="@+id/etCommentEdit"
                         android:maxLines="2"
                         android:paddingEnd="16dp"
-                        android:text="@string/comment" />
+                        android:text="@string/comment"
+
+                        />
 
                     <EditText
                         android:id="@+id/etCommentEdit"
@@ -95,11 +97,67 @@
                         android:maxLength="255"
                         android:selectAllOnFocus="true"
                         android:textAlignment="textStart" />
-                </RelativeLayout>
 
+                </RelativeLayout>
 
             </LinearLayout>
         </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/rlDateAndTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/svAddOrChangeMeas">
+
+            <View
+                android:id="@+id/vBtnsChooseDateAndTimeTop"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/btnChooseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/date" />
+
+            <View
+                android:layout_width="1dip"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/btnChooseDate"
+                android:layout_toRightOf="@id/btnChooseDate"
+                android:background="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/btnChooseTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/btnChooseDate"
+                android:text="@string/time" />
+
+            <TextView
+                android:id="@+id/tvDateAndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/btnChooseTime"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/vBtnsChooseDateAndTimeTop"
+                android:layout_toEndOf="@+id/btnChooseTime"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite" />
+
+            <View
+                android:id="@+id/vBtnsChooseDateAndTimeBottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_below="@id/btnChooseDate"
+                android:background="@color/colorPrimary" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rlControlPanel"
@@ -108,84 +166,41 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true">
 
-            <TextView
-                android:id="@+id/tvDateAndTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/btnChooseTime"
-                android:layout_alignParentStart="true"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:padding="@dimen/activity_item_padding"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite" />
-
             <View
-                android:id="@+id/view3"
+                android:id="@+id/vBtnsSaveAndDeleteTop"
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_above="@+id/btnChooseDate"
-                android:layout_alignEnd="@+id/btnChooseDate"
-                android:layout_alignStart="@+id/btnChooseDate"
-                android:layout_marginLeft="@dimen/activity_item_padding"
-                android:layout_marginRight="@dimen/activity_item_padding"
+                android:layout_above="@+id/btnSaveMeasurement"
                 android:background="@color/colorPrimary" />
-
-            <Button
-                android:id="@+id/btnChooseDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:text="@string/date" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:layout_above="@+id/btnChooseTime"
-                android:layout_alignEnd="@+id/btnChooseTime"
-                android:layout_alignStart="@+id/btnChooseTime"
-                android:layout_marginLeft="@dimen/activity_item_padding"
-                android:layout_marginRight="@dimen/activity_item_padding"
-                android:background="@color/colorPrimary" />
-
-            <Button
-                android:id="@+id/btnChooseTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/btnChooseDate"
-                android:text="@string/time" />
-
 
             <Button
                 android:id="@+id/btnDeleteCurMeasurements"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/btnSaveMeasurement"
-                android:layout_alignParentEnd="true"
-                android:text="@string/delete"
-                android:visibility="invisible" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@id/vBtnsSaveAndDeleteSep"
+                android:enabled="false"
+                android:text="@string/delete" />
 
             <View
-                android:id="@+id/view4"
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:layout_above="@+id/btnSaveMeasurement"
-                android:layout_alignEnd="@+id/btnSaveMeasurement"
-                android:layout_alignStart="@+id/btnSaveMeasurement"
-                android:layout_marginLeft="@dimen/activity_item_padding"
-                android:layout_marginRight="@dimen/activity_item_padding"
+                android:id="@+id/vBtnsSaveAndDeleteSep"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vBtnsSaveAndDeleteTop"
+                android:layout_centerInParent="true"
                 android:background="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnSaveMeasurement"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@id/vBtnsSaveAndDeleteSep"
                 android:text="@string/save" />
+
         </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+
+</LinearLayout>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.jason.EveryGlic.CalculatorCarbsActivity">
 
     <View
@@ -14,8 +15,6 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/activity_item_padding"
         android:padding="@dimen/activity_item_padding">
 
@@ -36,6 +35,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/etCarbsIn100GramsOfProduct"
+                    android:labelFor="@+id/etCarbsIn100GramsOfProduct"
                     android:text="@string/carbohydrates_per_100g_product" />
 
                 <EditText
@@ -65,6 +65,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/etGramsInProduct"
+                    android:labelFor="@+id/etGramsInProduct"
                     android:text="@string/grams_of_product" />
 
                 <EditText
@@ -97,6 +98,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/etCarbsInGramsOfProduct"
+                    android:labelFor="@+id/etCarbsInGramsOfProduct"
                     android:maxLines="2"
                     android:text="@string/carbs_in_grams_of_product" />
 
@@ -129,6 +131,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/etAmountBreadUnits"
+                    android:labelFor="@+id/etAmountBreadUnits"
                     android:maxLines="2"
                     android:text="@string/amount_of_bread_units" />
 
@@ -163,7 +166,7 @@
                 android:layout_marginTop="@dimen/activity_item_padding">
 
                 <View
-                    android:id="@+id/viewBtnsWelcomeScreen"
+                    android:id="@+id/vStackTop"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:background="@color/colorPrimary" />
@@ -172,8 +175,8 @@
                     android:id="@+id/tvStack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/viewBtnsWelcomeScreen"
-                    android:layout_below="@+id/viewBtnsWelcomeScreen"
+                    android:layout_alignStart="@+id/vStackTop"
+                    android:layout_below="@+id/vStackTop"
                     android:layout_toStartOf="@+id/tvStackSum"
                     android:maxLines="3"
                     android:paddingRight="@dimen/activity_item_padding"
@@ -185,20 +188,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/viewBtnsWelcomeScreen"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/textSizeNormal"
+                    android:layout_below="@+id/vStackTop"
                     android:text="@string/_nul"
-                    android:textAlignment="textStart" />
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textSizeNormal" />
 
                 <View
-                    android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:layout_below="@+id/tvStack"
                     android:background="@color/colorPrimary" />
 
             </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 
@@ -211,8 +214,6 @@
             android:id="@+id/viewStackBtnsUp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/activity_item_padding"
-            android:layout_marginRight="@dimen/activity_item_padding"
             android:background="@color/colorPrimary" />
 
         <Button
@@ -264,9 +265,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/btnDeleteLastInStack"
-            android:layout_marginLeft="@dimen/activity_item_padding"
-            android:layout_marginRight="@dimen/activity_item_padding"
             android:background="@color/colorPrimary" />
 
     </RelativeLayout>
-</RelativeLayout>
+
+</LinearLayout>

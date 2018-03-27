@@ -36,6 +36,8 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
         firstRun = sharedPref.getBoolean(KEY_PREFS_FIRST_RUN_AGREEMENT, true);
         if (!firstRun) {
             btnConfirm.setText(android.R.string.ok);
+        } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
     }
 

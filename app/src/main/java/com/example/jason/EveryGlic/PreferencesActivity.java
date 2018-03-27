@@ -3,6 +3,7 @@ package com.example.jason.EveryGlic;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import static com.example.jason.EveryGlic.DBHelper.KEY_MEASUREMENT;
+import static com.example.jason.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
 import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
 import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
 import static com.example.jason.EveryGlic.MyWorks.isEmpty;
@@ -88,6 +91,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     Button btnSavePreferences;
     Button btnResetToDefault;
     Button btnDeleteAllMeasurements;
+    Button btnBackupDB;
+    Button btnRestoreDB;
 
     RadioButton rbDiabetesType1;
     RadioButton rbDiabetesType2;
@@ -130,6 +135,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         btnSavePreferences = findViewById(R.id.btnSavePreferences);
         btnResetToDefault = findViewById(R.id.btnResetToDefault);
         btnDeleteAllMeasurements = findViewById(R.id.btnDeleteAllMeasurements);
+        btnBackupDB = findViewById(R.id.btnBackupDB);
+        btnRestoreDB = findViewById(R.id.btnRestoreDB);
 
         rbDiabetesType1 = findViewById(R.id.rbDiabetesType1);
         rbDiabetesType2 = findViewById(R.id.rbDiabetesType2);
@@ -157,6 +164,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         btnSavePreferences.setOnClickListener(this);
         btnResetToDefault.setOnClickListener(this);
         btnDeleteAllMeasurements.setOnClickListener(this);
+        btnBackupDB.setOnClickListener(this);
+        btnRestoreDB.setOnClickListener(this);
 
         rbDiabetesType1.setOnClickListener(this);
         rbDiabetesType2.setOnClickListener(this);
@@ -349,10 +358,10 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
 
         // check for first run app
         if (firstRun) {
-            // hide button delete all measurements
+            /*// hide button delete all measurements // perhaps it don't need
             btnDeleteAllMeasurements.setVisibility(View.INVISIBLE);
             vBtnDelAllMeasTop.setVisibility(View.INVISIBLE);
-            vBtnDelAllMeasBottom.setVisibility(View.INVISIBLE);
+            vBtnDelAllMeasBottom.setVisibility(View.INVISIBLE);*/
 
             preferencesChanged(true, true);
 
@@ -373,35 +382,48 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             // delete all measurements
             case R.id.btnDeleteAllMeasurements:
-                // Alert dialog to confirm delete all measurements
-                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+                // get all records count
+                Cursor cursor = database.rawQuery("SELECT COUNT (" + KEY_MEASUREMENT + ") FROM " + TABLE_MEASUREMENTS, null);
+                cursor.moveToFirst();
+                int allMeasurementsCount = cursor.getInt(0);
 
-                alert.setTitle(getString(R.string.delete_all_measurements));
-                alert.setMessage(getString(R.string.these_changes_can_t_return));
-                alert.setNegativeButton(getString(android.R.string.no),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                //Canceled.
-                            }
-                        });
-                alert.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        SQLiteDatabase database = dbHelper.getWritableDatabase();
-                        database.delete(DBHelper.TABLE_MEASUREMENTS, null, null);
-                        database.close();
-                        Toast.makeText(PreferencesActivity.this, getString(
-                                R.string.all_measurements_has_been_deleted),
-                                Toast.LENGTH_LONG).show();
+                if (allMeasurementsCount > 0) {
+                    // Alert dialog to confirm delete all measurements
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-                        finish(); //exit from preferences
-                    }
-                });
-                alert.show();
+                    alert.setTitle(getString(R.string.delete_all_measurements));
+                    alert.setMessage(getString(R.string.these_changes_can_t_return));
+                    alert.setNegativeButton(getString(android.R.string.no),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //Canceled.
+                                }
+                            });
+                    alert.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            SQLiteDatabase database = dbHelper.getWritableDatabase();
+                            database.delete(DBHelper.TABLE_MEASUREMENTS, null, null);
+                            database.close();
+                            Toast.makeText(PreferencesActivity.this, getString(
+                                    R.string.all_measurements_has_been_deleted),
+                                    Toast.LENGTH_LONG).show();
+
+                            finish(); //exit from preferences
+                        }
+                    });
+                    alert.show();
+                } else {
+                    // no measurements
+                    Toast.makeText(this, R.string.no_measurements, Toast.LENGTH_LONG).show();
+                }
+
                 break;
 
             // reset preferences to default but not save
@@ -416,6 +438,16 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(this, R.string.settings_have_been_saved, Toast.LENGTH_SHORT).show();
                     finish();
                 }
+                break;
+
+            // backing up database
+            case R.id.btnBackupDB:
+                Toast.makeText(this, "backing up database", Toast.LENGTH_SHORT).show();
+                break;
+
+            // restoring database
+            case R.id.btnRestoreDB:
+                Toast.makeText(this, "restoring database", Toast.LENGTH_SHORT).show();
                 break;
 
             default:

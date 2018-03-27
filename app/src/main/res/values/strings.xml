@@ -150,5 +150,7 @@
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="start">Start</string>
+    <string name="restore">Restore</string>
+    <string name="no_measurements">No measurements</string>
 
 </resources>

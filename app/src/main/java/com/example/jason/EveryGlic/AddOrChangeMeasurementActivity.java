@@ -74,8 +74,6 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     TextView tvDateAndTime;
     TextView tvUnitBloodSugar;
 
-    TimePicker timePicker;
-
     // SQLite database
     DBHelper dbHelper;
 
@@ -159,13 +157,14 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
         // if editing measurement
         if (idRec != -1) {
-            // display delete button
-            btnDeleteCurMeasurements.setVisibility(View.VISIBLE);
+            // enable delete button
+            btnDeleteCurMeasurements.setEnabled(true);
             setTitle(getString(R.string.edit_measurement));
 
             // load measurement
             loadRecords();
         } else {
+//            btnDeleteCurMeasurements.setEnabled(false);
             etBloodSugarMeasurement.requestFocus();
         }
 

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,8 +26,6 @@ import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DE
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_CUR_APP_VER_CODE;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_DB_NEED_UPDATE;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
@@ -74,20 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-//        Trace.beginSection("MainActivity.onCreate");
         setContentView(R.layout.activity_main);
-//        Trace.endSection();
-
-        int prefsCurAppVersion = sharedPref.getInt(KEY_PREFS_CUR_APP_VER_CODE, 1);
-
-        Log.d(TAG, "prefsCurAppVersion: " + prefsCurAppVersion + "\n"
-                + "BuildConfig.VERSION_CODE: " + BuildConfig.VERSION_CODE);
-
-        if (BuildConfig.VERSION_CODE > prefsCurAppVersion) {
-            Log.d(TAG, "putBoolean(KEY_PREFS_DB_NEED_UPDATE: true ");
-            prefEditor.putBoolean(KEY_PREFS_DB_NEED_UPDATE, true);
-            prefEditor.putInt(KEY_PREFS_CUR_APP_VER_CODE, BuildConfig.VERSION_CODE);
-        }
 
         // save change of preferences
         prefEditor.apply();

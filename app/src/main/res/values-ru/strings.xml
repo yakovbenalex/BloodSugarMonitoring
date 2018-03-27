@@ -32,7 +32,7 @@
     <string name="settings_have_been_saved">Настройки сохранены</string>
     <string name="mg_dl">мг/дл</string>
     <string name="mmol_l">ммоль/л</string>
-    <string name="preferences">Предпочтения</string>
+    <string name="preferences">Настройки</string>
     <string name="measurements">Измерения</string>
     <string name="date_cannot_be_greater_than_the_current">Дата не может быть больше текущей.</string>
     <string name="date_cannot_be_less_than__year">Дата не может быть меньше %1$d года.</string>
@@ -128,4 +128,6 @@
     <string name="next">Дальше</string>
     <string name="skip">Пропустить</string>
     <string name="start">Начать</string>
+    <string name="restore">Восстановить</string>
+    <string name="no_measurements">Измерений нет</string>
 </resources>

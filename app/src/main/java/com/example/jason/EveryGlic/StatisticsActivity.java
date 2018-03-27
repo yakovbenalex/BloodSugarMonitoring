@@ -26,7 +26,7 @@ import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
 import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_DIABETES_1TYPE;
+import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
 import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 public class StatisticsActivity extends AppCompatActivity {
@@ -96,6 +96,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
     // SQLite database
     DBHelper dbHelper;
+    // display date format
     String DATE_FORMAT = "dd/MM EEE- ";
     SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
@@ -149,8 +150,11 @@ public class StatisticsActivity extends AppCompatActivity {
 
         loadPreferences();
 
-        if (prefsUnitBloodSugarMmol) sugarFormat = "%1$.1f";
-        else sugarFormat = "%1$.1f";
+        // set display sugar format
+        sugarFormat = prefsUnitBloodSugarMmol ? "%1$.1f" : "%1$.0f";
+
+        /*if (prefsUnitBloodSugarMmol) sugarFormat = "%1$.1f";
+        else sugarFormat = "%1$.0f";*/
 
         // get starts last week in seconds
         resetNowDate();
@@ -160,7 +164,8 @@ public class StatisticsActivity extends AppCompatActivity {
         // get starts current week in seconds
         resetNowDate();
         now.set(Calendar.DAY_OF_WEEK, prefsBeginningWeek);
-        if (prefsBeginningWeek < 2) now.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 7);
+        if (prefsBeginningWeek < 2)
+            now.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 7);
         startCurWeekInSec = now.getTimeInMillis() / 1000;
 
         // get starts current month in seconds
@@ -176,12 +181,6 @@ public class StatisticsActivity extends AppCompatActivity {
         Log.d(TAG, "StatisticsActivity, onResume: " + sdf.format(startCurWeekInSec * 1000) + prefsBeginningWeek);
         loadStatistics();
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        createInfoItemInActionBar(menu);
-        return super.onCreateOptionsMenu(menu);
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,7 +209,7 @@ public class StatisticsActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
 
         // get saved value
-        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_DIABETES_1TYPE,
+        prefsUnitBloodSugarMmol = sharedPref.getBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL,
                 UNIT_BLOOD_SUGAR_MMOL_DEFAULT);
 
         prefsBloodLowSugar = sharedPref.getFloat(KEY_PREFS_BLOOD_LOW_SUGAR, BLOOD_LOW_SUGAR_DEFAULT);
@@ -336,17 +335,24 @@ public class StatisticsActivity extends AppCompatActivity {
                 // average
                 cursor = database.rawQuery(getStrQuery(KEY_AVG, startLastWeekInSec), null);
                 cursor.moveToFirst();
-                lastWeekSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastWeekSugarAvg = cursor.getFloat(0);
 
                 // minimum
                 cursor = database.rawQuery(getStrQuery(KEY_MIN, startLastWeekInSec), null);
                 cursor.moveToFirst();
-                lastWeekSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastWeekSugarMin = cursor.getFloat(0);
 
                 // maximum
                 cursor = database.rawQuery(getStrQuery(KEY_MAX, startLastWeekInSec), null);
                 cursor.moveToFirst();
-                lastWeekSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastWeekSugarMax = cursor.getFloat(0);
+
+                // to display measurement in selected in preferences unit of sugar measurement
+                if (!prefsUnitBloodSugarMmol) {
+                    lastWeekSugarAvg *= 18;
+                    lastWeekSugarMin *= 18;
+                    lastWeekSugarMax *= 18;
+                }
 
                 // set Info to textViews
                 tvLastWeekAvg.setText(String.format(Locale.ENGLISH, sugarFormat, lastWeekSugarAvg));
@@ -359,17 +365,24 @@ public class StatisticsActivity extends AppCompatActivity {
                 // average
                 cursor = database.rawQuery(getStrQuery(KEY_AVG, startLastMonthInSec), null);
                 cursor.moveToFirst();
-                lastMonthSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastMonthSugarAvg = cursor.getFloat(0);
 
                 // minimum
                 cursor = database.rawQuery(getStrQuery(KEY_MIN, startLastMonthInSec), null);
                 cursor.moveToFirst();
-                lastMonthSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastMonthSugarMin = cursor.getFloat(0);
 
                 // maximum
                 cursor = database.rawQuery(getStrQuery(KEY_MAX, startLastMonthInSec), null);
                 cursor.moveToFirst();
-                lastMonthSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                lastMonthSugarMax = cursor.getFloat(0);
+
+                // to display measurement in selected in preferences unit of sugar measurement
+                if (!prefsUnitBloodSugarMmol) {
+                    lastMonthSugarAvg *= 18;
+                    lastMonthSugarMin *= 18;
+                    lastMonthSugarMax *= 18;
+                }
 
                 // set Info to textViews
                 tvLastMonthAvg.setText(String.format(Locale.ENGLISH, sugarFormat, lastMonthSugarAvg));
@@ -382,17 +395,24 @@ public class StatisticsActivity extends AppCompatActivity {
                 // average
                 cursor = database.rawQuery(getStrQuery(KEY_AVG, startCurMonthInSec), null);
                 cursor.moveToFirst();
-                curWeekSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                curWeekSugarAvg = cursor.getFloat(0);
 
                 // minimum
                 cursor = database.rawQuery(getStrQuery(KEY_MIN, startCurWeekInSec), null);
                 cursor.moveToFirst();
-                curWeekSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                curWeekSugarMin = cursor.getFloat(0);
 
                 // maximum
                 cursor = database.rawQuery(getStrQuery(KEY_MAX, startCurWeekInSec), null);
                 cursor.moveToFirst();
-                curWeekSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                curWeekSugarMax = cursor.getFloat(0);
+
+                // to display measurement in selected in preferences unit of sugar measurement
+                if (!prefsUnitBloodSugarMmol) {
+                    curWeekSugarAvg *= 18;
+                    curWeekSugarMin *= 18;
+                    curWeekSugarMax *= 18;
+                }
 
                 // set Info to textViews
                 tvCurWeekAvg.setText(String.format(Locale.ENGLISH, sugarFormat, curWeekSugarAvg));
@@ -405,17 +425,24 @@ public class StatisticsActivity extends AppCompatActivity {
                 // average
                 cursor = database.rawQuery(getStrQuery(KEY_AVG, startCurMonthInSec), null);
                 cursor.moveToFirst();
-                curMonthSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                curMonthSugarAvg = cursor.getFloat(0);
 
                 // minimum
                 cursor = database.rawQuery(getStrQuery(KEY_MIN, startCurMonthInSec), null);
                 cursor.moveToFirst();
-                curMonthSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                curMonthSugarMin = cursor.getFloat(0);
 
                 // maximum
                 cursor = database.rawQuery(getStrQuery(KEY_MAX, startCurMonthInSec), null);
                 cursor.moveToFirst();
-                curMonthSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+                curMonthSugarMax = cursor.getFloat(0);
+
+                // to display measurement in selected in preferences unit of sugar measurement
+                if (!prefsUnitBloodSugarMmol) {
+                    curMonthSugarAvg *= 18;
+                    curMonthSugarMin *= 18;
+                    curMonthSugarMax *= 18;
+                }
 
                 // set Info to textViews
                 tvCurMonthAvg.setText(String.format(Locale.ENGLISH, sugarFormat, curMonthSugarAvg));
@@ -427,17 +454,24 @@ public class StatisticsActivity extends AppCompatActivity {
             // average
             cursor = database.rawQuery(getStrQuery(KEY_AVG), null);
             cursor.moveToFirst();
-            allTimeSugarAvg = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+            allTimeSugarAvg = cursor.getFloat(0);
 
             // minimum
             cursor = database.rawQuery(getStrQuery(KEY_MIN), null);
             cursor.moveToFirst();
-            allTimeSugarMin = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+            allTimeSugarMin = cursor.getFloat(0);
 
             // maximum
             cursor = database.rawQuery(getStrQuery(KEY_MAX), null);
             cursor.moveToFirst();
-            allTimeSugarMax = prefsUnitBloodSugarMmol ? cursor.getFloat(0) : cursor.getFloat(0) * 18;
+            allTimeSugarMax = cursor.getFloat(0);
+
+            // to display measurement in selected in preferences unit of sugar measurement
+            if (!prefsUnitBloodSugarMmol) {
+                allTimeSugarAvg *= 18;
+                allTimeSugarMin *= 18;
+                allTimeSugarMax *= 18;
+            }
 
             // set Info to textViews
             tvAllTimeAvg.setText(String.format(Locale.ENGLISH, sugarFormat, allTimeSugarAvg));
