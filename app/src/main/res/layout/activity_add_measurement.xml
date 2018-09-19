@@ -6,7 +6,7 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.example.jason.EveryGlic.AddOrChangeMeasurementActivity">
+    tools:context="ru.opalevapps.EveryGlic.AddOrChangeMeasurementActivity">
 
     <View
         android:layout_width="match_parent"
@@ -109,6 +109,19 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/svAddOrChangeMeas">
 
+            <TextView
+                android:id="@+id/tvDateAndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/btnChooseTime"
+                android:layout_below="@+id/vBtnsChooseDateAndTimeTop"
+                android:layout_toStartOf="@id/btnChooseDate"
+                android:layout_alignParentStart="true"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite" />
+
             <View
                 android:id="@+id/vBtnsChooseDateAndTimeTop"
                 android:layout_width="match_parent"
@@ -120,35 +133,24 @@
                 android:id="@+id/btnChooseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/viewTimeBtnsSep"
                 android:text="@string/date" />
 
             <View
+                android:id="@+id/viewTimeBtnsSep"
                 android:layout_width="1dip"
                 android:layout_height="match_parent"
                 android:layout_alignBottom="@id/btnChooseDate"
-                android:layout_toRightOf="@id/btnChooseDate"
+                android:layout_toLeftOf="@+id/btnChooseTime"
                 android:background="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnChooseTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/btnChooseDate"
+                android:layout_alignParentEnd="true"
                 android:text="@string/time" />
 
-            <TextView
-                android:id="@+id/tvDateAndTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/btnChooseTime"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/vBtnsChooseDateAndTimeTop"
-                android:layout_toEndOf="@+id/btnChooseTime"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite" />
 
             <View
                 android:id="@+id/vBtnsChooseDateAndTimeBottom"

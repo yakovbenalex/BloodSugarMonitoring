@@ -15,6 +15,7 @@
 
         <!-- button -->
         <item name="buttonStyle">@style/FlatButton</item>
+        <item name="radioButtonStyle">@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton</item>
         <!--android:background="?android:attr/selectableItemBackground"-->
     </style>
 
@@ -22,6 +23,10 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <!--<style name="RadioB" parent="android:Widget.DeviceDefault.Light.CompoundButton.RadioButton">
+        <item name="radioButtonStyle">@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>-->
     <style name="FlatButton" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
         <item name="android:padding">@dimen/activity_item_padding</item>

@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,9 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Locale;
-
-import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
 
 public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
     // const
@@ -36,19 +33,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        // find views on screen by id
-        btnInfoUsefulTips = findViewById(R.id.btnInfoUsefulTips);
-        btnInfoEmergencyConditions = findViewById(R.id.btnInfoEmergencyConditions);
-        btnInfoChronicComplications = findViewById(R.id.btnInfoChronicComplications);
-        btnInfoUrgentMedicalAssistance = findViewById(R.id.btnInfoUrgentMedicalAssistance);
-
-        tvInfo = findViewById(R.id.tvInfo);
-
-        // set the listeners for views
-        btnInfoUsefulTips.setOnClickListener(this);
-        btnInfoEmergencyConditions.setOnClickListener(this);
-        btnInfoChronicComplications.setOnClickListener(this);
-        btnInfoUrgentMedicalAssistance.setOnClickListener(this);
+        initViews();
 
         // get current locale
         Locale curLocale = getResources().getConfiguration().locale;
@@ -87,13 +72,30 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        createInfoItemInActionBar(menu);
+        MyWorks.createInfoItemInActionBar(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        parseMenuItemInfo(this, item);
+        MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        // find views on screen by id
+        btnInfoUsefulTips = findViewById(R.id.btnInfoUsefulTips);
+        btnInfoEmergencyConditions = findViewById(R.id.btnInfoEmergencyConditions);
+        btnInfoChronicComplications = findViewById(R.id.btnInfoChronicComplications);
+        btnInfoUrgentMedicalAssistance = findViewById(R.id.btnInfoUrgentMedicalAssistance);
+
+        tvInfo = findViewById(R.id.tvInfo);
+
+        // set the listeners for views
+        btnInfoUsefulTips.setOnClickListener(this);
+        btnInfoEmergencyConditions.setOnClickListener(this);
+        btnInfoChronicComplications.setOnClickListener(this);
+        btnInfoUrgentMedicalAssistance.setOnClickListener(this);
     }
 }

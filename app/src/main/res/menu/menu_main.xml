@@ -4,13 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-
-
     <item
         android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
         android:orderInCategory="2"
         android:title="@string/action_settings"
-        android:icon="@drawable/ic_action_settings"
         app:showAsAction="ifRoom" />
 
     <item
@@ -24,5 +22,11 @@
         android:orderInCategory="100"
         android:title="@string/action_about"
         app:showAsAction="never" />
+
+    <!--<item
+        android:id="@+id/action_check_app_on_g_play"
+        android:orderInCategory="100"
+        android:title="Check on GPlay"
+        app:showAsAction="never" />-->
 
 </menu>

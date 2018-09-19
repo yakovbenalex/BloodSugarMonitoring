@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.jason.EveryGlic;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

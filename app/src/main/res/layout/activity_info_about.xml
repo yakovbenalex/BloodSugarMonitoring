@@ -23,22 +23,32 @@
                 android:id="@+id/textInfoRules"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_item_padding"
                 android:contentDescription="@string/info_about"
                 android:minWidth="190dp"
                 android:text="@string/info_about"
-                android:textIsSelectable="true"
                 android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/tvAppVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textInfoRules"
+                android:layout_marginBottom="@dimen/activity_item_padding"
+                android:minWidth="190dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvInfoNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/textInfoRules"
+                android:layout_below="@+id/tvAppVersion"
                 android:minWidth="190dp"
                 android:text="@string/developerInfo"
                 android:textColor="@android:color/black"
-                android:textIsSelectable="true"
                 android:textSize="16sp" />
 
         </RelativeLayout>

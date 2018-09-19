@@ -1,6 +1,5 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,10 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
-import static com.example.jason.EveryGlic.PreferencesActivity.IDM_INFO;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.IDM_INFO;
 
-
+// for different aspect of application work
 class MyWorks {
 
     private static final String TAG = "myLog";
@@ -97,25 +97,13 @@ class MyWorks {
     }
 
     // for parse menu item info on ActionBar (all items)
-    static boolean parseMenuItemMain(Context context, MenuItem item) {
+    static void parseMenuItemMain(Context context, MenuItem item) {
         switch (item.getItemId()) {
+            // start preferences activity
             case R.id.action_settings:
                 Intent intentPreferencesActivity = new Intent(context, PreferencesActivity.class);
                 context.startActivity(intentPreferencesActivity);
                 break;
-
-            /*case R.id.action_info:
-            Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show();
-            // for identify called activity
-            switch (context.getClass().getSimpleName()) {
-                case "MainActivity":
-                    Toast.makeText(context, "MainActivity", Toast.LENGTH_SHORT).show();
-                    break;
-
-                default:
-                    Toast.makeText(context, "There is no information for this screen", Toast.LENGTH_SHORT).show();
-                    break;
-            }*/
 
             // start agreement activity
             case R.id.action_agreement:
@@ -123,19 +111,23 @@ class MyWorks {
                 context.startActivity(intentAgreementActivity);
                 break;
 
+            // start info activity
             case R.id.action_about:
-                // custom dialog
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.activity_info_about);
-                dialog.setTitle(R.string.about);
-                dialog.show();
+                Intent intentSettingsActivity = new Intent(context, AboutActivity.class);
+                context.startActivity(intentSettingsActivity);
                 break;
+
+            /*// start info activity
+            case R.id.action_check_app_on_g_play:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("market://details?id=com.opalevapps.EveryGlic"));
+                context.startActivity(intent);
+                break;*/
 
             default:
                 break;
         }
         Log.d(TAG, "parseMenuItemInfo: " + context + " ");
-        return true;
     }
 
     // for parse menu item info on ActionBar (all items)
@@ -148,7 +140,7 @@ class MyWorks {
                 boolean showDialog = true;
 
                 // for identify called activity
-                // IN THE FUTURE IT WILL BE IN DATABASE //
+                // IN THE FUTURE HELP TEXT WILL BE IN DATABASE //
                 switch (context.getClass().getSimpleName()) {
                     case "MainActivity":
                         dialogTitle = "Главный экран";
@@ -210,16 +202,21 @@ class MyWorks {
 
                 // show dialog if help for screen is available
                 if (showDialog) {
-                    dialogText += "\n\n!!!\nВ текущей тестовой версии приложения " +
-                            "справка имется только на русском языке.\n!!!";
+                    if (!Locale.getDefault().getLanguage().equals("ru")) {
+                        dialogText += "\n\n!!!\n In current test version app - help is only available on russian language, sorry man." +
+//                            "В текущей тестовой версии приложения справка имется только на русском языке." +
+                                "\n!!!";
+
+                    }
+
                     showDialog(context, dialogTitle, dialogText);
                 }
+//                Log.d(TAG, "parseMenuItemInfo: " + Locale.getDefault().getLanguage());
                 break;
 
             default:
                 break;
         }
-//        Log.d(TAG, "parseMenuItemInfo: " + context + " ");
         return true;
     }
 

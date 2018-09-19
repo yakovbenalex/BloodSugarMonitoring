@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 
 public class AgreementActivity extends AppCompatActivity implements View.OnClickListener {
     // temporary variables
@@ -25,11 +25,7 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
 
-        // find views on screen by id
-        btnConfirm = findViewById(R.id.btnConfirm);
-
-        // listeners
-        btnConfirm.setOnClickListener(this);
+        initViews();
 
         // get firstRun value
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -73,5 +69,14 @@ public class AgreementActivity extends AppCompatActivity implements View.OnClick
             super.onBackPressed();
             finish();
         }
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        // find views on screen by id
+        btnConfirm = findViewById(R.id.btnConfirm);
+
+        // listeners
+        btnConfirm.setOnClickListener(this);
     }
 }

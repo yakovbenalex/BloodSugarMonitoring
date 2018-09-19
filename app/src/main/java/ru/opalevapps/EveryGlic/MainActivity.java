@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,20 +17,17 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
-import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItemMain;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+import static ru.opalevapps.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 
 // implements View.OnClickListener
@@ -76,30 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // save change of preferences
         prefEditor.apply();
 
-        // find view on screen by id
-        btnCalculatorCarbs = findViewById(R.id.btnCalculatorCarbs);
-        btnAddMeasurement = findViewById(R.id.btnAddMeasurement);
-        btnMeasurements = findViewById(R.id.btnMeasurements);
-        btnStatistics = findViewById(R.id.btnStatistics);
-        btnInfo = findViewById(R.id.btnInfo);
-
-        lvMeasurements3Last = findViewById(R.id.lvMeasurements3Last);
-
-        // listeners for views
-        btnAddMeasurement.setOnClickListener(this);
-        btnStatistics.setOnClickListener(this);
-        btnMeasurements.setOnClickListener(this);
-        btnCalculatorCarbs.setOnClickListener(this);
-        btnInfo.setOnClickListener(this);
-
-        lvMeasurements3Last.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentAddMeasurementActivity = new Intent(MainActivity.this, AddOrChangeMeasurementActivity.class);
-                intentAddMeasurementActivity.putExtra("idRec", id);
-                startActivity(intentAddMeasurementActivity);
-            }
-        });
+        initViews();
 
         dbHelper = new DBHelper(this);
         dbHelper.getDatabaseName().isEmpty();
@@ -108,14 +82,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        createInfoItemInActionBar(menu);
+        MyWorks.createInfoItemInActionBar(menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        parseMenuItemMain(this, item);
-        parseMenuItemInfo(this, item);
+        MyWorks.parseMenuItemMain(this, item);
+        MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -230,7 +204,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Cancel
             }
         });
+        quitDialog.setCancelable(false);
 
         quitDialog.show();
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        // find view on screen by id
+        btnCalculatorCarbs = findViewById(R.id.btnCalculatorCarbs);
+        btnAddMeasurement = findViewById(R.id.btnAddMeasurement);
+        btnMeasurements = findViewById(R.id.btnMeasurements);
+        btnStatistics = findViewById(R.id.btnStatistics);
+        btnInfo = findViewById(R.id.btnInfo);
+
+        lvMeasurements3Last = findViewById(R.id.lvMeasurements3Last);
+
+        // listeners for views
+        btnAddMeasurement.setOnClickListener(this);
+        btnStatistics.setOnClickListener(this);
+        btnMeasurements.setOnClickListener(this);
+        btnCalculatorCarbs.setOnClickListener(this);
+        btnInfo.setOnClickListener(this);
+
+        lvMeasurements3Last.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intentAddMeasurementActivity = new Intent(MainActivity.this, AddOrChangeMeasurementActivity.class);
+                intentAddMeasurementActivity.putExtra("idRec", id);
+                startActivity(intentAddMeasurementActivity);
+            }
+        });
     }
 }

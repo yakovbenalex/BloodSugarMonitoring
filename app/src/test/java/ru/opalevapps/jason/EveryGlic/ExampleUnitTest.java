@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.jason.EveryGlic;
 
 import org.junit.Test;
 

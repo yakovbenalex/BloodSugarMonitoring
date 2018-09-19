@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

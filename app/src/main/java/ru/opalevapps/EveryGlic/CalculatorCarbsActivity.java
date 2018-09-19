@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,14 +18,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
-import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
-import static com.example.jason.EveryGlic.MyWorks.isEmpty;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
-import static com.example.jason.EveryGlic.MyWorks.scrollToBottomOfTextView;
-import static com.example.jason.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
 
 public class CalculatorCarbsActivity extends AppCompatActivity implements View.OnClickListener {
     // keys (CCS - Calculator carbs state)
@@ -83,24 +78,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_calculator_carbs);
 //        Log.d(TAG, "CalculatorCarbsActivity, onCreate: ");
 
-        // find views on screen by id
-        etGramsOfProduct = findViewById(R.id.etGramsInProduct);
-        etCarbsIn100GramsOfProduct = findViewById(R.id.etCarbsIn100GramsOfProduct);
-        etCarbsInGramsOfProduct = findViewById(R.id.etCarbsInGramsOfProduct);
-        etAmountBreadUnits = findViewById(R.id.etAmountBreadUnits);
-
-        btnClearStack = findViewById(R.id.btnClearStack);
-        btnDeleteLastInStack = findViewById(R.id.btnDeleteLastInStack);
-        btnAddToStack = findViewById(R.id.btnAddToStack);
-
-        tvCarbsInBreadUnit = findViewById(R.id.tvCarbsInBreadUnit);
-        tvStack = findViewById(R.id.tvStack);
-        tvStackSum = findViewById(R.id.tvStackSum);
-
-        // listeners for views
-        btnClearStack.setOnClickListener(this);
-        btnDeleteLastInStack.setOnClickListener(this);
-        btnAddToStack.setOnClickListener(this);
+        initViews();
 
         // get preferences object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -112,218 +90,6 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         // set amount of carbs in bread unit
         strTemp = "1 " + getString(R.string.bu) + " = " + prefsAmountCarbsInBreadUnit + " " + getString(R.string.gr);
         tvCarbsInBreadUnit.setText(strTemp);
-
-        // editTexts listener
-        etCarbsIn100GramsOfProduct.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String s = String.valueOf(charSequence);
-
-                // set one point accuracy for editText value
-                if (s.contains(".")) {
-                    s = getStringNumberWithAccuracy(s, 1, '.', false);
-                    if (s.length() != charSequence.toString().length()) {
-                        etCarbsIn100GramsOfProduct.setText(s);
-                        etCarbsIn100GramsOfProduct.setSelection(s.length());
-                    }
-                }
-
-                // for limit carbsIn100GramsOfProduct value in editText
-                if (s.length() != 0 && Float.parseFloat(s) > 100.01) {
-                    etCarbsIn100GramsOfProduct.setText(R.string._100_0);
-                    etCarbsIn100GramsOfProduct.setSelection(
-                            etCarbsIn100GramsOfProduct.getText().length());
-                }
-
-                // for calculate values when changes happen in this editText (has focus)
-                if (!isEmpty(etCarbsIn100GramsOfProduct) && !isEmpty(etGramsOfProduct)) {
-                    carbsIn100GramsOfProduct = Float.parseFloat(
-                            etCarbsIn100GramsOfProduct.getText().toString());
-                    gramsInProduct = Float.parseFloat(etGramsOfProduct.getText().toString());
-
-                    carbsInGramsOfProduct = gramsInProduct / 100 * carbsIn100GramsOfProduct;
-                    amountBreadUnits = carbsInGramsOfProduct / prefsAmountCarbsInBreadUnit;
-                    // need to fix displaying small number by mantissa
-                    if (carbsInGramsOfProduct < 0.1) {
-                        carbsInGramsOfProduct = 0f;
-                    }
-                    if (amountBreadUnits < 0.1) {
-                        amountBreadUnits = 0f;
-                    }
-
-                    // for limit gramsInProduct value in editText
-                    if (amountBreadUnits > 99.91) {
-                        etGramsOfProduct.setText(String.valueOf(99.9 * prefsAmountCarbsInBreadUnit
-                                * 100 / carbsIn100GramsOfProduct + 0.01));
-                    }
-
-                    etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
-                    etAmountBreadUnits.setText(String.valueOf(amountBreadUnits));
-                } else {
-                    etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
-                    etAmountBreadUnits.setText(String.valueOf("0.0"));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-        etGramsOfProduct.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String s = String.valueOf(charSequence);
-
-                // set one point accuracy for editText value
-                if (s.contains(".")) {
-                    s = getStringNumberWithAccuracy(s, 1, '.', false);
-                    if (s.length() != charSequence.toString().length()) {
-                        etGramsOfProduct.setText(s);
-                        etGramsOfProduct.setSelection(s.length());
-                    }
-                }
-
-                // 99.9 - msx amount of bread units, 100 - grams
-                float gramsInProductMax = (float) (99.9 * prefsAmountCarbsInBreadUnit * 100
-                        / carbsIn100GramsOfProduct + 0.01);
-
-                // for limit gramsInProduct value in editText
-                if (s.length() != 0 && Float.parseFloat(s) > gramsInProductMax) {
-                    etGramsOfProduct.setText(String.valueOf(gramsInProductMax));
-                    etGramsOfProduct.setSelection(etGramsOfProduct.getText().length());
-                }
-
-                // for calculate values when changes happen in this editText (has focus)
-                if (gramsInProductHasFocus) {
-                    if (!isEmpty(etGramsOfProduct) && !isEmpty(etCarbsIn100GramsOfProduct)) {
-                        gramsInProduct = Float.parseFloat(etGramsOfProduct.getText().toString());
-                        carbsIn100GramsOfProduct = Float.parseFloat(
-                                etCarbsIn100GramsOfProduct.getText().toString());
-
-                        carbsInGramsOfProduct = gramsInProduct / 100 * carbsIn100GramsOfProduct;
-                        amountBreadUnits = carbsInGramsOfProduct / prefsAmountCarbsInBreadUnit;
-                        if (carbsInGramsOfProduct < 0.1) {
-                            carbsInGramsOfProduct = 0f;
-                        }
-                        if (amountBreadUnits < 0.1) {
-                            amountBreadUnits = 0f;
-                        }
-
-                        etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
-                        etAmountBreadUnits.setText(String.valueOf(amountBreadUnits));
-
-                    } else {
-                        etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
-                        etAmountBreadUnits.setText(String.valueOf("0.0"));
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-        etCarbsInGramsOfProduct.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String s = String.valueOf(charSequence);
-                // set one point accuracy for editText value
-                if (s.contains(".")) {
-                    s = getStringNumberWithAccuracy(s, 1, '.', false);
-                    if (s.length() != charSequence.toString().length()) {
-                        etCarbsInGramsOfProduct.setText(s);
-                        etCarbsInGramsOfProduct.setSelection(s.length());
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-        etAmountBreadUnits.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String s = String.valueOf(charSequence);
-
-                // set one point accuracy for editText value
-                if (s.contains(".")) {
-                    s = getStringNumberWithAccuracy(s, 1, '.', false);
-                    if (s.length() != charSequence.toString().length()) {
-                        etAmountBreadUnits.setText(s);
-                        etAmountBreadUnits.setSelection(s.length());
-                    }
-                }
-
-                // for limit gramsInProduct value in editText
-                if (s.length() != 0 && Float.parseFloat(s) > 99.91) {
-                    etAmountBreadUnits.setText(R.string._99_9);
-                    etAmountBreadUnits.setSelection(etAmountBreadUnits.getText().length());
-                }
-
-                // for calculate values when changes happen in this editText (has focus)
-                if (amountBreadUnitsHasFocus) {
-                    if (!isEmpty(etAmountBreadUnits) && !isEmpty(etCarbsIn100GramsOfProduct)) {
-                        carbsIn100GramsOfProduct = Float.parseFloat(
-                                etCarbsIn100GramsOfProduct.getText().toString());
-                        if (carbsIn100GramsOfProduct > 0) {
-                            amountBreadUnits = Float.parseFloat(
-                                    etAmountBreadUnits.getText().toString());
-
-                            gramsInProduct = amountBreadUnits * prefsAmountCarbsInBreadUnit
-                                    * 100 / carbsIn100GramsOfProduct;
-                            carbsInGramsOfProduct = gramsInProduct / 100 * carbsIn100GramsOfProduct;
-
-                            etGramsOfProduct.setText(String.valueOf(gramsInProduct));
-                            etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
-                        }
-                    } else {
-                        etGramsOfProduct.setText(String.valueOf("0.0"));
-                        etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
-        // event on change focus in editTexts (set cursor to end)
-        etGramsOfProduct.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                gramsInProductHasFocus = hasFocus;
-            }
-        });
-        etAmountBreadUnits.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                amountBreadUnitsHasFocus = hasFocus;
-            }
-        });
-        etCarbsIn100GramsOfProduct.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                carbsIn100GramsOfProductHasFocus = hasFocus;
-            }
-        });
 
         // set textView stackSum to 0.0 if stack is empty
         if (stackForCalc.isEmpty()) {
@@ -340,15 +106,16 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        createInfoItemInActionBar(menu);
+        MyWorks.createInfoItemInActionBar(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        parseMenuItemInfo(this, item);
+        MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -376,7 +143,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     // subtract last stack value from stack sum
                     stackSum -= stackForCalc.get(stackForCalc.size() - 1);
 
-                    strTemp = "= " + getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
+                    strTemp = "= " + MyWorks.getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
                     tvStackSum.setText(strTemp);
 
                     // remove last value in stack's textView
@@ -398,7 +165,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     stackForCalc.remove(stackForCalc.size() - 1);
                 }
 
-                scrollToBottomOfTextView(tvStack);
+                MyWorks.scrollToBottomOfTextView(tvStack);
 
 //                tvStack.append(" + " + qwe);
 //                qwe++;
@@ -420,7 +187,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                         stackForCalc.add(curStackVal);
 
                         // set value with one point accuracy
-                        strTemp = "= " + getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
+                        strTemp = "= " + MyWorks.getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
                         tvStackSum.setText(strTemp);
 
                         // if stack's value is first, then set to stack textView without sign plus
@@ -448,7 +215,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                 /*// for scrollable textView
                 tvStack.setMovementMethod(new ScrollingMovementMethod());*/
 
-                scrollToBottomOfTextView(tvStack);
+                MyWorks.scrollToBottomOfTextView(tvStack);
 
                 /*tvStack.setText("");
                 for (int i = 0; i < 21; i++) {
@@ -502,7 +269,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     //            Log.d(TAG, stackArr[i] + "\n");
                 }
                 tvStack.setText(stack);
-                strTemp = "= " + getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
+                strTemp = "= " + MyWorks.getStringNumberWithAccuracy(String.valueOf(stackSum), 1, '.', false);
                 tvStackSum.setText(strTemp);
             }
         } catch (NumberFormatException e) {
@@ -515,7 +282,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         // for scrollable textView
         tvStack.setMovementMethod(new ScrollingMovementMethod());
         // scroll to end of tvStack textView
-        scrollToBottomOfTextView(tvStack);
+        MyWorks.scrollToBottomOfTextView(tvStack);
     }
 
     @Override
@@ -579,5 +346,239 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     + stackForCalc.isEmpty()
                     + "\nlast stack value: " + stackForCalc.get(stackForCalc.size() - 1));
         }
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        // find views on screen by id
+        etGramsOfProduct = findViewById(R.id.etGramsInProduct);
+        etCarbsIn100GramsOfProduct = findViewById(R.id.etCarbsIn100GramsOfProduct);
+        etCarbsInGramsOfProduct = findViewById(R.id.etCarbsInGramsOfProduct);
+        etAmountBreadUnits = findViewById(R.id.etAmountBreadUnits);
+
+        btnClearStack = findViewById(R.id.btnClearStack);
+        btnDeleteLastInStack = findViewById(R.id.btnDeleteLastInStack);
+        btnAddToStack = findViewById(R.id.btnAddToStack);
+
+        tvCarbsInBreadUnit = findViewById(R.id.tvCarbsInBreadUnit);
+        tvStack = findViewById(R.id.tvStack);
+        tvStackSum = findViewById(R.id.tvStackSum);
+
+        // listeners for views
+        btnClearStack.setOnClickListener(this);
+        btnDeleteLastInStack.setOnClickListener(this);
+        btnAddToStack.setOnClickListener(this);
+
+        // editTexts listener
+        etCarbsIn100GramsOfProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String s = String.valueOf(charSequence);
+
+                // set one point accuracy for editText value
+                if (s.contains(".")) {
+                    s = MyWorks.getStringNumberWithAccuracy(s, 1, '.', false);
+                    if (s.length() != charSequence.toString().length()) {
+                        etCarbsIn100GramsOfProduct.setText(s);
+                        etCarbsIn100GramsOfProduct.setSelection(s.length());
+                    }
+                }
+
+                // for limit carbsIn100GramsOfProduct value in editText
+                if (s.length() != 0 && Float.parseFloat(s) > 100.01) {
+                    etCarbsIn100GramsOfProduct.setText(R.string._100_0);
+                    etCarbsIn100GramsOfProduct.setSelection(
+                            etCarbsIn100GramsOfProduct.getText().length());
+                }
+
+                // for calculate values when changes happen in this editText (has focus)
+                if (!MyWorks.isEmpty(etCarbsIn100GramsOfProduct) && !MyWorks.isEmpty(etGramsOfProduct)) {
+                    carbsIn100GramsOfProduct = Float.parseFloat(
+                            etCarbsIn100GramsOfProduct.getText().toString());
+                    gramsInProduct = Float.parseFloat(etGramsOfProduct.getText().toString());
+
+                    carbsInGramsOfProduct = gramsInProduct / 100 * carbsIn100GramsOfProduct;
+                    amountBreadUnits = carbsInGramsOfProduct / prefsAmountCarbsInBreadUnit;
+                    // need to fix displaying small number by mantissa
+                    if (carbsInGramsOfProduct < 0.1) {
+                        carbsInGramsOfProduct = 0f;
+                    }
+                    if (amountBreadUnits < 0.1) {
+                        amountBreadUnits = 0f;
+                    }
+
+                    // for limit gramsInProduct value in editText
+                    if (amountBreadUnits > 99.91) {
+                        etGramsOfProduct.setText(String.valueOf(99.9 * prefsAmountCarbsInBreadUnit
+                                * 100 / carbsIn100GramsOfProduct + 0.01));
+                    }
+
+                    etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
+                    etAmountBreadUnits.setText(String.valueOf(amountBreadUnits));
+                } else {
+                    etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
+                    etAmountBreadUnits.setText(String.valueOf("0.0"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+        etGramsOfProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String s = String.valueOf(charSequence);
+
+                // set one point accuracy for editText value
+                if (s.contains(".")) {
+                    s = MyWorks.getStringNumberWithAccuracy(s, 1, '.', false);
+                    if (s.length() != charSequence.toString().length()) {
+                        etGramsOfProduct.setText(s);
+                        etGramsOfProduct.setSelection(s.length());
+                    }
+                }
+
+                // 99.9 - msx amount of bread units, 100 - grams
+                float gramsInProductMax = (float) (99.9 * prefsAmountCarbsInBreadUnit * 100
+                        / carbsIn100GramsOfProduct + 0.01);
+
+                // for limit gramsInProduct value in editText
+                if (s.length() != 0 && Float.parseFloat(s) > gramsInProductMax) {
+                    etGramsOfProduct.setText(String.valueOf(gramsInProductMax));
+                    etGramsOfProduct.setSelection(etGramsOfProduct.getText().length());
+                }
+
+                // for calculate values when changes happen in this editText (has focus)
+                if (gramsInProductHasFocus) {
+                    if (!MyWorks.isEmpty(etGramsOfProduct) && !MyWorks.isEmpty(etCarbsIn100GramsOfProduct)) {
+                        gramsInProduct = Float.parseFloat(etGramsOfProduct.getText().toString());
+                        carbsIn100GramsOfProduct = Float.parseFloat(
+                                etCarbsIn100GramsOfProduct.getText().toString());
+
+                        carbsInGramsOfProduct = gramsInProduct / 100 * carbsIn100GramsOfProduct;
+                        amountBreadUnits = carbsInGramsOfProduct / prefsAmountCarbsInBreadUnit;
+                        if (carbsInGramsOfProduct < 0.1) {
+                            carbsInGramsOfProduct = 0f;
+                        }
+                        if (amountBreadUnits < 0.1) {
+                            amountBreadUnits = 0f;
+                        }
+
+                        etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
+                        etAmountBreadUnits.setText(String.valueOf(amountBreadUnits));
+
+                    } else {
+                        etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
+                        etAmountBreadUnits.setText(String.valueOf("0.0"));
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+        etCarbsInGramsOfProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String s = String.valueOf(charSequence);
+                // set one point accuracy for editText value
+                if (s.contains(".")) {
+                    s = MyWorks.getStringNumberWithAccuracy(s, 1, '.', false);
+                    if (s.length() != charSequence.toString().length()) {
+                        etCarbsInGramsOfProduct.setText(s);
+                        etCarbsInGramsOfProduct.setSelection(s.length());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+        etAmountBreadUnits.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String s = String.valueOf(charSequence);
+
+                // set one point accuracy for editText value
+                if (s.contains(".")) {
+                    s = MyWorks.getStringNumberWithAccuracy(s, 1, '.', false);
+                    if (s.length() != charSequence.toString().length()) {
+                        etAmountBreadUnits.setText(s);
+                        etAmountBreadUnits.setSelection(s.length());
+                    }
+                }
+
+                // for limit gramsInProduct value in editText
+                if (s.length() != 0 && Float.parseFloat(s) > 99.91) {
+                    etAmountBreadUnits.setText(R.string._99_9);
+                    etAmountBreadUnits.setSelection(etAmountBreadUnits.getText().length());
+                }
+
+                // for calculate values when changes happen in this editText (has focus)
+                if (amountBreadUnitsHasFocus) {
+                    if (!MyWorks.isEmpty(etAmountBreadUnits) && !MyWorks.isEmpty(etCarbsIn100GramsOfProduct)) {
+                        carbsIn100GramsOfProduct = Float.parseFloat(
+                                etCarbsIn100GramsOfProduct.getText().toString());
+                        if (carbsIn100GramsOfProduct > 0) {
+                            amountBreadUnits = Float.parseFloat(
+                                    etAmountBreadUnits.getText().toString());
+
+                            gramsInProduct = amountBreadUnits * prefsAmountCarbsInBreadUnit
+                                    * 100 / carbsIn100GramsOfProduct;
+                            carbsInGramsOfProduct = gramsInProduct / 100 * carbsIn100GramsOfProduct;
+
+                            etGramsOfProduct.setText(String.valueOf(gramsInProduct));
+                            etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
+                        }
+                    } else {
+                        etGramsOfProduct.setText(String.valueOf("0.0"));
+                        etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        // event on change focus in editTexts (set cursor to end)
+        etGramsOfProduct.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                gramsInProductHasFocus = hasFocus;
+            }
+        });
+        etAmountBreadUnits.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                amountBreadUnitsHasFocus = hasFocus;
+            }
+        });
+        etCarbsIn100GramsOfProduct.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                carbsIn100GramsOfProductHasFocus = hasFocus;
+            }
+        });
     }
 }

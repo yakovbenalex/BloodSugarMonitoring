@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,15 +33,7 @@ public class WelcomeScreenActivity extends AppCompatActivity implements View.OnC
 
         setContentView(R.layout.activity_welcome_screen_slide);
 
-        // find views by id
-        btnNext = findViewById(R.id.btnNext);
-        btnSkip = findViewById(R.id.btnSkip);
-
-        mViewPager = findViewById(R.id.welcome_screen_pager);
-
-        // set listeners
-        btnNext.setOnClickListener(this);
-        btnSkip.setOnClickListener(this);
+        initViews();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -182,5 +174,18 @@ public class WelcomeScreenActivity extends AppCompatActivity implements View.OnC
             // Show total pages.
             return WELCOME_SCREEN_PAGE_COUNT;
         }
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        // find views by id
+        btnNext = findViewById(R.id.btnNext);
+        btnSkip = findViewById(R.id.btnSkip);
+
+        mViewPager = findViewById(R.id.welcome_screen_pager);
+
+        // set listeners
+        btnNext.setOnClickListener(this);
+        btnSkip.setOnClickListener(this);
     }
 }

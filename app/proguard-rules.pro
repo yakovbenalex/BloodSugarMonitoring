@@ -22,7 +22,7 @@
 
 #
 ###---------------Begin: proguard configuration common for all Android apps ----------
-#-optimizationpasses 5
+-optimizationpasses 5
 #-dontusemixedcaseclassnames
 #-dontskipnonpubliclibraryclasses
 #-dontskipnonpubliclibraryclassmembers
@@ -32,7 +32,7 @@
 #-printseeds seeds.txt
 #-printusage unused.txt
 #-printmapping mapping.txt
-#-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 #
 #-allowaccessmodification
 #-keepattributes *Annotation*

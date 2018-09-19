@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,18 +14,18 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
-import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+import static ru.opalevapps.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static ru.opalevapps.EveryGlic.MyWorks.createInfoItemInActionBar;
+import static ru.opalevapps.EveryGlic.MyWorks.parseMenuItemInfo;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 public class MeasurementsActivity extends AppCompatActivity {
     private static final String TAG = "myLog";
@@ -50,16 +50,7 @@ public class MeasurementsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurements);
 
-        lvMeasurementsAll = findViewById(R.id.lvMeasurementsAll);
-
-        lvMeasurementsAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MeasurementsActivity.this, AddOrChangeMeasurementActivity.class);
-                intent.putExtra("idRec", id);
-                startActivity(intent);
-            }
-        });
+        initViews();
 
         // get settings object
         SharedPreferences sharedPref = getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
@@ -141,5 +132,19 @@ public class MeasurementsActivity extends AppCompatActivity {
 
         lvMeasurementsAll.setAdapter(new ItemRecordsAdapter(this, data,
                 prefsBloodLowSugar, prefsBloodHighSugar, prefsUnitBloodSugarMmol, prefsTimeFormat24h));
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        lvMeasurementsAll = findViewById(R.id.lvMeasurementsAll);
+
+        lvMeasurementsAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MeasurementsActivity.this, AddOrChangeMeasurementActivity.class);
+                intent.putExtra("idRec", id);
+                startActivity(intent);
+            }
+        });
     }
 }

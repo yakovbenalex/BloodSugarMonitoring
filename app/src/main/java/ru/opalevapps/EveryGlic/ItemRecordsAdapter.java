@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -71,7 +71,7 @@ class ItemRecordsAdapter extends BaseAdapter {
 
         // sugar color range
         if (sugar < prefsBloodLowSugar + 0.01f) { // low sugar
-            tvListSugar.setTextColor(Color.rgb(0,100,255));
+            tvListSugar.setTextColor(Color.rgb(0, 100, 255));
         } else {
 
             if (sugar < prefsBloodHighSugar) { // normal sugar

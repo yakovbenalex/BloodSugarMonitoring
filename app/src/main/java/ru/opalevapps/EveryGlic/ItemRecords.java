@@ -1,6 +1,6 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
-
+// blood sugar measurement item
 class ItemRecords {
     private int id;
     private float measurementSugar;

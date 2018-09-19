@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,20 +14,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.example.jason.EveryGlic.DBHelper.KEY_MEASUREMENT;
-import static com.example.jason.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
-import static com.example.jason.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
-import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
-import static com.example.jason.EveryGlic.PreferencesActivity.BEGINNING_WEEK_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+import static ru.opalevapps.EveryGlic.DBHelper.KEY_MEASUREMENT;
+import static ru.opalevapps.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
+import static ru.opalevapps.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.BEGINNING_WEEK_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -105,41 +103,7 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        // find views on screen by id
-        tvAllTimeCount = findViewById(R.id.tvCountAllTime);
-        tvAllTimeCountLow = findViewById(R.id.tvLastAllTimeCountLow);
-        tvAllTimeCountHigh = findViewById(R.id.tvLastAllTimeCountHigh);
-        tvAllTimeAvg = findViewById(R.id.tvAllTimeAvg);
-        tvAllTimeMin = findViewById(R.id.tvAllTimeMin);
-        tvAllTimeMax = findViewById(R.id.tvAllTimeMax);
-
-        tvCurWeekCount = findViewById(R.id.tvCurWeekCount);
-        tvCurWeekCountLow = findViewById(R.id.tvCurWeekCountLow);
-        tvCurWeekCountHigh = findViewById(R.id.tvCurWeekCountHigh);
-        tvCurWeekAvg = findViewById(R.id.tvCurWeekAvg);
-        tvCurWeekMin = findViewById(R.id.tvCurWeekMin);
-        tvCurWeekMax = findViewById(R.id.tvCurWeekMax);
-
-        tvCurMonthCount = findViewById(R.id.tvCountCurMonth);
-        tvCurMonthCountLow = findViewById(R.id.tvCurMonthCountLow);
-        tvCurMonthCountHigh = findViewById(R.id.tvCurMonthCountHigh);
-        tvCurMonthAvg = findViewById(R.id.tvCurMonthAvg);
-        tvCurMonthMin = findViewById(R.id.tvCurMonthMin);
-        tvCurMonthMax = findViewById(R.id.tvCurMonthMax);
-
-        tvLastWeekCount = findViewById(R.id.tvCountLastWeek);
-        tvLastWeekCountLow = findViewById(R.id.tvLastWeekCountLow);
-        tvLastWeekCountHigh = findViewById(R.id.tvLastWeekCountHigh);
-        tvLastWeekAvg = findViewById(R.id.tvLastWeekAvg);
-        tvLastWeekMin = findViewById(R.id.tvLastWeekMin);
-        tvLastWeekMax = findViewById(R.id.tvLastWeekMax);
-
-        tvLastMonthCount = findViewById(R.id.tvCountLastMonth);
-        tvLastMonthCountLow = findViewById(R.id.tvLastMonthCountLow);
-        tvLastMonthCountHigh = findViewById(R.id.tvLastMonthCountHigh);
-        tvLastMonthAvg = findViewById(R.id.tvLastMonthAvg);
-        tvLastMonthMin = findViewById(R.id.tvLastMonthMin);
-        tvLastMonthMax = findViewById(R.id.tvLastMonthMax);
+        initViews();
 
         dbHelper = new DBHelper(this);
     }
@@ -184,13 +148,13 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        createInfoItemInActionBar(menu);
+        MyWorks.createInfoItemInActionBar(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        parseMenuItemInfo(this, item);
+        MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -571,5 +535,44 @@ public class StatisticsActivity extends AppCompatActivity {
         }
         cursor.close();
         database.close();
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        // find views on screen by id
+        tvAllTimeCount = findViewById(R.id.tvCountAllTime);
+        tvAllTimeCountLow = findViewById(R.id.tvLastAllTimeCountLow);
+        tvAllTimeCountHigh = findViewById(R.id.tvLastAllTimeCountHigh);
+        tvAllTimeAvg = findViewById(R.id.tvAllTimeAvg);
+        tvAllTimeMin = findViewById(R.id.tvAllTimeMin);
+        tvAllTimeMax = findViewById(R.id.tvAllTimeMax);
+
+        tvCurWeekCount = findViewById(R.id.tvCurWeekCount);
+        tvCurWeekCountLow = findViewById(R.id.tvCurWeekCountLow);
+        tvCurWeekCountHigh = findViewById(R.id.tvCurWeekCountHigh);
+        tvCurWeekAvg = findViewById(R.id.tvCurWeekAvg);
+        tvCurWeekMin = findViewById(R.id.tvCurWeekMin);
+        tvCurWeekMax = findViewById(R.id.tvCurWeekMax);
+
+        tvCurMonthCount = findViewById(R.id.tvCountCurMonth);
+        tvCurMonthCountLow = findViewById(R.id.tvCurMonthCountLow);
+        tvCurMonthCountHigh = findViewById(R.id.tvCurMonthCountHigh);
+        tvCurMonthAvg = findViewById(R.id.tvCurMonthAvg);
+        tvCurMonthMin = findViewById(R.id.tvCurMonthMin);
+        tvCurMonthMax = findViewById(R.id.tvCurMonthMax);
+
+        tvLastWeekCount = findViewById(R.id.tvCountLastWeek);
+        tvLastWeekCountLow = findViewById(R.id.tvLastWeekCountLow);
+        tvLastWeekCountHigh = findViewById(R.id.tvLastWeekCountHigh);
+        tvLastWeekAvg = findViewById(R.id.tvLastWeekAvg);
+        tvLastWeekMin = findViewById(R.id.tvLastWeekMin);
+        tvLastWeekMax = findViewById(R.id.tvLastWeekMax);
+
+        tvLastMonthCount = findViewById(R.id.tvCountLastMonth);
+        tvLastMonthCountLow = findViewById(R.id.tvLastMonthCountLow);
+        tvLastMonthCountHigh = findViewById(R.id.tvLastMonthCountHigh);
+        tvLastMonthAvg = findViewById(R.id.tvLastMonthAvg);
+        tvLastMonthMin = findViewById(R.id.tvLastMonthMin);
+        tvLastMonthMax = findViewById(R.id.tvLastMonthMax);
     }
 }

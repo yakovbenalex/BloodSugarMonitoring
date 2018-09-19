@@ -1,4 +1,4 @@
-package com.example.jason.EveryGlic;
+package ru.opalevapps.EveryGlic;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -26,17 +26,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.example.jason.EveryGlic.MyWorks.clearET;
-import static com.example.jason.EveryGlic.MyWorks.createInfoItemInActionBar;
-import static com.example.jason.EveryGlic.MyWorks.getStringNumberWithAccuracy;
-import static com.example.jason.EveryGlic.MyWorks.numberInRange;
-import static com.example.jason.EveryGlic.MyWorks.parseMenuItemInfo;
-import static com.example.jason.EveryGlic.MyWorks.requiredFiledEmpty;
-import static com.example.jason.EveryGlic.MyWorks.roundUp;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
-import static com.example.jason.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static com.example.jason.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static ru.opalevapps.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 public class AddOrChangeMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
     // limit to back starts on 1970 (this is enough)
@@ -99,61 +92,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         }
         sdf = new SimpleDateFormat(DATE_FORMAT);
 
-        // find views on screen by id
-        btnChooseDate = findViewById(R.id.btnChooseDate);
-        btnChooseTime = findViewById(R.id.btnChooseTime);
-        btnSaveMeasurement = findViewById(R.id.btnSaveMeasurement);
-        btnDeleteCurMeasurements = findViewById(R.id.btnDeleteCurMeasurements);
-
-        etBloodSugarMeasurement = findViewById(R.id.etBloodSugarMeasurementEdit);
-        etComment = findViewById(R.id.etCommentEdit);
-
-        tvDateAndTime = findViewById(R.id.tvDateAndTime);
-        tvUnitBloodSugar = findViewById(R.id.tvUnitBloodSugar);
-
-
-        // set hint for editText
-        setEditTextsHints(prefsUnitBloodSugarMmol);
-
-        // set views properties and other
-//        timePicker.setIs24HourView(true);
-
-        if (prefsUnitBloodSugarMmol) {
-            tvUnitBloodSugar.setText(getString(R.string.mmol_l));
-        } else {
-            tvUnitBloodSugar.setText(getString(R.string.mg_dl));
-        }
-
-        // set the listeners for views
-        btnChooseDate.setOnClickListener(this);
-        btnChooseTime.setOnClickListener(this);
-        btnSaveMeasurement.setOnClickListener(this);
-        btnDeleteCurMeasurements.setOnClickListener(this);
-
-        // event on text change in editTexts
-        etBloodSugarMeasurement.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                String s = String.valueOf(charSequence);
-
-                // set one point accuracy for editText value
-                if (s.contains(".")) {
-                    s = getStringNumberWithAccuracy(s, 1, '.', false);
-                    if (s.length() != charSequence.toString().length()) {
-                        etBloodSugarMeasurement.setText(s);
-                        etBloodSugarMeasurement.setSelection(s.length());
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+        initViews();
 
         // if editing measurement
         if (idRec != -1) {
@@ -174,13 +113,13 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        createInfoItemInActionBar(menu);
+        MyWorks.createInfoItemInActionBar(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        parseMenuItemInfo(this, item);
+        MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -329,7 +268,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         if (prefsUnitBloodSugarMmol) {
             contentValues.put(DBHelper.KEY_MEASUREMENT, measurement);
         } else {
-            float tmpBloodLowSugar = roundUp(
+            float tmpBloodLowSugar = MyWorks.roundUp(
                     Float.parseFloat(etBloodSugarMeasurement.getText().toString()) / 18, 1).floatValue();
             contentValues.put(DBHelper.KEY_MEASUREMENT, tmpBloodLowSugar);
         }
@@ -402,10 +341,10 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     // set hints for editText
     public void setEditTextsHints(boolean prefsUnitBloodSugarMmol) {
         if (prefsUnitBloodSugarMmol) {
-            etBloodSugarMeasurement.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toF),
+            etBloodSugarMeasurement.setHint(String.format(Locale.ENGLISH, getString(R.string.from_toFloat),
                     bloodSugarLimitLow, bloodSugarLimitHigh));
         } else {
-            etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_toD),
+            etBloodSugarMeasurement.setHint(String.format(getString(R.string.from_toDecimal),
                     (int) (bloodSugarLimitLow * 18), (int) (bloodSugarLimitHigh * 18)));
         }
     }
@@ -413,25 +352,25 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     // check fields for correctness
     public boolean isCorrectInputValues() {
         // is empty
-        if (requiredFiledEmpty(etBloodSugarMeasurement)) {
+        if (MyWorks.requiredFiledEmpty(etBloodSugarMeasurement)) {
             Toast.makeText(this, getString(R.string.sugar_measurement_field_must_be_filled), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // check on range input value and set focus on them
         if (prefsUnitBloodSugarMmol) {
-            if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
+            if (!MyWorks.numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
                     bloodSugarLimitLow, bloodSugarLimitHigh)) {
                 etBloodSugarMeasurement.requestFocus();
-                clearET(etBloodSugarMeasurement);
+                MyWorks.clearET(etBloodSugarMeasurement);
                 Toast.makeText(this, getString(R.string.incorrect_value), Toast.LENGTH_SHORT).show();
                 return false;
             }
         } else {
-            if (!numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
+            if (!MyWorks.numberInRange(Float.parseFloat(etBloodSugarMeasurement.getText().toString()),
                     (int) (bloodSugarLimitLow * 18), (int) (bloodSugarLimitHigh * 18))) {
                 etBloodSugarMeasurement.requestFocus();
-                clearET(etBloodSugarMeasurement);
+                MyWorks.clearET(etBloodSugarMeasurement);
                 Toast.makeText(this, getString(R.string.incorrect_value), Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -442,5 +381,64 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     // get time in millis
     public long getMillisInSeconds(long timeInSeconds) {
         return timeInSeconds * 1000;
+    }
+
+    // initialize views on screen and their listening
+    public void initViews() {
+        // find views on screen by id
+        btnChooseDate = findViewById(R.id.btnChooseDate);
+        btnChooseTime = findViewById(R.id.btnChooseTime);
+        btnSaveMeasurement = findViewById(R.id.btnSaveMeasurement);
+        btnDeleteCurMeasurements = findViewById(R.id.btnDeleteCurMeasurements);
+
+        etBloodSugarMeasurement = findViewById(R.id.etBloodSugarMeasurementEdit);
+        etComment = findViewById(R.id.etCommentEdit);
+
+        tvDateAndTime = findViewById(R.id.tvDateAndTime);
+        tvUnitBloodSugar = findViewById(R.id.tvUnitBloodSugar);
+
+
+        // set hint for editText
+        setEditTextsHints(prefsUnitBloodSugarMmol);
+
+        // set views properties and other
+//        timePicker.setIs24HourView(true);
+
+        if (prefsUnitBloodSugarMmol) {
+            tvUnitBloodSugar.setText(getString(R.string.mmol_l));
+        } else {
+            tvUnitBloodSugar.setText(getString(R.string.mg_dl));
+        }
+
+        // set the listeners for views
+        btnChooseDate.setOnClickListener(this);
+        btnChooseTime.setOnClickListener(this);
+        btnSaveMeasurement.setOnClickListener(this);
+        btnDeleteCurMeasurements.setOnClickListener(this);
+
+        // event on text change in editTexts
+        etBloodSugarMeasurement.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                String s = String.valueOf(charSequence);
+
+                // set one point accuracy for editText value
+                if (s.contains(".")) {
+                    s = MyWorks.getStringNumberWithAccuracy(s, 1, '.', false);
+                    if (s.length() != charSequence.toString().length()) {
+                        etBloodSugarMeasurement.setText(s);
+                        etBloodSugarMeasurement.setSelection(s.length());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 }
