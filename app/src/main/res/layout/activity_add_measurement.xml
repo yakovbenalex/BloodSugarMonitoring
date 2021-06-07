@@ -50,8 +50,8 @@
                         android:id="@+id/etBloodSugarMeasurementEdit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
                         android:ems="8"
                         android:inputType="numberDecimal"
                         android:labelFor="@+id/etBloodSugarMeasurementEdit"
@@ -63,9 +63,9 @@
                         android:id="@+id/tvUnitBloodSugar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignStart="@+id/etBloodSugarMeasurementEdit"
                         android:layout_below="@+id/etBloodSugarMeasurementEdit"
+                        android:layout_alignStart="@+id/etBloodSugarMeasurementEdit"
+                        android:layout_alignParentEnd="true"
                         android:textAlignment="center"
                         android:textSize="@dimen/textSizeCaption" />
                 </RelativeLayout>
@@ -113,10 +113,10 @@
                 android:id="@+id/tvDateAndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/btnChooseTime"
                 android:layout_below="@+id/vBtnsChooseDateAndTimeTop"
-                android:layout_toStartOf="@id/btnChooseDate"
+                android:layout_alignBottom="@+id/btnChooseTime"
                 android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/btnChooseDate"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:textAlignment="center"
@@ -161,12 +161,30 @@
 
         </RelativeLayout>
 
+
+        <RelativeLayout
+            android:id="@+id/rlTest1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/rlControlPanel"
+            android:layout_below="@+id/rlDateAndTime"
+            android:layout_marginStart="0dp"
+            >
+
+            <Button
+                android:id="@+id/btnAddTestData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/rlControlPanel"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true">
 
             <View
                 android:id="@+id/vBtnsSaveAndDeleteTop"
@@ -179,8 +197,8 @@
                 android:id="@+id/btnDeleteCurMeasurements"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@id/vBtnsSaveAndDeleteSep"
                 android:enabled="false"
                 android:text="@string/delete" />
@@ -197,12 +215,14 @@
                 android:id="@+id/btnSaveMeasurement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/vBtnsSaveAndDeleteSep"
                 android:text="@string/save" />
 
         </RelativeLayout>
+
+
     </RelativeLayout>
 
 </LinearLayout>

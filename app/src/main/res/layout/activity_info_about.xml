@@ -37,7 +37,6 @@
                 android:layout_below="@+id/textInfoRules"
                 android:layout_marginBottom="@dimen/activity_item_padding"
                 android:minWidth="190dp"
-                android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
             <TextView
@@ -48,7 +47,6 @@
                 android:layout_below="@+id/tvAppVersion"
                 android:minWidth="190dp"
                 android:text="@string/developerInfo"
-                android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
         </RelativeLayout>

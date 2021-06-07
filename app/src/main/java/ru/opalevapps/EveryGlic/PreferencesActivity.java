@@ -30,7 +30,7 @@ import static ru.opalevapps.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
     //-------------------------------------DECLARE BLOCK START------------------------------------//
     // value range for BloodLowSugar and BloodHighSugar (without much need not to change)
-    protected static final float BLOOD_LOW_SUGAR_LOWER_BOUND = 3.2f;
+    protected static final float BLOOD_LOW_SUGAR_LOWER_BOUND = 2.0f;
     protected static final float BLOOD_LOW_SUGAR_UPPER_BOUND = 4.9f;
     protected static final float BLOOD_HIGH_SUGAR_LOWER_BOUND = 7.8f;
     protected static final float BLOOD_HIGH_SUGAR_UPPER_BOUND = 12f;

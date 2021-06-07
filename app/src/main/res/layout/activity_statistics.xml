@@ -25,6 +25,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="3dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -34,13 +35,13 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/week"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/textSizeCaption" />
+                    android:textSize="@dimen/textSizeCaptionLarge" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_alignEnd="@+id/textViewWeekSugars"
                     android:layout_below="@+id/textViewWeekSugars"
+                    android:layout_alignEnd="@+id/textViewWeekSugars"
                     android:background="@color/colorPrimary" />
 
                 <TextView
@@ -248,11 +249,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:layout_marginTop="@dimen/activity_item_pref_padding"
+                android:layout_marginBottom="3dp"
                 android:background="@color/colorPrimary" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="3dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -262,7 +265,7 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/month"
                     android:textColor="#000"
-                    android:textSize="@dimen/textSizeCaption" />
+                    android:textSize="@dimen/textSizeCaptionLarge" />
 
                 <TextView
                     android:id="@+id/textViewMonthCurrent"
@@ -286,8 +289,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_alignEnd="@+id/textViewMonthSugars"
                     android:layout_below="@+id/textViewMonthSugars"
+                    android:layout_alignEnd="@+id/textViewMonthSugars"
                     android:background="@color/colorPrimary" />
 
             </RelativeLayout>
@@ -476,6 +479,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:layout_marginTop="@dimen/activity_item_pref_padding"
+                android:layout_marginBottom="3dp"
                 android:background="@color/colorPrimary" />
 
             <RelativeLayout
@@ -490,13 +494,13 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/all_time"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/textSizeCaption" />
+                    android:textSize="@dimen/textSizeCaptionLarge" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_alignEnd="@+id/textViewAllTimeSugars"
                     android:layout_below="@+id/textViewAllTimeSugars"
+                    android:layout_alignEnd="@+id/textViewAllTimeSugars"
                     android:background="@color/colorPrimary" />
 
             </RelativeLayout>

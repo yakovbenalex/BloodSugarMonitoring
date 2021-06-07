@@ -36,7 +36,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     private static final int yearLimitLowerBound = 1970;
 
     // Sugar range limit
-    private static final float bloodSugarLimitLow = 0.7f;
+    private static final float bloodSugarLimitLow = 0.3f;
     private static final float bloodSugarLimitHigh = 55.5f;
 
     // for date and time
@@ -60,6 +60,9 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     Button btnChooseTime;
     Button btnSaveMeasurement;
     Button btnDeleteCurMeasurements;
+
+    // TEST ---------------
+    Button btnAddTestData;
 
     EditText etBloodSugarMeasurement;
     EditText etComment;
@@ -126,6 +129,37 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            // TEST ------
+            case R.id.btnAddTestData:
+                int testDataCount = 50;
+
+                // choose update or add measurement
+                updateRec = false;
+
+                for (int i = 0; i < testDataCount; i++) {
+                    // check date to more than current and reset if so
+                    now = Calendar.getInstance();
+
+                    float leftLimit = 3.5f;
+                    float rightLimit = 15.5f;
+                    float newMeasure = leftLimit + (float) (Math.random() * (rightLimit - leftLimit));
+                    String newMeasureStr = Float.toString(newMeasure);
+                    newMeasure = Float.parseFloat(newMeasureStr.substring(0, newMeasureStr.indexOf(".") + 1));
+
+                    long dateLeftLimit = 1L;
+                    long dateRightLimit = 2L * 30 * 24 * 60 * 60;
+                    long dateOffset = dateLeftLimit + (long) (Math.random() * (dateRightLimit - dateLeftLimit));
+                    long date = dateAndTime.getTimeInMillis() / 1000 - dateOffset;
+                    String comment = "Test data " + i + " - " + newMeasure;
+
+                    // save measurement or update if updateRec is true
+                    writeRecord(newMeasure, date, comment, updateRec);
+
+//                    finish();
+                }
+                Toast.makeText(this, Integer.toString(testDataCount) + " test data added", Toast.LENGTH_SHORT).show();
+                break;
+
             // show dialog to choose date
             case R.id.btnChooseDate:
                 new DatePickerDialog(this, datePickerDialog,
@@ -391,6 +425,10 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         btnSaveMeasurement = findViewById(R.id.btnSaveMeasurement);
         btnDeleteCurMeasurements = findViewById(R.id.btnDeleteCurMeasurements);
 
+        // TEST -------
+        btnAddTestData = findViewById(R.id.btnAddTestData);
+
+
         etBloodSugarMeasurement = findViewById(R.id.etBloodSugarMeasurementEdit);
         etComment = findViewById(R.id.etCommentEdit);
 
@@ -415,6 +453,9 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         btnChooseTime.setOnClickListener(this);
         btnSaveMeasurement.setOnClickListener(this);
         btnDeleteCurMeasurements.setOnClickListener(this);
+
+        // TEST -------
+        btnAddTestData.setOnClickListener(this);
 
         // event on text change in editTexts
         etBloodSugarMeasurement.addTextChangedListener(new TextWatcher() {

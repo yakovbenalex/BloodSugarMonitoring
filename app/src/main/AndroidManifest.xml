@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.opalevapps.EveryGlic"
     android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="0.1">
+    android:versionCode="4"
+    android:versionName="0.04">
 
     <supports-screens
         android:anyDensity="true"
@@ -79,7 +79,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="ru.opalevapps.EveryGlic.AboutActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:label="@string/title_activity_about" />
     </application>
 

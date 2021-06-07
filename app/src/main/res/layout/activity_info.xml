@@ -3,64 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.opalevapps.EveryGlic.InfoActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="ru.opalevapps.EveryGlic.InfoActivity">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/separator_action_bar"
         android:background="@color/colorPrimaryDark" />
 
-    <LinearLayout
-        android:id="@+id/llInfoButtons"
+    <Spinner
+        android:id="@+id/spinnerInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnInfoUsefulTips"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/UsefulTips"
-            android:textAlignment="textStart" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/colorPrimaryDark" />
-
-        <Button
-            android:id="@+id/btnInfoEmergencyConditions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/EmergencyConditions"
-            android:textAlignment="textStart" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/colorPrimaryDark" />
-
-        <Button
-            android:id="@+id/btnInfoChronicComplications"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ChronicComplications"
-            android:textAlignment="textStart" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/colorPrimaryDark" />
-
-        <Button
-            android:id="@+id/btnInfoUrgentMedicalAssistance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/UrgentMedicalAssistance"
-            android:textAlignment="textStart" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
     <View
         android:layout_width="match_parent"
@@ -83,8 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_item_padding"
-                android:paddingRight="@dimen/activity_item_padding"
                 android:paddingTop="@dimen/activity_item_padding"
+                android:paddingRight="@dimen/activity_item_padding"
                 android:text="@string/_InfoUsefulTips"
                 android:textIsSelectable="true" />
 

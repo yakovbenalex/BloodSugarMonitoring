@@ -9,9 +9,10 @@
 
     <!-- text -->
     <dimen name="textSizeNormal">17sp</dimen>
-    <dimen name="textSizeNormalLarge">17sp</dimen>
+    <dimen name="textSizeNormalLarge">19sp</dimen>
     <dimen name="textSizeNormalXLarge">23sp</dimen>
     <dimen name="textSizeCaption">14sp</dimen>
+    <dimen name="textSizeCaptionLarge">17sp</dimen>
 
 
     <dimen name="icon_size_default">52dp</dimen>

@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean prefsTimeFormat24h;
     boolean firstRun;
 
+    // other vars
+    int lastRecordsCount = 7;
+
     // views
     Button btnAddMeasurement;
     Button btnStatistics;
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS,
                 null, null, null, null, null,
-                DBHelper.KEY_TIME_IN_SECONDS + " DESC", "3");
+                DBHelper.KEY_TIME_IN_SECONDS + " DESC", Integer.toString(lastRecordsCount));
 
         // if available at least one records, get data from database
         if (cursor.moveToFirst()) {
