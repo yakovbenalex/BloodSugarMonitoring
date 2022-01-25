@@ -1,14 +1,14 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import ru.opalevapps.EveryGlic.MyWorks;
+import ru.opalevapps.EveryGlic.R;
+
 public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
     // const
     private static final String DB_NAME = "info.db";
@@ -24,17 +27,12 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     String[] spinnerData;
 
     // views
-    Button btnInfoUsefulTips;
-    Button btnInfoEmergencyConditions;
-    Button btnInfoChronicComplications;
-    Button btnInfoUrgentMedicalAssistance;
-
     Spinner spinnerInfo;
 
     // field to output info
     TextView tvInfo;
 
-    //Переменная для работы с БД
+    //var for db work
     private SQLiteDatabase myDB;
 
     @Override
@@ -89,7 +87,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
@@ -117,10 +115,9 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         // adapter
         spinnerInfo = findViewById(R.id.spinnerInfo);
         List<String> list = new ArrayList<>(Arrays.asList(spinnerData));
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerInfo.setAdapter(spinnerAdapter);
-//        spinnerAdapter.add("DELHI");
 //        spinnerAdapter.notifyDataSetChanged();
 
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {

@@ -1,4 +1,7 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
+
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,8 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
+import ru.opalevapps.EveryGlic.R;
 
 public class AgreementActivity extends AppCompatActivity implements View.OnClickListener {
     // temporary variables

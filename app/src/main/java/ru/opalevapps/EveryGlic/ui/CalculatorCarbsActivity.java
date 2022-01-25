@@ -1,7 +1,12 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
+
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,9 +23,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static ru.opalevapps.EveryGlic.PreferencesActivity.AMOUNT_CARBS_IN_BREAD_UNIT_DEFAULT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT;
+import ru.opalevapps.EveryGlic.MyWorks;
+import ru.opalevapps.EveryGlic.R;
 
 public class CalculatorCarbsActivity extends AppCompatActivity implements View.OnClickListener {
     // keys (CCS - Calculator carbs state)
@@ -111,7 +115,7 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
@@ -420,8 +424,8 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                     etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
                     etAmountBreadUnits.setText(String.valueOf(amountBreadUnits));
                 } else {
-                    etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
-                    etAmountBreadUnits.setText(String.valueOf("0.0"));
+                    etCarbsInGramsOfProduct.setText("0.0");
+                    etAmountBreadUnits.setText("0.0");
                 }
             }
 
@@ -477,8 +481,8 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                         etAmountBreadUnits.setText(String.valueOf(amountBreadUnits));
 
                     } else {
-                        etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
-                        etAmountBreadUnits.setText(String.valueOf("0.0"));
+                        etCarbsInGramsOfProduct.setText("0.0");
+                        etAmountBreadUnits.setText("0.0");
                     }
                 }
             }
@@ -550,8 +554,8 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
                             etCarbsInGramsOfProduct.setText(String.valueOf(carbsInGramsOfProduct));
                         }
                     } else {
-                        etGramsOfProduct.setText(String.valueOf("0.0"));
-                        etCarbsInGramsOfProduct.setText(String.valueOf("0.0"));
+                        etGramsOfProduct.setText("0.0");
+                        etCarbsInGramsOfProduct.setText("0.0");
                     }
                 }
             }
@@ -562,23 +566,8 @@ public class CalculatorCarbsActivity extends AppCompatActivity implements View.O
         });
 
         // event on change focus in editTexts (set cursor to end)
-        etGramsOfProduct.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                gramsInProductHasFocus = hasFocus;
-            }
-        });
-        etAmountBreadUnits.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                amountBreadUnitsHasFocus = hasFocus;
-            }
-        });
-        etCarbsIn100GramsOfProduct.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                carbsIn100GramsOfProductHasFocus = hasFocus;
-            }
-        });
+        etGramsOfProduct.setOnFocusChangeListener((view, hasFocus) -> gramsInProductHasFocus = hasFocus);
+        etAmountBreadUnits.setOnFocusChangeListener((view, hasFocus) -> amountBreadUnitsHasFocus = hasFocus);
+        etCarbsIn100GramsOfProduct.setOnFocusChangeListener((view, hasFocus) -> carbsIn100GramsOfProductHasFocus = hasFocus);
     }
 }

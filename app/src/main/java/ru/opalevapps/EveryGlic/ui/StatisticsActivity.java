@@ -1,9 +1,23 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
+
+import static ru.opalevapps.EveryGlic.db.DBHelper.KEY_MEASUREMENT;
+import static ru.opalevapps.EveryGlic.db.DBHelper.KEY_TIME_IN_SECONDS;
+import static ru.opalevapps.EveryGlic.db.DBHelper.TABLE_MEASUREMENTS;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.BEGINNING_WEEK_DEFAULT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,18 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static ru.opalevapps.EveryGlic.DBHelper.KEY_MEASUREMENT;
-import static ru.opalevapps.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
-import static ru.opalevapps.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.BEGINNING_WEEK_DEFAULT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BEGINNING_WEEK;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+import ru.opalevapps.EveryGlic.MyWorks;
+import ru.opalevapps.EveryGlic.R;
+import ru.opalevapps.EveryGlic.db.DBHelper;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -153,7 +158,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
@@ -192,13 +197,13 @@ public class StatisticsActivity extends AppCompatActivity {
         if (lowSugar) equalitySign = " < ";
         else equalitySign = " > ";
         return "SELECT " + func + "(" + KEY_MEASUREMENT + ") FROM " + TABLE_MEASUREMENTS
-                + " WHERE " + KEY_MEASUREMENT + equalitySign + String.valueOf(boundarySugar);
+                + " WHERE " + KEY_MEASUREMENT + equalitySign + boundarySugar;
     }
 
     // get String query from a given time
     public String getStrQuery(String func, long startTimeInSec) {
         return "SELECT " + func + "(" + KEY_MEASUREMENT + ") FROM " + TABLE_MEASUREMENTS
-                + " WHERE " + KEY_TIME_IN_SECONDS + " > " + String.valueOf(startTimeInSec);
+                + " WHERE " + KEY_TIME_IN_SECONDS + " > " + startTimeInSec;
     }
 
     // get String query from a given time
@@ -208,7 +213,7 @@ public class StatisticsActivity extends AppCompatActivity {
         else equalitySign = " > ";
         return "SELECT " + func + "(" + KEY_MEASUREMENT + ") FROM " + TABLE_MEASUREMENTS
                 + " WHERE " + KEY_TIME_IN_SECONDS + " > " + startTimeInSec
-                + " AND " + KEY_MEASUREMENT + equalitySign + String.valueOf(boundarySugar);
+                + " AND " + KEY_MEASUREMENT + equalitySign + boundarySugar;
     }
 
     // load statistics

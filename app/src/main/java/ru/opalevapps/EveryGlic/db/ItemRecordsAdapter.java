@@ -1,4 +1,4 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.db;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,7 +11,9 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-class ItemRecordsAdapter extends BaseAdapter {
+import ru.opalevapps.EveryGlic.R;
+
+public class ItemRecordsAdapter extends BaseAdapter {
     // array of ItemRecords
     private ArrayList<ItemRecords> data = new ArrayList<>();
 
@@ -23,9 +25,9 @@ class ItemRecordsAdapter extends BaseAdapter {
     private boolean prefsTimeFormat24h;
     private boolean prefsUnitBloodSugarMmol;
 
-    ItemRecordsAdapter(Context context, ArrayList<ItemRecords> arr,
-                       float prefsBloodLowSugar, float prefsBloodHighSugar,
-                       boolean prefsUnitBloodSugarMmol, boolean prefsTimeFormat24h) {
+    public ItemRecordsAdapter(Context context, ArrayList<ItemRecords> arr,
+                              float prefsBloodLowSugar, float prefsBloodHighSugar,
+                              boolean prefsUnitBloodSugarMmol, boolean prefsTimeFormat24h) {
         if (arr != null) {
             data = arr;
         }

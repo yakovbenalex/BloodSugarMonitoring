@@ -1,13 +1,13 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.db;
 
 // blood sugar measurement item
-class ItemRecords {
+public class ItemRecords {
     private int id;
     private float measurementSugar;
     private long timeInSeconds;
     private String comment;
 
-    ItemRecords(int id, float measurementSugar, long timeInSeconds, String comment) {
+    public ItemRecords(int id, float measurementSugar, long timeInSeconds, String comment) {
         this.id = id;
         this.measurementSugar = measurementSugar;
         this.timeInSeconds = timeInSeconds;

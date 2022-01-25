@@ -141,4 +141,5 @@
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_about">О приложении</string>
     <string name="pref_title_social_recommendations">Включить социальные рекомендации</string>
+    <string name="feature_option">Будущая опция</string>
 </resources>

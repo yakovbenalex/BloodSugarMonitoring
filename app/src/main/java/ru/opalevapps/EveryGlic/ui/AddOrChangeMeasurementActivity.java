@@ -1,13 +1,18 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
+
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -26,10 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+import ru.opalevapps.EveryGlic.MyWorks;
+import ru.opalevapps.EveryGlic.R;
+import ru.opalevapps.EveryGlic.db.DBHelper;
 
 public class AddOrChangeMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
     // limit to back starts on 1970 (this is enough)
@@ -121,7 +125,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
@@ -157,7 +161,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
 //                    finish();
                 }
-                Toast.makeText(this, Integer.toString(testDataCount) + " test data added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, testDataCount + " test data added", Toast.LENGTH_SHORT).show();
                 break;
 
             // show dialog to choose date
@@ -185,27 +189,23 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
                 alertDelCurMes.setTitle(getString(R.string.delete_current_measurements));
                 alertDelCurMes.setMessage(getString(R.string.these_changes_can_t_return));
-                alertDelCurMes.setNegativeButton(getString(android.R.string.no), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
-                    }
+                alertDelCurMes.setNegativeButton(getString(android.R.string.no), (dialog, whichButton) -> {
+                    // Canceled.
                 });
 
                 // confirm delete current measurement
-                alertDelCurMes.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // delete current measurement from database
-                        SQLiteDatabase database = dbHelper.getWritableDatabase();
-                        database.delete(DBHelper.TABLE_MEASUREMENTS,
-                                DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
+                alertDelCurMes.setPositiveButton(getString(android.R.string.yes), (dialog, whichButton) -> {
+                    // delete current measurement from database
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    database.delete(DBHelper.TABLE_MEASUREMENTS,
+                            DBHelper.KEY_ID + " = " + idRec, null);
 
-                        deleteRecord(idRec);
-                        Toast.makeText(AddOrChangeMeasurementActivity.this,
-                                getString(R.string.the_current_measurement_has_been_deleted),
-                                Toast.LENGTH_LONG).show();
-                        finish();
+                    deleteRecord(idRec);
+                    Toast.makeText(AddOrChangeMeasurementActivity.this,
+                            getString(R.string.the_current_measurement_has_been_deleted),
+                            Toast.LENGTH_LONG).show();
+                    finish();
 
-                    }
                 });
                 alertDelCurMes.show();
                 break;
@@ -312,7 +312,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
 
         if (updateRec) {
             database.update(DBHelper.TABLE_MEASUREMENTS, contentValues,
-                    DBHelper.KEY_ID + " = " + String.valueOf(idRec), null);
+                    DBHelper.KEY_ID + " = " + idRec, null);
         } else {
             database.insert(DBHelper.TABLE_MEASUREMENTS, null, contentValues);
         }
@@ -325,7 +325,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         database.delete(DBHelper.TABLE_MEASUREMENTS
-                , DBHelper.KEY_ID + " = " + String.valueOf(idRec)
+                , DBHelper.KEY_ID + " = " + idRec
                 , null);
         database.close();
     }
@@ -337,7 +337,7 @@ public class AddOrChangeMeasurementActivity extends AppCompatActivity implements
         long timeInMillis;
 
         Cursor cursor = database.query(DBHelper.TABLE_MEASUREMENTS, null,
-                DBHelper.KEY_ID + " = " + String.valueOf(idRec), null, null, null, null);
+                DBHelper.KEY_ID + " = " + idRec, null, null, null, null);
         cursor.moveToFirst();
 
         // db columns indexes

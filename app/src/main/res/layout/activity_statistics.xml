@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ru.opalevapps.EveryGlic.StatisticsActivity">
+    tools:context="ru.opalevapps.EveryGlic.ui.StatisticsActivity">
 
     <View
         android:layout_width="match_parent"

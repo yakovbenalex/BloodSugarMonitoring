@@ -1,25 +1,25 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-class DBHelper extends SQLiteOpenHelper{
+public class DBHelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
     static final String DATABASE_NAME = "bloodGlucoseMonitoring";
 
     //KEYS shared
-    static final String KEY_ID = "_id";
-    static final String KEY_TIME_IN_SECONDS = "dateAndTime";
+    public static final String KEY_ID = "_id";
+    public static final String KEY_TIME_IN_SECONDS = "dateAndTime";
 
     //table measurements
-    static final String TABLE_MEASUREMENTS = "measurements";
+    public static final String TABLE_MEASUREMENTS = "measurements";
     //KEYS for table measurements
-    static final String KEY_MEASUREMENT = "measurement";
-    static final String KEY_COMMENT = "comment";
+    public static final String KEY_MEASUREMENT = "measurement";
+    public static final String KEY_COMMENT = "comment";
 
-    DBHelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

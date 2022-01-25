@@ -1,33 +1,38 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
 
-import android.content.DialogInterface;
+import static ru.opalevapps.EveryGlic.db.DBHelper.KEY_TIME_IN_SECONDS;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import static ru.opalevapps.EveryGlic.DBHelper.KEY_TIME_IN_SECONDS;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_HIGH_SUGAR_DEFAULT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.BLOOD_LOW_SUGAR_DEFAULT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_HIGH_SUGAR;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_BLOOD_LOW_SUGAR;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_FIRST_RUN_AGREEMENT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_TIME_FORMAT_24H;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.TIME_FORMAT_24H_DEFAULT;
-import static ru.opalevapps.EveryGlic.PreferencesActivity.UNIT_BLOOD_SUGAR_MMOL_DEFAULT;
+import ru.opalevapps.EveryGlic.MyWorks;
+import ru.opalevapps.EveryGlic.R;
+import ru.opalevapps.EveryGlic.db.DBHelper;
+import ru.opalevapps.EveryGlic.db.ItemRecords;
+import ru.opalevapps.EveryGlic.db.ItemRecordsAdapter;
 
 
 // implements View.OnClickListener
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         MyWorks.parseMenuItemMain(this, item);
         MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
@@ -195,17 +200,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openQuitDialog() {
         AlertDialog.Builder quitDialog = new AlertDialog.Builder(MainActivity.this);
         quitDialog.setTitle(R.string.exit_are_you_sure);
-        quitDialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        quitDialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Cancel
-            }
+        quitDialog.setPositiveButton(android.R.string.yes, (dialog, which) -> finish());
+        quitDialog.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+            // Cancel
         });
         quitDialog.setCancelable(false);
 
@@ -230,13 +227,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnCalculatorCarbs.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
 
-        lvMeasurements3Last.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentAddMeasurementActivity = new Intent(MainActivity.this, AddOrChangeMeasurementActivity.class);
-                intentAddMeasurementActivity.putExtra("idRec", id);
-                startActivity(intentAddMeasurementActivity);
-            }
+        lvMeasurements3Last.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intentAddMeasurementActivity = new Intent(MainActivity.this, AddOrChangeMeasurementActivity.class);
+            intentAddMeasurementActivity.putExtra("idRec", id);
+            startActivity(intentAddMeasurementActivity);
         });
     }
 }

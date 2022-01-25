@@ -1,12 +1,14 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
 
-import android.content.DialogInterface;
+import static ru.opalevapps.EveryGlic.db.DBHelper.KEY_MEASUREMENT;
+import static ru.opalevapps.EveryGlic.db.DBHelper.TABLE_MEASUREMENTS;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -23,8 +25,9 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import static ru.opalevapps.EveryGlic.DBHelper.KEY_MEASUREMENT;
-import static ru.opalevapps.EveryGlic.DBHelper.TABLE_MEASUREMENTS;
+import ru.opalevapps.EveryGlic.MyWorks;
+import ru.opalevapps.EveryGlic.R;
+import ru.opalevapps.EveryGlic.db.DBHelper;
 
 
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
@@ -47,7 +50,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final int BEGINNING_WEEK_DEFAULT = 2;
 
     // keys for option menu
-    static final int IDM_INFO = 101;
+    public static final int IDM_INFO = 101;
 
     // keys
     protected static final String KEY_PREFS = "settings_pref";
@@ -59,9 +62,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected static final String KEY_PREFS_FIRST_RUN_AGREEMENT = "firstRunAgreement";
     protected static final String KEY_PREFS_TIME_FORMAT_24H = "timeFormat24hDefault2";
     protected static final String KEY_PREFS_BEGINNING_WEEK = "beginningWeek";
-
-    protected static final String KEY_PREFS_CUR_APP_VER_CODE = "currentAppVersionCode";
-    protected static final String KEY_PREFS_DB_NEED_UPDATE = "dbNeedUpdate";
 
     private static final String TAG = "PreferencesActivity";
 
@@ -200,7 +200,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         MyWorks.parseMenuItemInfo(this, item);
         return super.onOptionsItemSelected(item);
     }
@@ -223,22 +223,18 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                     alert.setTitle(getString(R.string.delete_all_measurements));
                     alert.setMessage(getString(R.string.these_changes_can_t_return));
                     alert.setNegativeButton(getString(android.R.string.no),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    //Canceled.
-                                }
+                            (dialog, whichButton) -> {
+                                //Canceled.
                             });
-                    alert.setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            SQLiteDatabase database = dbHelper.getWritableDatabase();
-                            database.delete(DBHelper.TABLE_MEASUREMENTS, null, null);
-                            database.close();
-                            Toast.makeText(PreferencesActivity.this, getString(
-                                    R.string.all_measurements_has_been_deleted),
-                                    Toast.LENGTH_LONG).show();
+                    alert.setPositiveButton(getString(android.R.string.yes), (dialog, whichButton) -> {
+                        SQLiteDatabase database1 = dbHelper.getWritableDatabase();
+                        database1.delete(DBHelper.TABLE_MEASUREMENTS, null, null);
+                        database1.close();
+                        Toast.makeText(PreferencesActivity.this, getString(
+                                R.string.all_measurements_has_been_deleted),
+                                Toast.LENGTH_LONG).show();
 
-                            finish(); //exit from preferences
-                        }
+                        finish(); //exit from preferences
                     });
                     alert.show();
                 } else {
@@ -262,16 +258,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
 
+            // TODO make BU feature
             // backing up database
             case R.id.btnBackupDB:
-//                Toast.makeText(this, "backing up database", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Будущая опция", Toast.LENGTH_SHORT).show();
-                break;
-
             // restoring database
             case R.id.btnRestoreDB:
-//                Toast.makeText(this, "restoring database", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Будущая опция", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.feature_option, Toast.LENGTH_SHORT).show();
                 break;
 
             default:
@@ -280,7 +272,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -331,8 +323,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         SharedPreferences.Editor prefEditor = sharedPref.edit();
 
         // put preferences values
-        if (rbDiabetesType1.isChecked()) prefEditor.putBoolean(KEY_PREFS_DIABETES_1TYPE, true);
-        else prefEditor.putBoolean(KEY_PREFS_DIABETES_1TYPE, false);
+        prefEditor.putBoolean(KEY_PREFS_DIABETES_1TYPE, rbDiabetesType1.isChecked());
 
         if (rbUnitOfBloodSugarMmolL.isChecked()) {
             prefEditor.putBoolean(KEY_PREFS_UNIT_BLOOD_SUGAR_MMOL, true);
@@ -352,8 +343,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         prefEditor.putFloat(KEY_PREFS_AMOUNT_CARBS_IN_BREAD_UNIT,
                 Float.parseFloat(etAmountCarb.getText().toString()));
 
-        if (rbTimeFormat24h.isChecked()) prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, true);
-        else prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, false);
+        prefEditor.putBoolean(KEY_PREFS_TIME_FORMAT_24H, rbTimeFormat24h.isChecked());
 
 
         switch (rgBeginningWeek.getCheckedRadioButtonId()) {
@@ -631,61 +621,43 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         });
 
         // On Checked Change event to enable button save preferences
-        rgUnitOfBloodSugar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                // set converted value depending on the type unit of blood sugar
-                switch (checkedId) {
-                    case R.id.rbUnitOfBloodSugarMmolL:
-                        etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER
-                                | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                        if (!MyWorks.isEmpty(etBloodLowSugar)) {
-                            tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
-                            etBloodLowSugar.setText(String.valueOf(MyWorks.roundUp(tmpBloodLowSugar / 18, 1)));
-                        }
-                        if (!MyWorks.isEmpty(etBloodHighSugar)) {
-                            tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
-                            etBloodHighSugar.setText(String.valueOf(MyWorks.roundUp(tmpBloodHighSugar / 18, 1)));
-                        }
-                        break;
+        rgUnitOfBloodSugar.setOnCheckedChangeListener((group, checkedId) -> {
+            // set converted value depending on the type unit of blood sugar
+            switch (checkedId) {
+                case R.id.rbUnitOfBloodSugarMmolL:
+                    etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER
+                            | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    if (!MyWorks.isEmpty(etBloodLowSugar)) {
+                        tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
+                        etBloodLowSugar.setText(String.valueOf(MyWorks.roundUp(tmpBloodLowSugar / 18, 1)));
+                    }
+                    if (!MyWorks.isEmpty(etBloodHighSugar)) {
+                        tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
+                        etBloodHighSugar.setText(String.valueOf(MyWorks.roundUp(tmpBloodHighSugar / 18, 1)));
+                    }
+                    break;
 
-                    case R.id.rbUnitOfBloodSugarMgdL:
-                        etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
-                        if (!MyWorks.isEmpty(etBloodLowSugar)) {
-                            tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
-                            etBloodLowSugar.setText(String.valueOf((int) (tmpBloodLowSugar * 18)));
-                        }
-                        if (!MyWorks.isEmpty(etBloodHighSugar)) {
-                            tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
-                            etBloodHighSugar.setText(String.valueOf((int) (tmpBloodHighSugar * 18)));
-                        }
-                        break;
+                case R.id.rbUnitOfBloodSugarMgdL:
+                    etBloodLowSugar.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    if (!MyWorks.isEmpty(etBloodLowSugar)) {
+                        tmpBloodLowSugar = Float.parseFloat(etBloodLowSugar.getText().toString());
+                        etBloodLowSugar.setText(String.valueOf((int) (tmpBloodLowSugar * 18)));
+                    }
+                    if (!MyWorks.isEmpty(etBloodHighSugar)) {
+                        tmpBloodHighSugar = Float.parseFloat(etBloodHighSugar.getText().toString());
+                        etBloodHighSugar.setText(String.valueOf((int) (tmpBloodHighSugar * 18)));
+                    }
+                    break;
 
-                    default:
-                        break;
-                }
-                setEditTextsHints(rbUnitOfBloodSugarMmolL.isChecked());
-                preferencesChanged(true, true);
+                default:
+                    break;
             }
+            setEditTextsHints(rbUnitOfBloodSugarMmolL.isChecked());
+            preferencesChanged(true, true);
         });
 
-        rgDiabetesType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                preferencesChanged(true, true);
-            }
-        });
-        rgTimeFormat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                preferencesChanged(true, true);
-            }
-        });
-        rgBeginningWeek.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                preferencesChanged(true, true);
-            }
-        });
+        rgDiabetesType.setOnCheckedChangeListener((group, checkedId) -> preferencesChanged(true, true));
+        rgTimeFormat.setOnCheckedChangeListener((group, checkedId) -> preferencesChanged(true, true));
+        rgBeginningWeek.setOnCheckedChangeListener((group, checkedId) -> preferencesChanged(true, true));
     }
 }

@@ -1,10 +1,12 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import ru.opalevapps.EveryGlic.R;
 
 public class AboutActivity extends AppCompatActivity {
     String version;

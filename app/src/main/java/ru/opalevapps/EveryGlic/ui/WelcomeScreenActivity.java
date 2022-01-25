@@ -1,4 +1,4 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import ru.opalevapps.EveryGlic.R;
 
 public class WelcomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -1,4 +1,4 @@
-package ru.opalevapps.EveryGlic;
+package ru.opalevapps.EveryGlic.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,7 +1,8 @@
 package ru.opalevapps.EveryGlic;
 
+import static ru.opalevapps.EveryGlic.ui.PreferencesActivity.IDM_INFO;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
@@ -15,20 +16,22 @@ import android.widget.Toast;
 import java.math.BigDecimal;
 import java.util.Locale;
 
-import static ru.opalevapps.EveryGlic.PreferencesActivity.IDM_INFO;
+import ru.opalevapps.EveryGlic.ui.AboutActivity;
+import ru.opalevapps.EveryGlic.ui.AgreementActivity;
+import ru.opalevapps.EveryGlic.ui.PreferencesActivity;
 
 // for different aspect of application work
-class MyWorks {
+public class MyWorks {
 
     private static final String TAG = "myLog";
 
     // round float number to scale
-    static BigDecimal roundUp(float value, int digits) {
+    public static BigDecimal roundUp(float value, int digits) {
         return new BigDecimal(String.valueOf(value)).setScale(digits, BigDecimal.ROUND_HALF_EVEN);
     }
 
     // get text with set accuracy after specified symbol(separator)
-    static String getStringNumberWithAccuracy(String s, int scale, Character separator, boolean fillZero) {
+    public static String getStringNumberWithAccuracy(String s, int scale, Character separator, boolean fillZero) {
         int sLength = s.length();
         int sepIndex = s.indexOf(separator);
 
@@ -57,22 +60,22 @@ class MyWorks {
     }
 
     // checking of number for included in the specified range.
-    static boolean numberInRange(float number, float lowerBound, float upperBound) {
+    public static boolean numberInRange(float number, float lowerBound, float upperBound) {
         return !(number < lowerBound || number > upperBound);
     }
 
     // checking fields on empty end return true if so
-    static boolean isEmpty(EditText et) {
+    public static boolean isEmpty(EditText et) {
         return et.getText().toString().trim().length() == 0;
     }
 
     // set focus and additional option: clear editText if needs
-    static void clearET(EditText et) {
+    public static void clearET(EditText et) {
         et.setText("");
     }
 
     // request focus for empty required fields and return true if so
-    static boolean requiredFiledEmpty(EditText et) {
+    public static boolean requiredFiledEmpty(EditText et) {
         if (isEmpty(et)) {
             et.requestFocus();
             return true;
@@ -81,23 +84,18 @@ class MyWorks {
     }
 
     // show alert dialog with setted title and text
-    static void showDialog(Context context, String title, String text) {
+    public static void showDialog(Context context, String title, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setTitle(title)
                 .setMessage(text)
                 .setCancelable(true)
                 .setPositiveButton(Resources.getSystem().getString(android.R.string.ok),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        }).show();
+                        (dialog, which) -> dialog.cancel()).show();
     }
 
     // for parse menu item info on ActionBar (all items)
-    static void parseMenuItemMain(Context context, MenuItem item) {
+    public static void parseMenuItemMain(Context context, MenuItem item) {
         switch (item.getItemId()) {
             // start preferences activity
             case R.id.action_settings:
@@ -131,7 +129,7 @@ class MyWorks {
     }
 
     // for parse menu item info on ActionBar (all items)
-    static boolean parseMenuItemInfo(Context context, MenuItem item) {
+    public static boolean parseMenuItemInfo(Context context, MenuItem item) {
         switch (item.getItemId()) {
             case IDM_INFO:
                 // vars for show info dialog
@@ -221,7 +219,7 @@ class MyWorks {
     }
 
     // for parse menu item on ActionBar (info item only)
-    static boolean createInfoItemInActionBar(Menu menu) {
+    public static boolean createInfoItemInActionBar(Menu menu) {
         menu.add(Menu.NONE, IDM_INFO, Menu.NONE, R.string.info)
                 .setIcon(R.drawable.ic_action_info)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -229,12 +227,10 @@ class MyWorks {
     }
 
     // scroll to bottom of textView
-    static void scrollToBottomOfTextView(final TextView tv) {
-        tv.post(new Runnable() {
-            public void run() {
-                if (tv.getLineCount() > tv.getMaxLines()) {
-                    tv.scrollTo(0, tv.getLineHeight() * (tv.getLineCount() - tv.getMaxLines()) + 2);
-                }
+    public static void scrollToBottomOfTextView(final TextView tv) {
+        tv.post(() -> {
+            if (tv.getLineCount() > tv.getMaxLines()) {
+                tv.scrollTo(0, tv.getLineHeight() * (tv.getLineCount() - tv.getMaxLines()) + 2);
             }
         });
     }
