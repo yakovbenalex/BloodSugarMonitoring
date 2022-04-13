@@ -115,31 +115,34 @@
     <string name="attention">Внимание!</string>
     <string name="there_is_no_information_for_this_screen">Для этого экрана справки нет</string>
     <string name="title_image">Картинка заголовка</string>
+
+    <!-- welcome screen titles -->
     <string name="welcome_screen1_title">Добро пожаловать!</string>
     <string name="welcome_screen2_title">Новое измерение</string>
     <string name="welcome_screen3_title">База измерений</string>
     <string name="welcome_screen4_title">Калькулятор углеводов</string>
     <string name="welcome_screen5_title">И многое другое</string>
+    <!-- welcome screen contents -->
     <string name="welcome_screen1_content">Приложение для оперативного мониторинга гликемии.</string>
     <string name="welcome_screen2_content">Добавляйте новое значение гликемии, введя уровень сахара, дату и время (можно писать комментарии).</string>
     <string name="welcome_screen3_content">Контролируйте уровень гликемии - просматривайте, изменяйте, удаляйте введённые ранее значения сахара.</string>
     <string name="welcome_screen4_content">Считайте количество ХЕ и углеводов, указав их значение на 100 гр. готового продукта.</string>
     <string name="welcome_screen5_content">Настройте параметры приложения. Получайте статистику за различные периоды (неделю, месяц, всё время) и полезную информацию по контролю измерений. Ваш помощник всегда рядом!</string>
+
     <string name="next">Дальше</string>
     <string name="skip">Пропустить</string>
     <string name="start">Начать</string>
     <string name="restore">Восстановить</string>
     <string name="no_measurements">Измерений нет</string>
-    <string name="pref_title_vibrate">Вибрация</string>
-    <string name="pref_title_sync_frequency">Частота синхронизации</string>
-    <string name="pref_title_ringtone">Рингтон</string>
-    <string name="pref_header_notifications">Уведомления</string>
-    <string name="pref_header_general">Основное</string>
     <string name="version">Версия</string>
-    <string name="pref_title_display_name">Отображаемое имя</string>
-    <string name="pref_default_display_name">Смотров Николай</string>
+    <string name="feature_option">Будущая опция</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_about">О приложении</string>
-    <string name="pref_title_social_recommendations">Включить социальные рекомендации</string>
-    <string name="feature_option">Будущая опция</string>
+
+    <!-- Dialog related -->
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">Ок</string>
+
 </resources>

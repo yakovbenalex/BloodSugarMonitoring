@@ -4,21 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/viewBtnsWelcomeScreenSep"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <androidx.viewpager.widget.ViewPager xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/welcome_screen_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </android.support.v4.view.ViewPager>
+        </androidx.viewpager.widget.ViewPager>
 
     </FrameLayout>
 
@@ -35,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/viewBtnsSep"
+        android:layout_toStartOf="@id/viewBtnsSep"
         android:text="@string/skip" />
 
     <View
@@ -52,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/viewBtnsSep"
+        android:layout_toEndOf="@id/viewBtnsSep"
         android:text="@string/next" />
 
 </RelativeLayout>
